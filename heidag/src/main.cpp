@@ -29,10 +29,6 @@
 #include "platforming_level.h"
 #include "splash.h"
 #include "main_menu.h"
-#include "casette_player.h"
-#include "thuisbezorgd.h"
-#include "steef.h"
-#include "ollie.h"
 
 
 int main()
@@ -51,17 +47,9 @@ int main()
 
     while (true)
     {
-        if (next == next_scene::casette) 
-            next = casette_player::run();
-        else if (next == next_scene::platforming)
+        if (next == next_scene::platforming)
             next = platforming_level::run();
         else if (next == next_scene::main_menu)
             next = main_menu::run();
-        else if (next == next_scene::thuisbezorgd)
-            next = thuisbezorgd::run();
-        else if (next == next_scene::steef)
-            next = steef::run();
-        else if (next == next_scene::ollie)
-            next = ollie::run();
     }
 }
