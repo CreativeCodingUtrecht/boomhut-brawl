@@ -30,3 +30,10 @@ Flashed using BennVenn's Joey Jr. V2++.
 **3D models and animations**: [Lara Adriolo](https://alienheadshitkid.neocities.org/), [cyberbirdxx](https://www.instagram.com/cyberbirdxx/)
 
 **Level design**: [dg_hoek](https://www.instagram.com/dg_hoek/), [cyberbirdxx](https://www.instagram.com/cyberbirdxx/)
+
+
+### Command
+
+```sh
+chokidar "src/**.*" "graphics/**.bmp" -c "make -j16" --initial true
+```

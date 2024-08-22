@@ -24,6 +24,10 @@
 #include "bn_regular_bg_items_background.h"
 #include "bn_regular_bg_items_foreground.h"
 
+// Sprites
+#include "bn_sprite_items_trein_kop.h"
+#include "bn_sprite_items_trein_middel.h"
+
 
 // Includes
 #include "../include/utils.h"
@@ -37,6 +41,7 @@
 #include "scene.h"
 
 
+using namespace bn;
 
 
 
@@ -78,7 +83,14 @@ namespace platforming_level
 
         // Background
         bn::bg_palettes::set_transparent_color(background_color);
-        
+
+
+        // Trein
+        sprite_ptr trein_kop = sprite_items::trein_kop.create_sprite(0,0);
+        sprite_ptr trein_middel = sprite_items::trein_middel.create_sprite(51,0);
+
+        trein_kop.set_camera(camera);
+        trein_middel.set_camera(camera);
 
         // World
         const bn::fixed gravity = 0.3;
@@ -86,6 +98,7 @@ namespace platforming_level
         // BG and map
         bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
         const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
+
 
 
         // Foreground 
