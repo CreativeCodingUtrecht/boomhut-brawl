@@ -113,7 +113,8 @@ namespace platforming_level
             // Update level
             // Lipje pickup items
     
-            printer->print_map_tiles_at_position(map_item, you.position);
+            // printer->print_map_tiles_at_position(map_item, you.position);
+            printer->print_map_tile_and_position(map_item, you.position);
 
 
             for (size_t i = 0; i < 7; i++)

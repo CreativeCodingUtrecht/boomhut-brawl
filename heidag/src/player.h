@@ -24,6 +24,26 @@
 
 
 
+int roundUp(int numToRound, int multiple)
+{
+    if (multiple == 0)
+        return numToRound;
+
+    int remainder = abs(numToRound) % multiple;
+    if (remainder == 0)
+        return numToRound;
+
+    if (numToRound < 0)
+        return -(abs(numToRound) - remainder);
+    else
+        return numToRound + multiple - remainder;
+}
+
+int roundDown(int n, int m) {
+    return n >= 0 ? (n / m) * m : ((n - m + 1) / m) * m;
+}
+
+
 
 namespace multiplayer 
 {
@@ -176,9 +196,13 @@ struct player {
 
 
         // Watch for gravity
-        int player_tile_index = get_map_tile_index_at_position(position, map_item);
+        int player_tile_index = get_map_tile_index_at_position(position, map_item); // + bn::fixed_point(0,+4)
+        
         int passthrough_tiles[] = { 0 };
+        int wall_tiles[] = { 6, 9, 10 };
+
         bool on_ground = true;
+        bool on_wall = false;
 
         BN_LOG(bn::format<20>("tile: {}", player_tile_index));
 
@@ -188,7 +212,13 @@ struct player {
                 on_ground = false;
             }
         }
-       
+        
+        // check if wall tile
+        for (int tile_index: wall_tiles) {
+            if (player_tile_index == tile_index) {
+                on_wall = true;
+            }
+        }
 
         // platform beneath player 
         if (on_ground) {
@@ -210,8 +240,10 @@ struct player {
             is_falling = true;
         }
 
+        BN_LOG(on_wall);
+
         // jumping and gravity
-        if (keypad_data.a_pressed && !is_jumping && on_ground) {
+        if (keypad_data.a_pressed && !is_jumping && on_ground && !on_wall) {
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity);
@@ -250,7 +282,12 @@ struct player {
         position += velocity;
         
         // Update sprite position
-        sprite_ptr.set_position(position.x(), position.y());
+        if (on_ground) {
+            // position.set_y(roundDown(position.y().floor_integer(), 2));
+        } 
+
+        sprite_ptr.set_position(position);
+
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
