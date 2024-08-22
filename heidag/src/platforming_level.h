@@ -7,6 +7,8 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
 #include "bn_regular_bg_map_cell_info.h"
+#include "bn_affine_bg_map_cell_info.h"
+#include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_point.h"
 #include "bn_log.h"
@@ -20,7 +22,7 @@
 
 
 // BGs
-#include "bn_regular_bg_items_tilemap.h"
+#include "bn_affine_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
 #include "bn_regular_bg_items_foreground.h"
 #include "bn_regular_bg_items_trein_bg.h"
@@ -51,12 +53,10 @@ namespace platforming_level
     
     next_scene run()
     {
-        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
-        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2, bn::display::height() / 2);
 
         // sky and mountains background
-        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2, bn::display::height() / 2);
-            background.set_z_order(4);
+        // bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2, bn::display::height() / 2);
+        // background.set_z_order(4);
 
 
         int clouds_x = 0.0;
@@ -87,10 +87,14 @@ namespace platforming_level
         // World
         const bn::fixed gravity = 0.3;
 
-        // BG and map
-        bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
-        const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
 
+        // BG and map
+        bn::affine_bg_item tilemap_item = bn::affine_bg_items::tilemap;
+        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2, bn::display::height() / 2);
+        bn::affine_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
+        const bn::affine_bg_map_item& map_item = tilemap_item.map_item();
+        tilemap.set_camera(*camera);
+        tilemap.set_wrapping_enabled(false);
 
 
         // Trein
@@ -102,8 +106,7 @@ namespace platforming_level
         // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
 
 
-        tilemap.set_camera(*camera);
-        background.set_camera(*camera);
+        // background.set_camera(*camera);
         // foreground.set_camera(*camera);
 
 

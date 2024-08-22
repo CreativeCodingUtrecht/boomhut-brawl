@@ -162,7 +162,7 @@ struct player {
 
 
 
-    void update(bn::regular_bg_map_item map_item, multiplayer::keypad_data::keypad_data_struct keypad_data) 
+    void update(bn::affine_bg_map_item map_item, multiplayer::keypad_data::keypad_data_struct keypad_data) 
     {
         // character switching 
         if (keypad_data.l_pressed) {
