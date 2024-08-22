@@ -32,6 +32,7 @@
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
+#include "zoop.h"
 
 #include "scene.h"
 
@@ -67,7 +68,11 @@ namespace platforming_level
             pickups::lipje(32+x_offset,y_offset),
             pickups::lipje(64+x_offset,y_offset),
             pickups::lipje(96+x_offset,y_offset)
-        };
+        };  
+
+
+        // Animals
+        zoop::bee bee;
 
 
 
@@ -110,15 +115,16 @@ namespace platforming_level
 
         while(true)
         {
-            // Update level
-            // Lipje pickup items
+            // Update animals
+            bee.update();
+
     
             // printer->print_map_tiles_at_position(map_item, you.position);
             printer->print_map_tile_and_position(map_item, you.position);
 
-
-            for (size_t i = 0; i < 7; i++)
-            {
+            // Update level
+            // Lipje pickup items
+            for (size_t i = 0; i < 7; i++) {
                 lipjes[i].update();
             }
 

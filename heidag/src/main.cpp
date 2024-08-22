@@ -38,9 +38,10 @@ int main()
     // The global camera and printer
     camera = bn::camera_ptr::create(0, 0);
     printer = info_printer();
+    global_random = bn::random();
 
     // Splash
-    splash::run();
+    // splash::run();
 
     // Main menu
     next_scene next = platforming_level::run();
