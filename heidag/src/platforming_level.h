@@ -21,9 +21,8 @@
 
 // BGs
 #include "bn_regular_bg_items_tilemap.h"
-#include "bn_regular_bg_items_sky.h"
-#include "bn_regular_bg_items_clouds.h"
-#include "bn_regular_bg_items_soapgoreslides.h"
+#include "bn_regular_bg_items_background.h"
+#include "bn_regular_bg_items_foreground.h"
 
 
 // Includes
@@ -50,8 +49,7 @@ namespace platforming_level
         bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2, bn::display::height() / 2);
 
         // sky and mountains background
-        bn::regular_bg_ptr sky = bn::regular_bg_items::sky.create_bg(0, 0);
-        bn::regular_bg_ptr clouds = bn::regular_bg_items::clouds.create_bg(0, 0);
+        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2, bn::display::height() / 2);
         
         int clouds_x = 0.0;
 
@@ -75,6 +73,7 @@ namespace platforming_level
 
         // Background
         bn::bg_palettes::set_transparent_color(background_color);
+        
 
         // World
         const bn::fixed gravity = 0.3;
@@ -82,7 +81,16 @@ namespace platforming_level
         // BG and map
         bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
         const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
+
+
+        // Foreground 
+        // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
+
+
         tilemap.set_camera(*camera);
+        background.set_camera(*camera);
+        // foreground.set_camera(*camera);
+
 
 
         // Player and other player, soon to be max. 4
@@ -104,6 +112,10 @@ namespace platforming_level
         {
             // Update level
             // Lipje pickup items
+    
+            printer->print_map_tiles_at_position(map_item, you.position);
+
+
             for (size_t i = 0; i < 7; i++)
             {
                 lipjes[i].update();

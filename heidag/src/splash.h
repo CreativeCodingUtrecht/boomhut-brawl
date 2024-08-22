@@ -8,12 +8,6 @@
 #include "bn_sprite_actions.h"
 
 
-#include "bn_sprite_items_splash_1.h"
-#include "bn_sprite_items_splash_2.h"
-#include "bn_sprite_items_splash_3.h"
-#include "bn_sprite_items_splash_4.h"
-#include "bn_sprite_items_splash_5.h"
-#include "bn_sprite_items_splash_6.h"
 #include "bn_sprite_items_lipje.h"
 #include "bn_sprite_items_c.h"
 #include "bn_sprite_items_c2.h"
@@ -30,33 +24,6 @@ namespace splash
 {
     using namespace bn;
 
-    // important
-    bool is_done;
-
-    // KP6 balloons: 
-    // 6 sprites (64x32 pixels)
-    constexpr sprite_item splash_sprite_items[] {
-        sprite_items::splash_1,
-        sprite_items::splash_2,
-        sprite_items::splash_3,
-        sprite_items::splash_4,
-        sprite_items::splash_5,
-        sprite_items::splash_6
-    };
-
-    point balloons_offset = point(10, 15);
-
-    point sprite_positions[] = {
-        point(-64, -64), point(64, -64),
-        point(-64, 0), point(64, 0),
-        point(-64, 64), point(64, 64),
-    };
-    
-
-    // 'a softpacksix production' text
-    fixed text_y = 80.0;
-    bool generated = false;
-    bool splash_sprite_prs_removed = false;
 
     next_scene run() 
     {

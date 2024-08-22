@@ -58,6 +58,8 @@ struct character_animations {
 struct player {
 
     // fields
+    bn::fixed health = 100; // 0 - 100
+
     bn::fixed_point position;
     bn::fixed_point velocity;
     bn::fixed gravity;
@@ -175,20 +177,17 @@ struct player {
 
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, map_item);
-        int ground_tiles[] = {1, 2, 3, 4, 16, 17, 18, 19, 20, 21, 22, 23 };
-        bool on_ground = false;
+        int passthrough_tiles[] = { 0 };
+        bool on_ground = true;
 
-        // BN_LOG(bn::format<20>("tile: {}", player_tile_index));
-       
-       for (int tile_index: ground_tiles) {
+        BN_LOG(bn::format<20>("tile: {}", player_tile_index));
+
+        // check if fallthrough tile
+        for (int tile_index: passthrough_tiles) {
             if (player_tile_index == tile_index) {
-                on_ground = true;
+                on_ground = false;
             }
-       }
-
-        // if (player_tile_index != 0) {
-        //     on_ground = true;
-        // }
+        }
        
 
         // platform beneath player 
