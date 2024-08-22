@@ -24,26 +24,6 @@
 
 
 
-int roundUp(int numToRound, int multiple)
-{
-    if (multiple == 0)
-        return numToRound;
-
-    int remainder = abs(numToRound) % multiple;
-    if (remainder == 0)
-        return numToRound;
-
-    if (numToRound < 0)
-        return -(abs(numToRound) - remainder);
-    else
-        return numToRound + multiple - remainder;
-}
-
-int roundDown(int n, int m) {
-    return n >= 0 ? (n / m) * m : ((n - m + 1) / m) * m;
-}
-
-
 
 namespace multiplayer 
 {
@@ -61,6 +41,8 @@ namespace multiplayer
         
         int data;
     };
+
+    const int START_GAME_SIGNAL = 65533;
 }
 
 
@@ -198,7 +180,7 @@ struct player {
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, map_item); // + bn::fixed_point(0,+4)
         
-        int passthrough_tiles[] = { 0 };
+        int passthrough_tiles[] = { 0, 37, 41, 36 };
         int wall_tiles[] = { 6, 9, 10 };
 
         bool on_ground = true;

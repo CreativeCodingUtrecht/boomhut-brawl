@@ -35,16 +35,24 @@ int main()
 {
     bn::core::init();
 
+    // Background
+    bn::color background_color = bn::color(16, 24, 29);
+    bn::bg_palettes::set_transparent_color(background_color);
+
+    
+
     // The global camera and printer
     camera = bn::camera_ptr::create(0, 0);
     printer = info_printer();
     global_random = bn::random();
 
     // Splash
-    // splash::run();
+    splash::run();
+
+
 
     // Main menu
-    next_scene next = platforming_level::run();
+    next_scene next = main_menu::run();
 
     while (true)
     {

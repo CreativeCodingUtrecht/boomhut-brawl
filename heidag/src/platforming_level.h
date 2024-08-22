@@ -23,6 +23,7 @@
 #include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
 #include "bn_regular_bg_items_foreground.h"
+#include "bn_regular_bg_items_trein_bg.h"
 
 // Sprites
 #include "bn_sprite_items_trein_kop.h"
@@ -50,13 +51,14 @@ namespace platforming_level
     
     next_scene run()
     {
-        bn::color background_color = bn::color(16, 24, 29);
         bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
         bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2, bn::display::height() / 2);
 
         // sky and mountains background
         bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2, bn::display::height() / 2);
-        
+            background.set_z_order(4);
+
+
         int clouds_x = 0.0;
 
 
@@ -81,16 +83,6 @@ namespace platforming_level
 
 
 
-        // Background
-        bn::bg_palettes::set_transparent_color(background_color);
-
-
-        // Trein
-        sprite_ptr trein_kop = sprite_items::trein_kop.create_sprite(0,0);
-        sprite_ptr trein_middel = sprite_items::trein_middel.create_sprite(51,0);
-
-        trein_kop.set_camera(camera);
-        trein_middel.set_camera(camera);
 
         // World
         const bn::fixed gravity = 0.3;
@@ -101,6 +93,11 @@ namespace platforming_level
 
 
 
+        // Trein
+        // regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-300);
+        // trein_bg.set_camera(camera);
+        // trein_bg.set_z_order(3);
+
         // Foreground 
         // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
 
@@ -108,6 +105,7 @@ namespace platforming_level
         tilemap.set_camera(*camera);
         background.set_camera(*camera);
         // foreground.set_camera(*camera);
+
 
 
 

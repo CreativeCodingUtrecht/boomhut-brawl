@@ -2,8 +2,9 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
-#include "globals.h"
+#include "bn_sprite_palette_actions.h"
 
+#include "globals.h"
 #include "scene.h"
 
 #include "bn_sprite_items_menu_casette.h"
@@ -12,9 +13,12 @@
 #include "bn_sprite_items_menu_thuisbezorgd.h"
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
-#include "bn_sprite_palette_actions.h"
+#include "bn_sprite_items_c.h"
+#include "bn_sprite_items_c2.h"
+#include "bn_sprite_items_u.h"
 
 #include "bn_regular_bg_items_menu_bg.h"
+
 
 #include "bn_sound_items.h"
 
@@ -63,15 +67,32 @@ namespace main_menu
         // }
     };
 
+
+    next_scene start_game(int selected_menu_item_x, int selected_menu_item_y) 
+    {   
+        bn::sound_items::into.play();
+        // bn::sound_items::shield.play();
+        
+        for (int x = 0; x < menu_items_x; x++) {
+            for (int y = 0; y < menu_items_x; y++) {
+                menu_item *item = &menu_items[x][y];
+                item->spr.reset();
+            }
+        }
+
+        return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
+    }
+    
+
     next_scene run() 
     {
-        bn::bg_palettes::set_transparent_color(bn::color(0,0,0));
+        // bn::bg_palettes::set_transparent_color(bn::color(0,0,0));
 
         bn::sound_items::pause.play();
 
         
         // BG
-        bn::regular_bg_ptr bg = bn::regular_bg_items::menu_bg.create_bg(12,45);
+        // bn::regular_bg_ptr bg = bn::regular_bg_items::menu_bg.create_bg(12,45);
 
 
         // Pickup
@@ -90,11 +111,9 @@ namespace main_menu
         );
         
 
-
-
         // menu selector
         bn::sprite_ptr menu_selector_spr = bn::sprite_items::menu_selector.create_sprite(0,0);
-        menu_selector_spr.set_scale(1.1);
+        menu_selector_spr.set_scale(0.1);
 
         int menu_selector_target_x = 0;
         int menu_selector_target_y = 0;
@@ -110,19 +129,47 @@ namespace main_menu
                 menu_item *item = &menu_items[x][y];        
                 item->spr = item->sprite_item.create_sprite(x_offset - 64 + item->x_offset, y_offset + item->y_offset);
                 item->spr->set_x(lerp(item->target_x + x_offset + item->x_offset, item->spr->x(), 0.2));
-
+                item->spr->set_scale(0.1);
             }
         }
 
-        printer->print("");
+        printer->print("waiting for other player...");
+
+        
+
+        int t = 0;
+        bool connected = false;
 
         while (true) 
         {
-            // log_memory_usage();
+            t++;
 
+
+            // Announce that you're there
+            if (!connected && t%5==0) {
+                bn::link::send(1);
+            }
+
+            // Receive
+            if (bn::optional<bn::link_state> link_state = bn::link::receive()) {
+                if (!connected) {
+                    printer->print("connected to other player!");
+                }
+
+                const bn::link_player& first_other_player = link_state->other_players().front();
+                int data = first_other_player.data();
+                // Start game when other player also starts
+                if (data == multiplayer::START_GAME_SIGNAL) {
+                    return start_game(selected_menu_item_x, selected_menu_item_y);
+                }
+            }
+
+            // logo in the corner
             anim.update();
             twinkle_anim.update();
 
+
+            // menu navigation 
             if (bn::keypad::up_pressed() || bn::keypad::down_pressed() || bn::keypad::right_pressed() || bn::keypad::left_pressed()) {
                 bn::sound_items::cursor.play();
 
@@ -146,6 +193,9 @@ namespace main_menu
                     item->target_y = (selected_menu_item_x == x && selected_menu_item_y == y) ? -3 : 0;
                     item->spr->set_y(lerp(item->target_y + y_offset + item->y_offset, item->spr->y(), 0.2));
 
+                    // grow menu item
+                    item->spr->set_scale(lerp(item->spr->horizontal_scale(), 1.0, 0.15));
+
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
                         menu_selector_target_x = item->target_x + x_offset + item->x_offset - 12;
                         menu_selector_target_y = item->target_y + y_offset + item->y_offset;
@@ -156,20 +206,13 @@ namespace main_menu
 
             menu_selector_spr.set_x(lerp(menu_selector_target_x, menu_selector_spr.x(), 0.6));
             menu_selector_spr.set_y(lerp(menu_selector_target_y, menu_selector_spr.y(), 0.6));
+            menu_selector_spr.set_scale(lerp(menu_selector_spr.horizontal_scale(), 1.1, 0.15));
+            
 
 
             if (bn::keypad::a_pressed()) {
-                bn::sound_items::into.play();
-                // bn::sound_items::shield.play();
-                
-                for (int x = 0; x < menu_items_x; x++) {
-                    for (int y = 0; y < menu_items_x; y++) {
-                        menu_item *item = &menu_items[x][y];
-                        item->spr.reset();
-                    }
-                }
-
-                return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
+                bn::link::send(multiplayer::START_GAME_SIGNAL);
+                return start_game(selected_menu_item_x, selected_menu_item_y);
             }
 
             bn::core::update();
@@ -177,6 +220,9 @@ namespace main_menu
 
         return next_scene::platforming;
     }
+
+
+    
 }
 
 
