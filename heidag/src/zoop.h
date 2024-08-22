@@ -15,6 +15,7 @@
 #include "bn_vector.h"
 
 #include "bn_sprite_items_bee.h";
+#include "bn_sprite_items_rat.h";
 
 #include "globals.h"
 
@@ -28,7 +29,17 @@ namespace zoop
 {
     struct rat
     {
+        sprite_ptr sprite = sprite_items::rat.create_sprite(244,186);    
+        
+        rat() 
+        {
+            sprite.set_camera(camera);
+        }
 
+        void update()
+        {
+
+        }
     };
 
 

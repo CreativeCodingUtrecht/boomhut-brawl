@@ -78,6 +78,7 @@ namespace platforming_level
 
         // Animals
         zoop::bee bee;
+        zoop::rat rat;
 
 
 
@@ -102,13 +103,7 @@ namespace platforming_level
         tilemap.set_z_order(-1000);
 
 
-        // windowing
-        // bn::window outside_window = bn::window::outside();
-        // outside_window.set_show_bg(tilemap, false);
-        // bn::rect_window internal_window = bn::rect_window::internal();
-        // internal_window.set_boundaries(-200, -128, 392, 392);
-        // internal_window.set_camera(camera);
-
+   
         // bn::rect_window internal_window = bn::rect_window();
         // internal_window.set_boundaries(-48, -96, 48, 96);
         // internal_window.set_visible(true);
@@ -119,9 +114,18 @@ namespace platforming_level
   
 
         // Trein
-        // regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-300);
-        // trein_bg.set_camera(camera);
-        // trein_bg.set_z_order(3);
+        regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
+        trein_bg.set_camera(camera);
+        trein_bg.set_z_order(5);
+
+
+        // windowing
+        bn::window outside_window = bn::window::outside();
+        outside_window.set_show_bg(trein_bg, false);
+        bn::rect_window internal_window = bn::rect_window::internal();
+        internal_window.set_boundaries(-0, -128, 392, 1024);
+        internal_window.set_camera(camera);
+
 
         // Foreground 
         // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
@@ -155,6 +159,8 @@ namespace platforming_level
         {
             // Update animals
             bee.update();
+            rat.update();
+            
 
     
             // printer->print_map_tiles_at_position(map_item, you.position);
@@ -168,6 +174,8 @@ namespace platforming_level
 
             // Moving clouds
             clouds_x -=  0.1;
+            trein_bg.set_x(trein_bg.x() - 2);
+
             // clouds.set_x(clouds_x + player.position.x() / bn::fixed(40.0));
 
 

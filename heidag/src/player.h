@@ -149,7 +149,7 @@ struct player {
     // methods
     player(bn::camera_ptr cam, bn::fixed grav) 
     {
-        position = bn::fixed_point(256,0);
+        position = bn::fixed_point(256,-100);
         velocity = bn::fixed_point(0,0);
         gravity = grav;
 
@@ -180,7 +180,7 @@ struct player {
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, map_item); // + bn::fixed_point(0,+4)
         
-        int passthrough_tiles[] = { 0, 37, 41, 36 };
+        int passthrough_tiles[] = { 0, 13, 14, 16, 37, 41, 36 };
         int wall_tiles[] = { 6, 9, 10 };
 
         bool on_ground = true;
@@ -264,7 +264,7 @@ struct player {
         position += velocity;
 
         // Map bounds
-        position.set_x(constrain(position.x(), 40, 720));
+        position.set_x(constrain(position.x(), 40, 740));
         
         // Update sprite position
         if (on_ground) {
