@@ -6,7 +6,7 @@
 #include "bn_camera_ptr.h"
 #include "bn_display.h"
 #include "bn_math.h"
-#include "bn_affine_bg_map_item.h"
+#include "bn_regular_bg_map_item.h"
 #include "bn_regular_bg_map_cell_info.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_format.h"
@@ -46,6 +46,11 @@ bn::color lerp(bn::color a, bn::color b, bn::fixed t)
 bn::fixed map(bn::fixed value, bn::fixed istart, bn::fixed istop, bn::fixed ostart, bn::fixed ostop)
 {
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+}
+
+bn::fixed constrain(bn::fixed value, bn::fixed min, bn::fixed max)
+{
+    return bn::min(max, bn::max(value, min));
 }
 
 
@@ -141,7 +146,7 @@ void move_with_dpad(bn::sprite_ptr spr)
  * Map utils
  * Map (0,0) is top-left but sprite (0,0) is center-center
  */
-const bn::point get_map_point_at_position(bn::fixed_point pos, bn::affine_bg_map_item map_item) 
+const bn::point get_map_point_at_position(bn::fixed_point pos, bn::regular_bg_map_item map_item) 
 {
     bn::size dimensions = map_item.dimensions();
     int map_x = mod(((pos.x() + bn::display::width() / 2 + 16) / 8).floor_integer(), dimensions.width());
@@ -150,7 +155,7 @@ const bn::point get_map_point_at_position(bn::fixed_point pos, bn::affine_bg_map
 }
 
 
-int get_map_tile_index_at_position(bn::fixed_point pos, bn::affine_bg_map_item map_item) 
+int get_map_tile_index_at_position(bn::fixed_point pos, bn::regular_bg_map_item map_item) 
 {
     const bn::point p = get_map_point_at_position(pos, map_item);
     bn::regular_bg_map_cell map_cell = map_item.cell(p);
@@ -191,7 +196,7 @@ class info_printer
         text_generator->set_center_alignment();
     }
 
-    void print_map_tiles_at_position(bn::affine_bg_map_item map_item, bn::fixed_point position) 
+    void print_map_tiles_at_position(bn::regular_bg_map_item map_item, bn::fixed_point position) 
     {
         int tile_left = get_map_tile_index_at_position(position + bn::fixed_point(-8,0), map_item);
         int tile_center = get_map_tile_index_at_position(position, map_item);
@@ -199,7 +204,7 @@ class info_printer
         print(bn::format<40>("{} | {} | {}", tile_left, tile_center, tile_right));
     }
 
-    void print_map_tile_and_position(bn::affine_bg_map_item map_item, bn::fixed_point position) 
+    void print_map_tile_and_position(bn::regular_bg_map_item map_item, bn::fixed_point position) 
     {
         int tile_center = get_map_tile_index_at_position(position, map_item);
         print(bn::format<40>("({}, {}): {}", position.x(), position.y(), tile_center));

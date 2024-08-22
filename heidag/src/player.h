@@ -149,7 +149,7 @@ struct player {
     // methods
     player(bn::camera_ptr cam, bn::fixed grav) 
     {
-        position = bn::fixed_point(0,0);
+        position = bn::fixed_point(256,0);
         velocity = bn::fixed_point(0,0);
         gravity = grav;
 
@@ -162,7 +162,7 @@ struct player {
 
 
 
-    void update(bn::affine_bg_map_item map_item, multiplayer::keypad_data::keypad_data_struct keypad_data) 
+    void update(bn::regular_bg_map_item map_item, multiplayer::keypad_data::keypad_data_struct keypad_data) 
     {
         // character switching 
         if (keypad_data.l_pressed) {
@@ -262,6 +262,9 @@ struct player {
 
         // Apply velocity to position
         position += velocity;
+
+        // Map bounds
+        position.set_x(constrain(position.x(), 40, 720));
         
         // Update sprite position
         if (on_ground) {

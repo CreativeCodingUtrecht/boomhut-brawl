@@ -7,9 +7,10 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
 #include "bn_regular_bg_map_cell_info.h"
-#include "bn_affine_bg_map_cell_info.h"
-#include "bn_affine_bg_ptr.h"
+#include "bn_regular_bg_map_cell_info.h"
+#include "bn_regular_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_rect_window.h"
 #include "bn_point.h"
 #include "bn_log.h"
 #include "bn_format.h"
@@ -22,7 +23,7 @@
 
 
 // BGs
-#include "bn_affine_bg_items_tilemap.h"
+#include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
 #include "bn_regular_bg_items_foreground.h"
 #include "bn_regular_bg_items_trein_bg.h"
@@ -54,9 +55,6 @@ namespace platforming_level
     next_scene run()
     {
 
-        // sky and mountains background
-        // bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2, bn::display::height() / 2);
-        // background.set_z_order(4);
 
 
         int clouds_x = 0.0;
@@ -88,14 +86,37 @@ namespace platforming_level
         const bn::fixed gravity = 0.3;
 
 
-        // BG and map
-        bn::affine_bg_item tilemap_item = bn::affine_bg_items::tilemap;
-        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2, bn::display::height() / 2);
-        bn::affine_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
-        const bn::affine_bg_map_item& map_item = tilemap_item.map_item();
-        tilemap.set_camera(*camera);
-        tilemap.set_wrapping_enabled(false);
+        // sky and mountains background
+        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        background.set_z_order(4);
+        background.set_camera(*camera);
 
+
+        // BG and map
+        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
+        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
+        const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
+        tilemap.set_camera(*camera);
+        // tilemap.set_wrapping_enabled(false);
+        tilemap.set_z_order(-1000);
+
+
+        // windowing
+        // bn::window outside_window = bn::window::outside();
+        // outside_window.set_show_bg(tilemap, false);
+        // bn::rect_window internal_window = bn::rect_window::internal();
+        // internal_window.set_boundaries(-200, -128, 392, 392);
+        // internal_window.set_camera(camera);
+
+        // bn::rect_window internal_window = bn::rect_window();
+        // internal_window.set_boundaries(-48, -96, 48, 96);
+        // internal_window.set_visible(true);
+        // internal_window.set_camera(camera);
+        // tilemap.set_visible_in_window(true, internal_window);
+
+
+  
 
         // Trein
         // regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-300);
@@ -126,6 +147,9 @@ namespace platforming_level
         int current_player_id;
         multiplayer::keypad_data last_keypad_data_to_send;
 
+
+        // Camera
+        camera->set_position(you.sprite_ptr.position());
 
         while(true)
         {
