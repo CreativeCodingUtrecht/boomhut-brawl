@@ -40,7 +40,7 @@ int main()
     printer = info_printer();
 
     // Splash
-    // splash::run();
+    splash::run();
 
     // Main menu
     next_scene next = platforming_level::run();
