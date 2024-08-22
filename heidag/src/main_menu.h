@@ -36,8 +36,8 @@ namespace main_menu
     const int menu_item_count = 4;
 
 
-    const int menu_items_x = 2;
-    const int menu_items_y = 2;
+    const int menu_items_x = 1;
+    const int menu_items_y = 1;
 
 
 
@@ -51,30 +51,16 @@ namespace main_menu
                 0,
                 0
             },
-            menu_item 
-            {
-                next_scene::ollie,
-                bn::sprite_items::menu_skater,
-                72,
-                0
-            },
         },
-        {
-            menu_item 
-            {
-                next_scene::steef,
-                bn::sprite_items::menu_steef,
-                0,
-                72
-            },
-            menu_item 
-            {
-                next_scene::casette,
-                bn::sprite_items::menu_casette,
-                72,
-                72,
-            },
-        }
+        // {
+        //     menu_item 
+        //     {
+        //         next_scene::casette,
+        //         bn::sprite_items::menu_casette,
+        //         72,
+        //         0
+        //     },
+        // }
     };
 
     next_scene run() 
@@ -175,9 +161,7 @@ namespace main_menu
             if (bn::keypad::a_pressed()) {
                 bn::sound_items::into.play();
                 // bn::sound_items::shield.play();
-
                 
-
                 for (int x = 0; x < menu_items_x; x++) {
                     for (int y = 0; y < menu_items_x; y++) {
                         menu_item *item = &menu_items[x][y];
@@ -187,7 +171,6 @@ namespace main_menu
 
                 return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
             }
-
 
             bn::core::update();
         }
