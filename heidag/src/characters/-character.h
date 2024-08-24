@@ -179,11 +179,7 @@ struct character {
 
         // Map bounds
         position.set_x(constrain(position.x(), 40, 740));
-        
-        // Update sprite position
-        if (on_ground) {
-            // position.set_y(roundDown(position.y().floor_integer(), 2));
-        } 
+        position.set_y(constrain(position.y(), -200, 486));
 
         sprite_ptr.set_position(position);
 

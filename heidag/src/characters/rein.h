@@ -6,7 +6,7 @@
 
 
 struct rein: public character {
-    bn::string<20> name = "Default character";
+    bn::string<20> name = "Rein";
 
     bn::fixed max_health = 100.0;
     bn::fixed health = max_health;
@@ -44,6 +44,7 @@ struct rein: public character {
     };
 
     rein() {}
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
@@ -131,11 +132,7 @@ struct rein: public character {
 
         // Map bounds
         position.set_x(constrain(position.x(), 40, 740));
-        
-        // Update sprite position
-        if (on_ground) {
-            // position.set_y(roundDown(position.y().floor_integer(), 2));
-        } 
+        position.set_y(constrain(position.y(), -200, 486));
 
         sprite_ptr.set_position(position);
 
@@ -158,6 +155,6 @@ struct rein: public character {
         else {
             animations.idle.update();
         }
-    }
+    } 
 };
 
