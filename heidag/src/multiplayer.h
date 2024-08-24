@@ -10,6 +10,7 @@ namespace multiplayer
             int l_pressed : 1;
             int r_pressed : 1;
             int a_pressed : 1;
+            int b_pressed : 1;
 
             int left_held : 1;
             int right_held : 1;
@@ -18,5 +19,8 @@ namespace multiplayer
         int data;
     };
 
-    const int START_GAME_SIGNAL = 65533;
+
+    enum signal: int {
+        signal_start_game = 65533
+    };
 }

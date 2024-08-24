@@ -149,7 +149,7 @@ namespace main_menu
                 const bn::link_player& first_other_player = link_state->other_players().front();
                 int data = first_other_player.data();
                 // Start game when other player also starts
-                if (data == multiplayer::START_GAME_SIGNAL) {
+                if (data == multiplayer::signal_start_game) {
                     return start_game(selected_menu_item_x, selected_menu_item_y);
                 }
             }
@@ -201,7 +201,7 @@ namespace main_menu
 
 
             if (bn::keypad::a_pressed()) {
-                bn::link::send(multiplayer::START_GAME_SIGNAL);
+                bn::link::send(multiplayer::signal_start_game);
                 return start_game(selected_menu_item_x, selected_menu_item_y);
             }
 
