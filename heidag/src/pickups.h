@@ -17,7 +17,7 @@
 
 
 // includes
-#include "player.h"
+#include "./characters/-character.h"
 #include "globals.h"
 
 #include "bn_sound_items.h"
@@ -39,7 +39,7 @@ namespace pickups
 
     struct pickup 
     {
-        virtual void update(bn::vector<player, 4> players);
+        virtual void update(bn::vector<character, 2> players);
     };
 
 
@@ -98,7 +98,7 @@ namespace pickups
                 bool close_to_a_player = false;
 
                 // Update for both players
-                for (player &p : players) {
+                for (character &p : players) {
                     bn::fixed dist = distance(spr.position(), p.sprite_ptr.position());
 
                     // Magnetic

@@ -34,9 +34,9 @@
 
 
 // Includes
-#include "../include/utils.h"
+#include "../../include/utils.h"
 #include "globals.h"
-#include "player.h"
+#include "./characters/-character.h"
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
@@ -49,14 +49,12 @@ using namespace bn;
 
 
 
+
 namespace platforming_level
 {
     
     next_scene run()
     {
-
-
-
         int clouds_x = 0.0;
 
 
@@ -137,14 +135,15 @@ namespace platforming_level
 
 
 
-        // Player and other player, soon to be max. 4
-        player you(*camera, gravity);
-        player other_player(*camera, gravity);
+        // Player and other player 
+        character you;
+        character other_player;
 
         players.push_back(you);
         players.push_back(other_player);
+
         
-        bn::fixed_point last_position;
+        
 
         // Multiplayer
         int players_counter;
@@ -153,6 +152,8 @@ namespace platforming_level
 
 
         // Camera
+        you.sprite_ptr.set_camera(*camera);
+        other_player.sprite_ptr.set_camera(*camera);
         camera->set_position(you.sprite_ptr.position());
 
         while(true)
@@ -195,17 +196,7 @@ namespace platforming_level
             };
 
             // Always update own player
-            you.update(map_item , keypad_data_to_send.keypad_data);
-
-
-            // Print map info when singleplayer
-            if (players_counter == 0) {
-                // map_info_printer.print_map_tiles_at_position(map_item, player.position);
-                if (you.position != last_position) {
-                    last_position = you.position;
-                    // printer->print_map_tile_and_position(map_item, you.position);
-                }
-            }
+            you.update(keypad_data_to_send.keypad_data);
 
             log_memory_usage();
 
@@ -240,7 +231,7 @@ namespace platforming_level
             }
             
             // always update for animations
-            other_player.update(map_item, other_player_keypad_data.keypad_data);
+            other_player.update(other_player_keypad_data.keypad_data);
 
 
             // Smooth cam

@@ -7,22 +7,27 @@
 #include "globals.h"
 #include "scene.h"
 
-#include "bn_sprite_items_menu_casette.h"
-#include "bn_sprite_items_menu_steef.h"
-#include "bn_sprite_items_menu_skater.h"
-#include "bn_sprite_items_menu_thuisbezorgd.h"
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
-#include "bn_sprite_items_c.h"
-#include "bn_sprite_items_c2.h"
-#include "bn_sprite_items_u.h"
+// #include "bn_sprite_items_c.h"
+// #include "bn_sprite_items_c2.h"
+// #include "bn_sprite_items_u.h"
 
 #include "bn_regular_bg_items_menu_bg.h"
-
-
 #include "bn_sound_items.h"
 
 
+// Characters
+#include "./characters/-character.h"
+#include "./characters/rein.h"
+#include "./characters/mar.h"
+#include "./characters/cate.h"
+
+
+// character all_characters[] = {
+//     rein(), 
+//     mar()
+// };
 
 namespace main_menu 
 {
@@ -37,13 +42,8 @@ namespace main_menu
         bn::optional<bn::sprite_ptr> spr;
     };
 
-    const int menu_item_count = 4;
-
-
     const int menu_items_x = 1;
     const int menu_items_y = 1;
-
-
 
     menu_item menu_items[menu_items_x][menu_items_y] = 
     {
@@ -55,18 +55,8 @@ namespace main_menu
                 0,
                 0
             },
-        },
-        // {
-        //     menu_item 
-        //     {
-        //         next_scene::casette,
-        //         bn::sprite_items::menu_casette,
-        //         72,
-        //         0
-        //     },
-        // }
+        }
     };
-
 
     next_scene start_game(int selected_menu_item_x, int selected_menu_item_y) 
     {   
@@ -103,12 +93,12 @@ namespace main_menu
             41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58
         );
 
-        bn::sprite_ptr spr = bn::sprite_items::lipje_item.create_sprite(bn::fixed_point(-105, -60));
-        bn::sprite_animate_action<60> anim = bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::lipje_item.tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
-            41, 42, 43, 44, 45, 46, 47, 48, 49, 50
-        );
+        // bn::sprite_ptr spr = bn::sprite_items::lipje_item.create_sprite(bn::fixed_point(-105, -60));
+        // bn::sprite_animate_action<60> anim = bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::lipje_item.tiles_item(), 
+        //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
+        //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
+        //     41, 42, 43, 44, 45, 46, 47, 48, 49, 50
+        // );
         
 
         // menu selector
@@ -165,7 +155,7 @@ namespace main_menu
             }
 
             // logo in the corner
-            anim.update();
+            // anim.update();
             twinkle_anim.update();
 
 

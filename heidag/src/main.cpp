@@ -18,15 +18,15 @@
 
 
 // Includes
-#include "../include/utils.h"
+#include "../../include/utils.h"
 #include "globals.h"
-#include "player.h"
+#include "./characters/-character.h"
 #include "pickups.h"
 
 
 // scenes
 #include "scene.h"
-#include "platforming_level.h"
+#include "boomhut.h"
 #include "splash.h"
 #include "main_menu.h"
 
@@ -35,9 +35,12 @@ int main()
 {
     bn::core::init();
 
+    // All characters
+
     // Background
     bn::color background_color = rgb255(140, 165, 247);
     bn::bg_palettes::set_transparent_color(background_color);
+    map_item = bn::regular_bg_items::tilemap.map_item();
 
     
     // The global camera and printer
@@ -46,7 +49,7 @@ int main()
     global_random = bn::random();
 
     // Splash
-    splash::run();
+    // splash::run();
 
     // Main menu
     next_scene next = main_menu::run();
