@@ -21,6 +21,10 @@ namespace multiplayer
 
 
     enum signal: int {
-        signal_start_game = 65533
+        signal_start_game = 65533,
+
+        signal_sync_x = 65532,
+        signal_sync_y = 65531,
+        signal_sync_health = 65530
     };
 }
