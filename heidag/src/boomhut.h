@@ -39,6 +39,8 @@
 #include "./characters/-character.h"
 #include "./characters/networkninja.h"
 #include "./characters/laury.h"
+#include "./characters/hunter.h"
+#include "./characters/fleur.h"
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
@@ -138,8 +140,8 @@ namespace platforming_level
 
 
         // Player and other player 
-        auto you = laury();
-        auto other_player = rein();
+        auto you = fleur();
+        auto other_player = hunter();
 
         players.push_back(you);
         players.push_back(other_player);
