@@ -21,23 +21,27 @@ struct mar: public character {
     bool is_landing;
     bool is_falling;
 
-    bn::sprite_item sprite_item = bn::sprite_items::rein_lario;
-    bn::sprite_ptr sprite_ptr = sprite_item.create_sprite(0,0);
+    bn::sprite_item sprite_item() {
+        return bn::sprite_items::rein_lario;
+    };
+
+    // bn::sprite_item pictogram;
+    bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
 
     character_animations animations = character_animations {
-        idle: bn::create_sprite_animate_action_forever(sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+        idle: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
         ),
-        run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+        run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
             38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
         ),
-        jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+        jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
             56, 57, 58, 59, 60
         ),
-        jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+        jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
             61, 61
         ),
-        jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+        jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
             62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
         )
     };
@@ -46,7 +50,7 @@ struct mar: public character {
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
-        int player_tile_index = get_map_tile_index_at_position(position, *map_item); // + bn::fixed_point(0,+4)
+        int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
 
         bool on_ground = true;
         bool on_wall = false;
@@ -129,8 +133,8 @@ struct mar: public character {
         position += velocity;
 
         // Map bounds
-        position.set_x(constrain(position.x(), 40, 740));
-        position.set_y(constrain(position.y(), -200, 486));
+        position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
+        position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
         sprite_ptr.set_position(position);
 

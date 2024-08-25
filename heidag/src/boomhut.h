@@ -37,6 +37,8 @@
 #include "../../include/utils.h"
 #include "globals.h"
 #include "./characters/-character.h"
+#include "./characters/networkninja.h"
+#include "./characters/laury.h"
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
@@ -117,11 +119,11 @@ namespace platforming_level
         trein_bg.set_z_order(5);
 
 
-        // windowing
+        // Window for the train
         bn::window outside_window = bn::window::outside();
         outside_window.set_show_bg(trein_bg, false);
         bn::rect_window internal_window = bn::rect_window::internal();
-        internal_window.set_boundaries(-0, -128, 392, 1024);
+        internal_window.set_boundaries(-0, -200, 392, 1024);
         internal_window.set_camera(camera);
 
 
@@ -136,8 +138,8 @@ namespace platforming_level
 
 
         // Player and other player 
-        character you;
-        character other_player;
+        auto you = laury();
+        auto other_player = rein();
 
         players.push_back(you);
         players.push_back(other_player);
@@ -155,6 +157,9 @@ namespace platforming_level
         you.sprite_ptr.set_camera(*camera);
         other_player.sprite_ptr.set_camera(*camera);
         camera->set_position(you.sprite_ptr.position());
+
+        // Health bars
+
 
         while(true)
         {
@@ -236,6 +241,7 @@ namespace platforming_level
 
             // Smooth cam
             camera_follow_smooth(*camera, you.sprite_ptr.position());
+            camera->set_x(constrain(camera->x(), 0, bounds_max_x));
 
             if (bn::keypad::start_pressed()) {
                 bn::music::stop();
