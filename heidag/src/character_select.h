@@ -310,18 +310,13 @@ namespace character_select
         bn::sprite_ptr selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
 
         // Characters / players
-        character* you;
-
-        fabian fab;
-
-        you = &fab;
-
+ 
 
         // auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
-        bn::sprite_ptr you_spr = you->sprite_item().create_sprite(-spacing_x,-45);
+        bn::sprite_ptr you_spr = fabian::sprite_item().create_sprite(-spacing_x,-45);
         // bn::sprite_ptr other_spr = fabian::sprite_item().create_sprite(spacing_x,-45);
 
-        bn::optional<bn::sprite_animate_action<400>> you_anim = you->idle_anim(you_spr);
+        bn::optional<bn::sprite_animate_action<400>> you_anim = fabian::idle_anim(you_spr);
         // bn::optional<bn::sprite_animate_action<400>> other_anim = fabian::idle_anim(other_spr);
         
 
@@ -330,12 +325,6 @@ namespace character_select
             t++;
 
             you_anim->update();
-
-            // Animate
-            // if (you_anim.has_value()) {
-            //     you_anim->update();
-            // }
-            // other_anim->update();
 
             // Receive
             if (bn::optional<bn::link_state> link_state = bn::link::receive()) {
@@ -350,11 +339,6 @@ namespace character_select
                     return start_game(selected_menu_item_x, selected_menu_item_y);
                 }
             }
-
-            // logo in the corner
-            // anim.update();
-            // twinkle_anim.update();
-
 
             // menu navigation 
             if (bn::keypad::up_pressed() || bn::keypad::down_pressed() || bn::keypad::right_pressed() || bn::keypad::left_pressed()) {
@@ -381,69 +365,45 @@ namespace character_select
 
                 // you_spr = mar::sprite_item().create_sprite(-spacing_x,-45);
                 // you_anim = 
-                
-                // if (c == all_characters::cate) {
-                //     you_spr = cate::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = fabian::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::christine) {
-                //     you_spr = christine::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = christine::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::fabian) {
-                //     you_spr = fabian::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = fabian::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::fleur) {
-                //     you_spr = fleur::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = fleur::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::hunter) {
-                //     you_spr = hunter::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = hunter::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::joost) {
-                //     you_spr = joost::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = joost::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::laury) {
-                //     you_spr = laury::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = laury::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::mar) {
-                //     you_spr = mar::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = mar::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::networkninja) {
-                //     you_spr = networkninja::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = networkninja::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::rein) {
-                //     you_spr = rein::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = rein::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::saskia) {
-                //     you_spr = saskia::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = saskia::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::sjef) {
-                //     you_spr = sjef::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = sjef::idle_anim(you_spr);
-                // }
-                // if (c == all_characters::werner) {
-                //     you_spr = werner::sprite_item().create_sprite(-spacing_x,-45);
-                //     you_anim = werner::idle_anim(you_spr);
-                // }
+
+                if (c == all_characters::fabian) {
+                    you_anim = fabian::idle_anim(you_spr);
+                }
+                if (c == all_characters::fleur) {
+                    you_anim = fleur::idle_anim(you_spr);
+                }
+                if (c == all_characters::hunter) {
+                    you_anim = hunter::idle_anim(you_spr);
+                }
+                if (c == all_characters::joost) {
+                    you_anim = joost::idle_anim(you_spr);
+                }
+                if (c == all_characters::laury) {
+                    you_anim = laury::idle_anim(you_spr);
+                }
+                if (c == all_characters::mar) {
+                    you_anim = mar::idle_anim(you_spr);
+                }
+                if (c == all_characters::networkninja) {
+                    you_anim = networkninja::idle_anim(you_spr);
+                }
+                if (c == all_characters::rein) {
+                    you_anim = rein::idle_anim(you_spr);
+                }
+                if (c == all_characters::saskia) {
+                    you_anim = saskia::idle_anim(you_spr);
+                }
+                if (c == all_characters::sjef) {
+                    you_anim = sjef::idle_anim(you_spr);
+                }
+                if (c == all_characters::werner) {
+                    you_anim = werner::idle_anim(you_spr);
+                }
             }
 
             for (int x = 0; x < menu_items_x; x++) {
                 for (int y = 0; y < menu_items_x; y++) {
                     character_pictogram *item = &character_pictograms[x][y];
-                    // item->target_y = (selected_menu_item_x == x && selected_menu_item_y == y) ? -3 : 0;
-                    // item->spr->set_y(lerp(item->target_y + y_offset + item->y_offset, item->spr->y(), 0.2));
-
-                    // grow menu item
-                    // item->spr->set_scale(lerp(item->spr->horizontal_scale(), 1.0, 0.15));
 
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
                         selector_you.set_x(x_offset + item->x_offset);
@@ -456,12 +416,6 @@ namespace character_select
                     }
                 }
             }
-            
-
-            // menu_selector_spr.set_x(lerp(menu_selector_target_x, menu_selector_spr.x(), 0.6));
-            // menu_selector_spr.set_y(lerp(menu_selector_target_y, menu_selector_spr.y(), 0.6));
-            // menu_selector_spr.set_scale(lerp(menu_selector_spr.horizontal_scale(), 1.1, 0.15));
-            
 
 
             if (bn::keypad::a_pressed()) {
