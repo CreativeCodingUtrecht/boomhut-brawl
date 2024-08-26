@@ -47,6 +47,8 @@
 #include "./characters/laury.h"
 #include "./characters/hunter.h"
 #include "./characters/fleur.h"
+#include "./characters/sjef.h"
+#include "./characters/fabian.h"
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
@@ -74,7 +76,7 @@ struct healthbars
     bn::sprite_ptr healthbar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
 
     healthbars(bn::sprite_item boss_spr_item, bn::sprite_item boss_spr_item2):
-        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 24, -bn::display::height() / 2 + 24))
+        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 12, -bn::display::height() / 2 + 20))
     {
         pictogram.set_z_order(-1);
     }
@@ -184,8 +186,8 @@ namespace platforming_level
 
 
         // Player and other player 
-        auto you = rein();
-        auto other_player = hunter();
+        auto you = fabian();
+        auto other_player = laury();
 
         players.push_back(you);
         players.push_back(other_player);

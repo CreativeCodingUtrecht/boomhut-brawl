@@ -2,11 +2,11 @@
 
 #include "-character.h"
 
-#include "bn_sprite_items_fabian.h"
+#include "bn_sprite_items_sjef.h"
 
 
-struct fabian: public character {
-    bn::string<20> name = "Fabian";
+struct sjef: public character {
+    bn::string<20> name = "Sjef";
 
     bn::fixed max_health = 100.0;
     bn::fixed health = max_health;
@@ -22,33 +22,35 @@ struct fabian: public character {
     bool is_landing;
     bool is_falling;
 
+    int spr_y_offset = 0;
 
     bn::sprite_item sprite_item() {
-        return bn::sprite_items::fabian;
+        return bn::sprite_items::sjef;
     };
 
     // bn::sprite_item pictogram;
-    bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
+    bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(position);
 
     character_animations animations = character_animations {
         idle: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
+            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
         ),
         run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
         ),
         jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            18, 19, 20, 21, 22, 23, 24, 25, 26
+            161, 162, 163, 164, 165, 166, 167
         ),
         jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            27, 27
+            168,168
         ),
         jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
+            169, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188
         )
     };
 
-    fabian() {}
+    sjef() {}
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
@@ -138,7 +140,8 @@ struct fabian: public character {
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
         position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
-        sprite_ptr.set_position(position);
+        sprite_ptr.set_x(position.x());
+        sprite_ptr.set_y(position.y() + spr_y_offset);
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
