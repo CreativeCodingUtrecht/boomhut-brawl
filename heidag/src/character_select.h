@@ -519,6 +519,12 @@ namespace character_select
             multiplayer::receive_keypad_data();
 
 
+            if (multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
+                BN_LOG("start received");
+                return next_scene::platforming;
+            }
+
+
             // menu navigation you
             if (keys_data.keypad_data.up_pressed || keys_data.keypad_data.down_pressed || 
                 keys_data.keypad_data.left_pressed || keys_data.keypad_data.right_pressed) {
@@ -567,7 +573,7 @@ namespace character_select
             if (multiplayer::other_player_keypad_data.keypad_data.up_pressed || multiplayer::other_player_keypad_data.keypad_data.down_pressed || 
                 multiplayer::other_player_keypad_data.keypad_data.left_pressed || multiplayer::other_player_keypad_data.keypad_data.right_pressed) {
                 
-                bn::sound_items::cursor.play();
+                // bn::sound_items::cursor.play();
 
                 int last_menu_item_x = other_selected_menu_item_x;
                 int last_menu_item_y = other_selected_menu_item_y;
@@ -588,7 +594,7 @@ namespace character_select
                 auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
                 auto c = selected.character_to_choose;
                 text_sprites_other.clear();
-                text_generator_other.generate(-112, 2, selected.name, text_sprites_other);
+                text_generator_other.generate(112, 2, selected.name, text_sprites_other);
 
                 if (c == all_characters::empty) {
                     other_selected_menu_item_x = last_menu_item_x;
@@ -601,6 +607,7 @@ namespace character_select
             if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
                 selected_other = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y].character_to_choose;
             }
+
 
             for (int x = 0; x < menu_items_x; x++) {
                 for (int y = 0; y < menu_items_x; y++) {

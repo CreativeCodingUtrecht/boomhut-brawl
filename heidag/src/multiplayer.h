@@ -7,6 +7,8 @@ namespace multiplayer
     // to a single 'int' to be able to send it over link.
     union keypad_data {
         struct keypad_data_struct {
+            int start_pressed : 1;
+            
             int l_pressed : 1;
             int r_pressed : 1;
             int up_pressed : 1;
@@ -19,8 +21,7 @@ namespace multiplayer
             int left_held : 1;
             int right_held : 1;
 
-            int start_pressed;
-            int select_pressed;
+            int select_pressed : 1;
         } keypad_data;
         
         int data;
@@ -50,6 +51,7 @@ namespace multiplayer
     keypad_data read_keys() {
         return keypad_data  {
             keypad_data: multiplayer::keypad_data::keypad_data_struct {
+                start_pressed: bn::keypad::start_pressed(),
                 l_pressed: bn::keypad::l_pressed(),
                 r_pressed: bn::keypad::r_pressed(),
                 up_pressed: bn::keypad::up_pressed(),
@@ -59,7 +61,6 @@ namespace multiplayer
                 a_pressed: bn::keypad::a_pressed(),
                 left_held: bn::keypad::left_held(),
                 right_held: bn::keypad::right_held(),
-                start_pressed: bn::keypad::start_pressed(),
                 select_pressed: bn::keypad::select_pressed()
             }
         };
