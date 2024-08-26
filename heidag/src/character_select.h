@@ -531,7 +531,7 @@ namespace character_select
             }
 
 
-            if (keys_data.keypad_data.start_pressed || multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
+            if (keys_data.keypad_data.start_pressed) {
                 // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::platforming;
             }
