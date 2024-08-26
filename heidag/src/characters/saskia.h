@@ -5,6 +5,7 @@
 
 #include "bn_sprite_items_saskia.h"
 #include "bn_sprite_items_avatar_saskia.h"
+#include "bn_sound_items.h"
 
 
 struct saskia: public character {
@@ -28,9 +29,25 @@ struct saskia: public character {
         return -7;
     };
 
+    bn::sound_item sound_naam() {
+        return bn::sound_items::saskia_naam;
+    }
+
+    bn::sound_item sound_tagline() {
+        return bn::sound_items::saskia_tagline;
+    }
+
+    bn::sound_item sound_jump() {
+        return bn::sound_items::saskia_jump;
+    }
+
+    bn::sound_item sound_hit() {
+        return bn::sound_items::saskia_hit;
+    }
+
     bn::fixed health = max_health();
 
-    bn::fixed_point position;
+    bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
 
     bool is_jumping;
@@ -57,7 +74,7 @@ struct saskia: public character {
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
         return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::saskia.tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74
         );
     }
 
@@ -133,6 +150,7 @@ struct saskia: public character {
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
+            sound_jump().play();
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());

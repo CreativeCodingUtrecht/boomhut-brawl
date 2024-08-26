@@ -4,11 +4,12 @@
 
 #include "bn_sprite_items_fabian.h"
 #include "bn_sprite_items_avatar_fabian.h"
+#include "bn_sound_items.h"
 
 
 struct fabian: public character {
     bn::string<20> name() {
-        return "Fabian";
+        return "El Chef";
     };
 
     bn::sprite_item avatar() {
@@ -18,6 +19,24 @@ struct fabian: public character {
     bn::fixed max_health() {
         return 100;
     };
+
+
+    bn::sound_item sound_naam() {
+        return bn::sound_items::fabian_naam;
+    }
+
+    bn::sound_item sound_tagline() {
+        return bn::sound_items::fabian_tagline;
+    }
+
+    bn::sound_item sound_jump() {
+        return bn::sound_items::fabian_jump;
+    }
+
+    bn::sound_item sound_hit() {
+        return bn::sound_items::fabian_hit;
+    }
+    
 
     bn::fixed health = max_health();
  
@@ -148,6 +167,7 @@ struct fabian: public character {
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
+            sound_jump().play();
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());

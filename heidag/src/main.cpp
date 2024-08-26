@@ -53,15 +53,15 @@ int main()
     // splash::run();
 
     // Main menu
-    next_scene next = platforming_level::run();
+    next_scene next = character_select::run();
 
     while (true)
     {
-        if (next == next_scene::platforming) 
-            platforming_level::run();
-        // if (next == next_scene::platforming)
-        //     next = platforming_level::run();
-        // else if (next == next_scene::main_menu)
-        //     next = main_menu::run();
+        if (next == next_scene::character_select) 
+            character_select::run();
+        if (next == next_scene::platforming)
+            next = platforming_level::run();
+        else if (next == next_scene::main_menu)
+            next = main_menu::run();
     }
 }

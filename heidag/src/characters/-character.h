@@ -13,7 +13,8 @@
 #include "bn_regular_bg_animate_actions.h"
 #include "bn_log.h"
 #include "bn_vector.h"
-
+#include "bn_sound_item.h"
+#include "bn_sound_items.h"
 
 #include "bn_sprite_items_rein_lario.h"
 
@@ -64,6 +65,12 @@ struct character {
     virtual bn::fixed run_speed();
     virtual bn::fixed jump_velocity();
 
+    // sounds
+    virtual bn::sound_item sound_naam();
+    virtual bn::sound_item sound_tagline();
+    virtual bn::sound_item sound_jump();
+    virtual bn::sound_item sound_hit();
+
     virtual character_animations animations();
     virtual bn::sprite_item spr_item();
     virtual bn::sprite_ptr sprite_ptr();
@@ -81,5 +88,6 @@ struct character {
 bn::unique_ptr<character> you;
 bn::unique_ptr<character> other_player;
 
-all_characters selected_you;
-all_characters selected_other;
+bn::optional<all_characters> selected_you;
+bn::optional<all_characters> selected_other;
+

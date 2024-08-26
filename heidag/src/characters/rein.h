@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_rein_lario.h"
 #include "bn_sprite_items_avatar_rein.h"
+#include "bn_sound_items.h"
 
 
 struct rein: public character {
@@ -26,6 +27,22 @@ struct rein: public character {
     bn::fixed jump_velocity() {
         return -7;
     };
+
+    bn::sound_item sound_naam() {
+        return bn::sound_items::timo_naam;
+    }
+
+    bn::sound_item sound_tagline() {
+        return bn::sound_items::timo_tagline;
+    }
+
+    bn::sound_item sound_jump() {
+        return bn::sound_items::timo_jump;
+    }
+
+    bn::sound_item sound_hit() {
+        return bn::sound_items::timo_hit;
+    }
 
     bn::fixed health = max_health();
 
@@ -136,6 +153,7 @@ struct rein: public character {
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
+            sound_jump().play();
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());

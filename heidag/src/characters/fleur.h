@@ -5,6 +5,7 @@
 
 #include "bn_sprite_items_fleur.h"
 #include "bn_sprite_items_avatar_fleur.h"
+#include "bn_sound_items.h"
 
 
 struct fleur: public character {
@@ -14,6 +15,23 @@ struct fleur: public character {
 
     bn::sprite_item avatar() {
         return bn::sprite_items::avatar_fleur;
+    }
+
+
+    bn::sound_item sound_naam() {
+        return bn::sound_items::fleur_naam;
+    }
+
+    bn::sound_item sound_tagline() {
+        return bn::sound_items::fleur_tagline;
+    }
+
+    bn::sound_item sound_jump() {
+        return bn::sound_items::fleur_jump;
+    }
+
+    bn::sound_item sound_hit() {
+        return bn::sound_items::fleur_hit;
     }
 
     bn::fixed health = max_health();
@@ -137,6 +155,7 @@ struct fleur: public character {
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
+            sound_jump().play();
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());

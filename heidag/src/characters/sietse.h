@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_sietse.h"
 #include "bn_sprite_items_avatar_sietse.h"
+#include "bn_sound_items.h"
 
 
 struct sietse: public character {
@@ -14,6 +15,23 @@ struct sietse: public character {
     bn::sprite_item avatar() {
         return bn::sprite_items::avatar_sietse;
     }
+
+    bn::sound_item sound_naam() {
+        return bn::sound_items::sietse_naam;
+    }
+
+    bn::sound_item sound_tagline() {
+        return bn::sound_items::sietse_tagline;
+    }
+
+    bn::sound_item sound_jump() {
+        return bn::sound_items::sietse_jump;
+    }
+
+    bn::sound_item sound_hit() {
+        return bn::sound_items::sietse_hit;
+    }
+
 
     bn::fixed max_health() {
         return 100;
@@ -29,7 +47,7 @@ struct sietse: public character {
 
     bn::fixed health = max_health();
 
-    bn::fixed_point position;
+    bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
 
     bool is_jumping;
@@ -134,6 +152,7 @@ struct sietse: public character {
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
+            sound_jump().play();
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());

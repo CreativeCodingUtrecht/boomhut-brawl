@@ -11,6 +11,7 @@
         "array": "cpp",
         "string_view": "cpp",
         "span": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "*.tcc": "cpp"
     }
 }

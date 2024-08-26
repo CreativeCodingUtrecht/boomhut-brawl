@@ -209,7 +209,9 @@ namespace platforming_level
         // printer->print(you->name());
         // }
 
-        selected_you = all_characters::networkninja;
+        if (!selected_you) {
+            selected_you = all_characters::networkninja;
+        }
 
         // Create player and other player 
         if (selected_you == all_characters::cate) {
@@ -256,7 +258,9 @@ namespace platforming_level
         }
 
 
-        selected_other = all_characters::fabian;
+        if (!selected_other) {
+            selected_other = all_characters::fabian;
+        }
         if (selected_other == all_characters::cate) {
             other_player.reset(new cate());
         }
