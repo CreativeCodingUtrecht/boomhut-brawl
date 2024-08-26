@@ -75,7 +75,10 @@ struct character {
 
 
 // Global
-bn::vector<character*, 2> players;
+// bn::vector<bn::unique_ptr<character>, 2> players;
+
+bn::unique_ptr<character> you;
+bn::unique_ptr<character> other_player;
 
 all_characters selected_you;
 all_characters selected_other;

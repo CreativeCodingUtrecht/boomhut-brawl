@@ -144,9 +144,9 @@ namespace platforming_level
 
 
         // sky and mountains background
-        // bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-        // background.set_z_order(4);
-        // background.set_camera(*camera);
+        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        background.set_z_order(4);
+        background.set_camera(*camera);
 
 
         // // BG and map
@@ -192,143 +192,108 @@ namespace platforming_level
         // background.set_camera(*camera);
         // foreground.set_camera(*camera);
 
-        auto fab = fabian();
 
-        character* you;
+        // you = &fabian();
         // character* other_player = &fab;
 
-        you = &fab;
 
         // BN_LOG(bn::format<> you->name());
 
-        printer->print(you->name());
+        // printer->print(you->name());
+
+        if (true) {
+            you.reset(new networkninja());
+        }
 
 
         // Create player and other player 
-        // if (selected_you == all_characters::cate) {
-        //     auto p = cate();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::christine) {
-        //     auto p = christine();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::fabian) {
-        //     auto p = fabian();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::fleur) {
-        //     auto p = fleur();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::hunter) {
-        //     auto p = hunter();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::joost) {
-        //     auto p = joost();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::laury) {
-        //     auto p = laury();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::mar) {
-        //     auto p = mar();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::networkninja) {
-        //     auto p = networkninja();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::rein) {
-        //     auto p = rein();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::saskia) {
-        //     auto p = saskia();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::saskia) {
-        //     auto p = sietse();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::sjef) {
-        //     auto p = sjef();
-        //     you = &p;
-        // }
-        // if (selected_you == all_characters::werner) {
-        //     auto p = werner();
-        //     you = &p;
-        // }
+        if (selected_you == all_characters::cate) {
+            you.reset(new cate());
+        }
+        if (selected_you == all_characters::christine) {
+            you.reset(new christine());
+        }
+        if (selected_you == all_characters::fabian) {
+            you.reset(new fabian());
+        }
+        if (selected_you == all_characters::fleur) {
+            you.reset(new fleur());
+        }
+        if (selected_you == all_characters::hunter) {
+            you.reset(new hunter());
+        }
+        if (selected_you == all_characters::joost) {
+            you.reset(new joost());
+        }
+        if (selected_you == all_characters::laury) {
+            you.reset(new laury());
+        }
+        if (selected_you == all_characters::mar) {
+            you.reset(new mar());
+        }
+        if (selected_you == all_characters::networkninja) {
+            you.reset(new networkninja());
+        }
+        if (selected_you == all_characters::rein) {
+            you.reset(new rein());
+        }
+        if (selected_you == all_characters::saskia) {
+            you.reset(new saskia());
+        }
+        if (selected_you == all_characters::sietse) {
+            you.reset(new sietse());
+        }
+        if (selected_you == all_characters::sjef) {
+            you.reset(new sjef());
+        }
+        if (selected_you == all_characters::werner) {
+            you.reset(new werner());
+        }
 
 
-        // selected_other = all_characters::fabian;
-        // if (selected_other == all_characters::cate) {
-        //     cate o = cate();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::christine) {
-        //     auto o = christine();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::fabian) {
-        //     auto o = fabian();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::fleur) {
-        //     auto o = fleur();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::hunter) {
-        //     auto o = hunter();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::joost) {
-        //     auto o = joost();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::laury) {
-        //     auto o = laury();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::mar) {
-        //     auto o = mar();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::networkninja) {
-        //     auto o = networkninja();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::rein) {
-        //     auto o = rein();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::saskia) {
-        //     auto o = saskia();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::saskia) {
-        //     auto o = sietse();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::sjef) {
-        //     auto o = sjef();
-        //     players.push_back(&o);
-        // }
-        // if (selected_other == all_characters::werner) {
-        //     auto o = werner();
-        //     players.push_back(&o);
-        // }
-
-        // auto you = players.at(0);
-        // auto other_player = players.at(1);
-
-
-        // auto p = fabian();
-        // auto o = laury();
-        players.push_back(you);
-        // players.push_back(other_player);
+        selected_other = all_characters::fabian;
+        if (selected_other == all_characters::cate) {
+            other_player.reset(new cate());
+        }
+        if (selected_other == all_characters::christine) {
+            other_player.reset(new christine());
+        }
+        if (selected_other == all_characters::fabian) {
+            other_player.reset(new fabian());
+        }
+        if (selected_other == all_characters::fleur) {
+            other_player.reset(new fleur());
+        }
+        if (selected_other == all_characters::hunter) {
+            other_player.reset(new hunter());
+        }
+        if (selected_other == all_characters::joost) {
+            other_player.reset(new joost());
+        }
+        if (selected_other == all_characters::laury) {
+            other_player.reset(new laury());
+        }
+        if (selected_other == all_characters::mar) {
+            other_player.reset(new mar());
+        }
+        if (selected_other == all_characters::networkninja) {
+            other_player.reset(new networkninja());
+        }
+        if (selected_other == all_characters::rein) {
+            other_player.reset(new rein());
+        }
+        if (selected_other == all_characters::saskia) {
+            other_player.reset(new saskia());
+        }
+        if (selected_other == all_characters::sietse) {
+            other_player.reset(new sietse());
+        }
+        if (selected_other == all_characters::sjef) {
+            other_player.reset(new sjef());
+        }
+        if (selected_other == all_characters::werner) {
+            other_player.reset(new werner());
+        }
 
 
         // Health
@@ -340,7 +305,7 @@ namespace platforming_level
 
         // Camera
         you->sprite_ptr().set_camera(*camera);
-        // other_player->sprite_ptr.set_camera(*camera);
+        other_player->sprite_ptr().set_camera(*camera);
         camera->set_position(you->sprite_ptr().position());
 
         // Health bars
@@ -352,10 +317,8 @@ namespace platforming_level
             // bee.update();
             // rat.update();
             
-
-    
-            // printer->print_map_tiles_at_position(map_item, you.position);
-            // printer->print_map_tile_and_position(map_item, you.position);
+            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr().position());
+            printer->print_map_tile_and_position(map_item, you->sprite_ptr().position());
 
             // Update level
             // Lipje pickup items
@@ -365,7 +328,7 @@ namespace platforming_level
 
             // Moving clouds
             // clouds_x -=  0.1;
-            // trein_bg.set_x(trein_bg.x() - 2);
+            trein_bg.set_x(trein_bg.x() - 2);
 
             // clouds.set_x(clouds_x + player.position.x() / bn::fixed(40.0));
 
@@ -380,20 +343,20 @@ namespace platforming_level
             // Always update own player
             you->update(keypad_data_to_send.keypad_data);
 
-            // // log_memory_usage();
+            // log_memory_usage();
 
-            // // Send if changed
-            // multiplayer::send_if_changed(keypad_data_to_send);
-
-
-            // // Update other player, receive keypad from other players
-            // multiplayer::receive_keypad_data();
-
-            // // always update for animations
-            // // other_player->update(multiplayer::other_player_keypad_data.keypad_data);
+            // Send if changed
+            multiplayer::send_if_changed(keypad_data_to_send);
 
 
-            // // Smooth cam
+            // Update other player, receive keypad from other players
+            multiplayer::receive_keypad_data();
+
+            // always update for animations
+            other_player->update(multiplayer::other_player_keypad_data.keypad_data);
+
+
+            // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr().position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 

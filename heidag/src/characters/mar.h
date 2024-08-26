@@ -6,15 +6,29 @@
 
 
 struct mar: public character {
-    bn::string<20> name = "Mar";
+    virtual bn::string<20> name() {
+        return "Mar";
+    }
 
-    bn::fixed max_health = 100.0;
-    bn::fixed health = max_health;
+    bn::fixed max_health() {
+        return 100;
+    };
+
+    bn::fixed run_speed() {
+        return 4;
+    };
+
+    bn::fixed jump_velocity() {
+        return -7;
+    };
+
+    bn::fixed health = max_health();
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
-    bn::fixed jump_velocity = -7.0;
-    bn::fixed run_speed = 4;
+
+    
+
 
     bool is_jumping;
     bool is_running;
@@ -27,13 +41,17 @@ struct mar: public character {
     };
 
     // bn::sprite_item pictogram;
-    bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
+    bn::sprite_ptr _sprite_ptr = sprite_item().create_sprite(spawn_point);
+
+    bn::sprite_ptr sprite_ptr() {
+        return _sprite_ptr;
+    };
 
 
     virtual bn::sprite_item spr_item() override {
         return bn::sprite_items::fabian;
     }
-    
+
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
         return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::maryam.tiles_item(), 
@@ -41,21 +59,29 @@ struct mar: public character {
         );
     }
 
-    character_animations animations = character_animations {
-        idle: idle_anim(sprite_ptr),
-        run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364
-        ),
-        jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311
-        ),
-        jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            311, 311
-        ),
-        jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340
-        )
-    };
+
+    virtual character_animations animations() override {
+        return {
+            character_animations {
+                idle: idle_anim(_sprite_ptr),
+                run: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364
+                ),
+                jump_up: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311
+                ),
+                jump_stay: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    311, 311
+                ),
+                jump_down: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340
+                )
+            }
+        };
+    }
+
+    character_animations anims = animations();
+
 
     mar() {}
 
@@ -108,15 +134,15 @@ struct mar: public character {
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
             is_jumping = true;
             is_landing = false;
-            velocity.set_y(jump_velocity);
-            animations.jump_down.reset();
-            animations.jump_up.reset();
+            velocity.set_y(jump_velocity());
+            anims.jump_down.reset();
+            anims.jump_up.reset();
         }
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed);
-            sprite_ptr.set_horizontal_flip(true);
+            velocity.set_x(-run_speed());
+            _sprite_ptr.set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -124,12 +150,12 @@ struct mar: public character {
         }
 
         if (keypad.right_held) {
-            velocity.set_x(run_speed);
+            velocity.set_x(run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
             }
-            sprite_ptr.set_horizontal_flip(false);
+            _sprite_ptr.set_horizontal_flip(false);
         }
         
         if (!keypad.left_held && !keypad.right_held) {
@@ -147,26 +173,26 @@ struct mar: public character {
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
         position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
-        sprite_ptr.set_position(position);
+        _sprite_ptr.set_position(position);
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
-            animations.jump_stay.update();
+            anims.jump_stay.update();
         }
         else if (is_running && !is_jumping) {
-            animations.run.update();
+            anims.run.update();
         }
         else if (is_jumping) {
-            if (animations.jump_up.done()) {
-                animations.jump_stay.update();
+            if (anims.jump_up.done()) {
+                anims.jump_stay.update();
             } else {
-                animations.jump_up.update();
+                anims.jump_up.update();
             }
-        } else if (is_landing && !animations.jump_down.done()) {
-            animations.jump_down.update();
+        } else if (is_landing && !anims.jump_down.done()) {
+            anims.jump_down.update();
         }
         else {
-            animations.idle.update();
+            anims.idle.update();
         }
     } 
 };
