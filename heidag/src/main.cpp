@@ -29,6 +29,7 @@
 #include "boomhut.h"
 #include "splash.h"
 #include "main_menu.h"
+#include "character_select.h"
 
 
 int main()
@@ -52,7 +53,7 @@ int main()
     // splash::run();
 
     // Main menu
-    next_scene next = platforming_level::run();
+    next_scene next = character_select::run();
 
     while (true)
     {

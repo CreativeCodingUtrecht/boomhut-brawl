@@ -16,20 +16,41 @@
 #include "bn_regular_bg_items_menu_bg.h"
 #include "bn_sound_items.h"
 #include "multiplayer.h"
+#include "bn_link.h"
+#include "bn_link_state.h"
+
+
+// Backgrounds
+#include "bn_regular_bg_items_character_select_screen.h"
+
+// Sprites
+#include "bn_sprite_items_pictogram_selector_you.h"
+#include "bn_sprite_items_pictogram_selector_other_player.h"
+#include "bn_sprite_items_rein_pictogram.h"
 
 // Characters
 #include "./characters/-character.h"
-#include "./characters/rein.h"
-#include "./characters/mar.h"
 #include "./characters/cate.h"
+#include "./characters/christine.h"
+#include "./characters/fabian.h"
+#include "./characters/fleur.h"
+#include "./characters/hunter.h"
+#include "./characters/joost.h"
+#include "./characters/laury.h"
+#include "./characters/mar.h"
+#include "./characters/networkninja.h"
+#include "./characters/rein.h"
+#include "./characters/saskia.h"
+#include "./characters/sjef.h"
+#include "./characters/werner.h"
 
 
 namespace character_select 
 {
-    struct menu_item
+    struct character_pictogram
     {
-        next_scene scene;
-        bn::sprite_item sprite_item;
+        bn::sprite_item pictogram;
+        all_characters character_to_choose;
         int x_offset = 0;
         int y_offset = 0;
         int target_x = 0;
@@ -40,100 +61,119 @@ namespace character_select
     const int menu_items_x = 1;
     const int menu_items_y = 1;
 
-    menu_item menu_items[menu_items_x][menu_items_y] = 
+    int y_offset = 0;
+
+
+    character_pictogram character_pictograms[menu_items_x][menu_items_y] = 
     {
         {
-            menu_item 
+            character_pictogram 
             {
-                next_scene::platforming,
-                bn::sprite_items::menu_platforming,
+                bn::sprite_items::rein_pictogram,
+                all_characters::rein,
                 0,
                 0
             },
         }
     };
 
+
+    character create_character(all_characters c) 
+    {
+        if (c == all_characters::cate) {
+            return cate();
+        }
+        if (c == all_characters::christine) {
+            return christine();
+        }
+        if (c == all_characters::fabian) {
+            return fabian();
+        }
+        if (c == all_characters::fleur) {
+            return fleur();
+        }
+        if (c == all_characters::hunter) {
+            return hunter();
+        }
+        if (c == all_characters::joost) {
+            return joost();
+        }
+        if (c == all_characters::laury) {
+            return laury();
+        }
+        if (c == all_characters::mar) {
+            return mar();
+        }
+        if (c == all_characters::networkninja) {
+            return networkninja();
+        }
+        if (c == all_characters::rein) {
+            return rein();
+        }
+        if (c == all_characters::saskia) {
+            return saskia();
+        }
+        if (c == all_characters::sjef) {
+            return sjef();
+        }
+        if (c == all_characters::werner) {
+            return werner();
+        }
+    }
+
     next_scene start_game(int selected_menu_item_x, int selected_menu_item_y) 
     {   
-        bn::sound_items::into.play();
-        // bn::sound_items::shield.play();
+        // bn::sound_items::into.play();
+        // // bn::sound_items::shield.play();
         
-        for (int x = 0; x < menu_items_x; x++) {
-            for (int y = 0; y < menu_items_x; y++) {
-                menu_item *item = &menu_items[x][y];
-                item->spr.reset();
-            }
-        }
+        // for (int x = 0; x < menu_items_x; x++) {
+        //     for (int y = 0; y < menu_items_x; y++) {
+        //         menu_item *item = &menu_items[x][y];
+        //         item->spr.reset();
+        //     }
+        // }
 
-        return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
+        // return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
     }
     
 
     next_scene run() 
     {
-        // bn::bg_palettes::set_transparent_color(bn::color(0,0,0));
-
-        bn::sound_items::pause.play();
-
-        
-        // BG
-        // bn::regular_bg_ptr bg = bn::regular_bg_items::menu_bg.create_bg(12,45);
-
-
-        // Pickup
-        bn::sprite_ptr twinkle_spr = bn::sprite_items::twinkle.create_sprite(bn::fixed_point(-105, -60));
-        bn::sprite_animate_action<60> twinkle_anim = bn::create_sprite_animate_action_forever(twinkle_spr, 1, bn::sprite_items::twinkle.tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
-            41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58
-        );
-
-        // bn::sprite_ptr spr = bn::sprite_items::lipje_item.create_sprite(bn::fixed_point(-105, -60));
-        // bn::sprite_animate_action<60> anim = bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::lipje_item.tiles_item(), 
-        //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
-        //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
-        //     41, 42, 43, 44, 45, 46, 47, 48, 49, 50
-        // );
-        
-
-        // menu selector
-        bn::sprite_ptr menu_selector_spr = bn::sprite_items::menu_selector.create_sprite(0,0);
-        menu_selector_spr.set_scale(0.1);
-
-        int menu_selector_target_x = 0;
-        int menu_selector_target_y = 0;
-
-        int x_offset = -30;
-        int y_offset = -35;
-        int selected_menu_item_x = 0;
-        int selected_menu_item_y = 0;
-
-        // create sprites
-        for (int x = 0; x < menu_items_x; x++) {
-            for (int y = 0; y < menu_items_x; y++) {
-                menu_item *item = &menu_items[x][y];        
-                item->spr = item->sprite_item.create_sprite(x_offset - 64 + item->x_offset, y_offset + item->y_offset);
-                item->spr->set_x(lerp(item->target_x + x_offset + item->x_offset, item->spr->x(), 0.2));
-                item->spr->set_scale(0.1);
-            }
-        }
-
-        printer->print("waiting for other player...");
-
-        
-
         int t = 0;
         bool connected = false;
+
+        int x_offset = 0;
+        int y_offset = 0;
+
+        int selected_menu_item_x = 0;
+        int selected_menu_item_y = 0;
+        int other_selected_menu_item_x = 1;
+        int other_selected_menu_item_y = 0;
+
+        // Background
+        bn::regular_bg_ptr bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
+
+        // Selectors
+        bn::sprite_ptr selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
+        bn::sprite_ptr selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
+
+        // Characters / players 
+        auto you = fabian();
+        auto other_player = laury();
+        int spacing_x = 85;
+        bn::sprite_ptr you_spr = you.sprite_item().create_sprite(-spacing_x,-45);
+        bn::sprite_ptr other_spr = other_player.sprite_item().create_sprite(spacing_x,-45);
+        auto you_anim = you.idle_anim(you_spr);
+        auto other_anim = other_player.idle_anim(other_spr);
+        
 
         while (true) 
         {
             t++;
 
-
-            // Announce that you're there
-            if (!connected && t%5==0) {
-                bn::link::send(1);
-            }
+            // Animate
+            you_anim.update();
+            other_anim.update();
 
             // Receive
             if (bn::optional<bn::link_state> link_state = bn::link::receive()) {
@@ -151,7 +191,7 @@ namespace character_select
 
             // logo in the corner
             // anim.update();
-            twinkle_anim.update();
+            // twinkle_anim.update();
 
 
             // menu navigation 
@@ -174,24 +214,29 @@ namespace character_select
 
             for (int x = 0; x < menu_items_x; x++) {
                 for (int y = 0; y < menu_items_x; y++) {
-                    menu_item *item = &menu_items[x][y];
+                    character_pictogram *item = &character_pictograms[x][y];
                     item->target_y = (selected_menu_item_x == x && selected_menu_item_y == y) ? -3 : 0;
-                    item->spr->set_y(lerp(item->target_y + y_offset + item->y_offset, item->spr->y(), 0.2));
+                    // item->spr->set_y(lerp(item->target_y + y_offset + item->y_offset, item->spr->y(), 0.2));
 
                     // grow menu item
-                    item->spr->set_scale(lerp(item->spr->horizontal_scale(), 1.0, 0.15));
+                    // item->spr->set_scale(lerp(item->spr->horizontal_scale(), 1.0, 0.15));
 
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
-                        menu_selector_target_x = item->target_x + x_offset + item->x_offset - 12;
-                        menu_selector_target_y = item->target_y + y_offset + item->y_offset;
+                        selector_you.set_x(item->target_x + x_offset + item->x_offset - 12);
+                        selector_you.set_y(item->target_y + y_offset + item->y_offset);
+                    }
+
+                    if (x == other_selected_menu_item_x && y == other_selected_menu_item_y) {
+                        selector_other_player.set_x(item->target_x + x_offset + item->x_offset - 12);
+                        selector_other_player.set_y(item->target_y + y_offset + item->y_offset);
                     }
                 }
             }
             
 
-            menu_selector_spr.set_x(lerp(menu_selector_target_x, menu_selector_spr.x(), 0.6));
-            menu_selector_spr.set_y(lerp(menu_selector_target_y, menu_selector_spr.y(), 0.6));
-            menu_selector_spr.set_scale(lerp(menu_selector_spr.horizontal_scale(), 1.1, 0.15));
+            // menu_selector_spr.set_x(lerp(menu_selector_target_x, menu_selector_spr.x(), 0.6));
+            // menu_selector_spr.set_y(lerp(menu_selector_target_y, menu_selector_spr.y(), 0.6));
+            // menu_selector_spr.set_scale(lerp(menu_selector_spr.horizontal_scale(), 1.1, 0.15));
             
 
 
