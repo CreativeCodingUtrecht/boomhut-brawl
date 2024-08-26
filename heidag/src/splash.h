@@ -34,7 +34,7 @@ namespace splash
         sprite_ptr c2 = sprite_items::c2.create_sprite(0,-128);
         sprite_ptr u = sprite_items::u.create_sprite(64,-128);
 
-        music_items::splashscreen.play();
+        // music_items::splashscreen.play();
 
         
 

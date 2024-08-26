@@ -2,7 +2,7 @@
 
 #include "-character.h"
 
-
+#include "bn_sprite_items_fabian.h"
 
 struct christine: public character {
     bn::string<20> name = "Christine";

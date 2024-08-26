@@ -7,6 +7,10 @@
         "string": "cpp",
         "vector": "cpp",
         "format": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "array": "cpp",
+        "string_view": "cpp",
+        "span": "cpp",
+        "random": "cpp"
     }
 }

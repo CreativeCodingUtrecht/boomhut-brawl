@@ -57,9 +57,10 @@ int main()
 
     while (true)
     {
-        if (next == next_scene::platforming)
-            next = platforming_level::run();
-        else if (next == next_scene::main_menu)
-            next = main_menu::run();
+        platforming_level::run();
+        // if (next == next_scene::platforming)
+        //     next = platforming_level::run();
+        // else if (next == next_scene::main_menu)
+        //     next = main_menu::run();
     }
 }

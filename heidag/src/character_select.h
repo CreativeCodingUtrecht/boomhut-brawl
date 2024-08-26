@@ -43,6 +43,11 @@
 #include "./characters/saskia.h"
 #include "./characters/sjef.h"
 #include "./characters/werner.h"
+#include "./characters/sietse.h"
+
+
+// Sounds
+#include "bn_sound_items.h";
 
 
 namespace character_select 
@@ -198,9 +203,9 @@ namespace character_select
         {
             character_pictogram 
             {
-                all_characters::rein,
+                all_characters::werner,
                 -33,
-                64
+                62
                 // ,
                 // bn::create_sprite_animate_action_forever(you_spr, 1, bn::sprite_items::sjef.tiles_item(), 
                 //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
@@ -208,9 +213,9 @@ namespace character_select
             },
             character_pictogram 
             {
-                all_characters::saskia,
+                all_characters::sietse,
                 -2,
-                64
+                62
                 // ,
                 // bn::create_sprite_animate_action_forever(you_spr, 1, bn::sprite_items::sjef.tiles_item(), 
                 //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
@@ -218,9 +223,9 @@ namespace character_select
             },
             character_pictogram 
             {
-                all_characters::sjef,
+                all_characters::empty,
                 29,
-                64
+                62
                 // ,
                 // bn::create_sprite_animate_action_forever(you_spr, 1, bn::sprite_items::sjef.tiles_item(), 
                 //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160
@@ -229,6 +234,52 @@ namespace character_select
         }
     };
 
+    bn::sprite_animate_action<400> get_animation_for_character(all_characters c, bn::sprite_ptr spr) 
+    {
+        if (c == all_characters::cate) {
+            return cate::idle_anim(spr);
+        }
+        if (c == all_characters::christine) {
+            return christine::idle_anim(spr);
+        }
+
+        if (c == all_characters::fabian) {
+            return fabian::idle_anim(spr);
+        }
+        if (c == all_characters::fleur) {
+            return fleur::idle_anim(spr);
+        }
+        if (c == all_characters::hunter) {
+            return hunter::idle_anim(spr);
+        }
+        if (c == all_characters::joost) {
+            return joost::idle_anim(spr);
+        }
+        if (c == all_characters::laury) {
+            return laury::idle_anim(spr);
+        }
+        if (c == all_characters::mar) {
+            return mar::idle_anim(spr);
+        }
+        if (c == all_characters::networkninja) {
+            return networkninja::idle_anim(spr);
+        }
+        if (c == all_characters::rein) {
+            return rein::idle_anim(spr);
+        }
+        if (c == all_characters::saskia) {
+            return saskia::idle_anim(spr);
+        }
+        if (c == all_characters::sietse) {
+            return sietse::idle_anim(spr);
+        }
+        if (c == all_characters::sjef) {
+            return sjef::idle_anim(spr);
+        }
+        if (c == all_characters::werner) {
+            return werner::idle_anim(spr);
+        }
+    }
 
     character create_character(all_characters c) 
     {
@@ -265,6 +316,9 @@ namespace character_select
         if (c == all_characters::saskia) {
             return saskia();
         }
+        if (c == all_characters::saskia) {
+            return sietse();
+        }
         if (c == all_characters::sjef) {
             return sjef();
         }
@@ -272,6 +326,55 @@ namespace character_select
             return werner();
         }
     }
+
+    bn::sound_item get_sound_for_character(all_characters c)
+    {
+        if (c == all_characters::cate) {
+            return bn::sound_items::cat_naam;
+        }
+        if (c == all_characters::christine) {
+            return bn::sound_items::christine_naam;
+        }
+        if (c == all_characters::fabian) {
+            return bn::sound_items::fabian_naam;
+        }
+        if (c == all_characters::fleur) {
+            return bn::sound_items::fleur_naam;
+        }
+        if (c == all_characters::hunter) {
+            return bn::sound_items::niels_naam;
+        }
+        if (c == all_characters::joost) {
+            return bn::sound_items::joost_naam;
+        }
+        if (c == all_characters::laury) {
+            return bn::sound_items::laura_naam;
+        }
+        if (c == all_characters::mar) {
+            return bn::sound_items::mar_naam;
+        }
+        if (c == all_characters::networkninja) {
+            return bn::sound_items::timo_naam;
+        }
+        if (c == all_characters::rein) {
+            return bn::sound_items::rein_naam;
+        }
+        if (c == all_characters::saskia) {
+            return bn::sound_items::saskia_naam;
+        }
+        if (c == all_characters::sietse) {
+            return bn::sound_items::sietse_naam;
+        }
+        if (c == all_characters::sjef) {
+            return bn::sound_items::sjef_naam;
+        }
+        if (c == all_characters::werner) {
+            return bn::sound_items::werner_naam;
+        }
+    }
+
+
+    // void 
 
     next_scene start_game(int selected_menu_item_x, int selected_menu_item_y) 
     {   
@@ -298,9 +401,9 @@ namespace character_select
         int y_offset = 0;
 
         int selected_menu_item_x = 0;
-        int selected_menu_item_y = 1;
+        int selected_menu_item_y = 0;
         int other_selected_menu_item_x = 0;
-        int other_selected_menu_item_y = 2;
+        int other_selected_menu_item_y = 0;
 
         // Background
         bn::regular_bg_ptr bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
@@ -313,44 +416,43 @@ namespace character_select
  
 
         // auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
-        bn::sprite_ptr you_spr = fabian::sprite_item().create_sprite(-spacing_x,-45);
-        // bn::sprite_ptr other_spr = fabian::sprite_item().create_sprite(spacing_x,-45);
+        bn::sprite_ptr you_spr = cate::sprite_item().create_sprite(-spacing_x,-45);
+        bn::sprite_ptr other_spr = cate::sprite_item().create_sprite(spacing_x,-45);
 
-        bn::optional<bn::sprite_animate_action<400>> you_anim = fabian::idle_anim(you_spr);
-        // bn::optional<bn::sprite_animate_action<400>> other_anim = fabian::idle_anim(other_spr);
+        bn::optional<bn::sprite_animate_action<400>> you_anim = cate::idle_anim(you_spr);
+        bn::optional<bn::sprite_animate_action<400>> other_anim = cate::idle_anim(other_spr);
         
+
 
         while (true) 
         {
             t++;
 
             you_anim->update();
+            other_anim->update();
 
-            // Receive
-            if (bn::optional<bn::link_state> link_state = bn::link::receive()) {
-                if (!connected) {
-                    printer->print("connected to other player!");
-                }
+            // multiplayer
+            multiplayer::keypad_data keys_data = multiplayer::read_keys();
+            multiplayer::send_if_changed(keys_data);
+            multiplayer::receive_keypad_data();
 
-                const bn::link_player& first_other_player = link_state->other_players().front();
-                int data = first_other_player.data();
-                // Start game when other player also starts
-                if (data == multiplayer::signal_start_game) {
-                    return start_game(selected_menu_item_x, selected_menu_item_y);
-                }
-            }
 
-            // menu navigation 
-            if (bn::keypad::up_pressed() || bn::keypad::down_pressed() || bn::keypad::right_pressed() || bn::keypad::left_pressed()) {
+            // menu navigation you
+            if (keys_data.keypad_data.up_pressed || keys_data.keypad_data.down_pressed || 
+                keys_data.keypad_data.left_pressed || keys_data.keypad_data.right_pressed) {
+                
                 bn::sound_items::cursor.play();
 
-                if (bn::keypad::up_pressed())
+                int last_menu_item_x = selected_menu_item_x;
+                int last_menu_item_y = selected_menu_item_y;
+
+                if (keys_data.keypad_data.up_pressed)
                     selected_menu_item_x--;
-                if (bn::keypad::down_pressed())
+                if (keys_data.keypad_data.down_pressed)
                     selected_menu_item_x++;
-                if (bn::keypad::left_pressed())
+                if (keys_data.keypad_data.left_pressed)
                     selected_menu_item_y--;
-                if (bn::keypad::right_pressed())
+                if (keys_data.keypad_data.right_pressed)
                     selected_menu_item_y++;
                 
 
@@ -360,45 +462,56 @@ namespace character_select
                 auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
                 auto c = selected.character_to_choose;
 
-                // you_anim.reset();
+                if (c == all_characters::empty) {
+                    selected_menu_item_x = last_menu_item_x;
+                    selected_menu_item_y = last_menu_item_y;
+                }
+
+                you_anim = get_animation_for_character(c, you_spr);
+
+                get_sound_for_character(c).play();
+            }
 
 
-                // you_spr = mar::sprite_item().create_sprite(-spacing_x,-45);
-                // you_anim = 
+            if (keys_data.keypad_data.a_pressed) {
+                selected_you = character_pictograms[selected_menu_item_x][selected_menu_item_y].character_to_choose;
+            }
 
-                if (c == all_characters::fabian) {
-                    you_anim = fabian::idle_anim(you_spr);
+            // menu navigation other player
+            if (multiplayer::other_player_keypad_data.keypad_data.up_pressed || multiplayer::other_player_keypad_data.keypad_data.down_pressed || 
+                multiplayer::other_player_keypad_data.keypad_data.left_pressed || multiplayer::other_player_keypad_data.keypad_data.right_pressed) {
+                
+                bn::sound_items::cursor.play();
+
+                int last_menu_item_x = other_selected_menu_item_x;
+                int last_menu_item_y = other_selected_menu_item_y;
+
+                if (multiplayer::other_player_keypad_data.keypad_data.up_pressed)
+                    other_selected_menu_item_x--;
+                if (multiplayer::other_player_keypad_data.keypad_data.down_pressed)
+                    other_selected_menu_item_x++;
+                if (multiplayer::other_player_keypad_data.keypad_data.left_pressed)
+                    other_selected_menu_item_y--;
+                if (multiplayer::other_player_keypad_data.keypad_data.right_pressed)
+                    other_selected_menu_item_y++;
+                
+
+                other_selected_menu_item_x = mod(other_selected_menu_item_x, menu_items_x);
+                other_selected_menu_item_y = mod(other_selected_menu_item_y, menu_items_y);
+
+                auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
+                auto c = selected.character_to_choose;
+
+                if (c == all_characters::empty) {
+                    other_selected_menu_item_x = last_menu_item_x;
+                    other_selected_menu_item_y = last_menu_item_y;
                 }
-                if (c == all_characters::fleur) {
-                    you_anim = fleur::idle_anim(you_spr);
-                }
-                if (c == all_characters::hunter) {
-                    you_anim = hunter::idle_anim(you_spr);
-                }
-                if (c == all_characters::joost) {
-                    you_anim = joost::idle_anim(you_spr);
-                }
-                if (c == all_characters::laury) {
-                    you_anim = laury::idle_anim(you_spr);
-                }
-                if (c == all_characters::mar) {
-                    you_anim = mar::idle_anim(you_spr);
-                }
-                if (c == all_characters::networkninja) {
-                    you_anim = networkninja::idle_anim(you_spr);
-                }
-                if (c == all_characters::rein) {
-                    you_anim = rein::idle_anim(you_spr);
-                }
-                if (c == all_characters::saskia) {
-                    you_anim = saskia::idle_anim(you_spr);
-                }
-                if (c == all_characters::sjef) {
-                    you_anim = sjef::idle_anim(you_spr);
-                }
-                if (c == all_characters::werner) {
-                    you_anim = werner::idle_anim(you_spr);
-                }
+
+                other_anim = get_animation_for_character(c, other_spr);
+            }
+
+            if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
+                selected_other = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y].character_to_choose;
             }
 
             for (int x = 0; x < menu_items_x; x++) {
@@ -418,9 +531,9 @@ namespace character_select
             }
 
 
-            if (bn::keypad::a_pressed()) {
-                bn::link::send(multiplayer::signal_start_game);
-                return start_game(selected_menu_item_x, selected_menu_item_y);
+            if (keys_data.keypad_data.start_pressed || multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
+                // bn::link::send(multiplayer::signal_start_game);
+                return next_scene::platforming;
             }
 
             bn::core::update();

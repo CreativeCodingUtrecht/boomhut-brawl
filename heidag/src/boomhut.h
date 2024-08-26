@@ -43,12 +43,20 @@
 #include "../../include/utils.h"
 #include "globals.h"
 #include "./characters/-character.h"
-#include "./characters/networkninja.h"
-#include "./characters/laury.h"
-#include "./characters/hunter.h"
-#include "./characters/fleur.h"
-#include "./characters/sjef.h"
+#include "./characters/cate.h"
+#include "./characters/christine.h"
 #include "./characters/fabian.h"
+#include "./characters/fleur.h"
+#include "./characters/hunter.h"
+#include "./characters/joost.h"
+#include "./characters/laury.h"
+#include "./characters/mar.h"
+#include "./characters/networkninja.h"
+#include "./characters/rein.h"
+#include "./characters/saskia.h"
+#include "./characters/sjef.h"
+#include "./characters/werner.h"
+#include "./characters/sietse.h"
 #include "pickups.h"
 #include "splash.h"
 #include "main_menu.h"
@@ -185,12 +193,124 @@ namespace platforming_level
 
 
 
-        // Player and other player 
-        auto you = hunter();
-        auto other_player = networkninja();
+        // Create player and other player 
+        if (selected_you == all_characters::cate) {
+            auto you = cate();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::christine) {
+            auto you = christine();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::fabian) {
+            auto you = fabian();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::fleur) {
+            auto you = fleur();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::hunter) {
+            auto you = hunter();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::joost) {
+            auto you = joost();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::laury) {
+            auto you = laury();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::mar) {
+            auto you = mar();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::networkninja) {
+            auto you = networkninja();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::rein) {
+            auto you = rein();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::saskia) {
+            auto you = saskia();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::saskia) {
+            auto you = sietse();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::sjef) {
+            auto you = sjef();
+            players.push_back(you);
+        }
+        if (selected_you == all_characters::werner) {
+            auto you = werner();
+            players.push_back(you);
+        }
 
-        players.push_back(you);
-        players.push_back(other_player);
+
+        if (selected_other == all_characters::cate) {
+            auto o = cate();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::christine) {
+            auto o = christine();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::fabian) {
+            auto o = fabian();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::fleur) {
+            auto o = fleur();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::hunter) {
+            auto o = hunter();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::joost) {
+            auto o = joost();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::laury) {
+            auto o = laury();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::mar) {
+            auto o = mar();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::networkninja) {
+            auto o = networkninja();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::rein) {
+            auto o = rein();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::saskia) {
+            auto o = saskia();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::saskia) {
+            auto o = sietse();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::sjef) {
+            auto o = sjef();
+            players.push_back(o);
+        }
+        if (selected_other == all_characters::werner) {
+            auto o = werner();
+            players.push_back(o);
+        }
+
+        auto you = players.at(0);
+        auto other_player = players.at(1);
 
 
         // Health
@@ -198,10 +318,6 @@ namespace platforming_level
         // healthbar other_healthbar = healthbar(bn::sprite_items::hunter_pictogram, true);
         
 
-        // Multiplayer
-        int players_counter;
-        int current_player_id;
-        multiplayer::keypad_data last_keypad_data_to_send;
 
 
         // Camera
@@ -240,16 +356,8 @@ namespace platforming_level
             // sky.set_position(-player.position / bn::fixed(50.0));
 
 
-            // Update player, send keypad to other players
-            multiplayer::keypad_data keypad_data_to_send {
-                keypad_data: multiplayer::keypad_data::keypad_data_struct {
-                    l_pressed: bn::keypad::l_pressed(),
-                    r_pressed: bn::keypad::r_pressed(),
-                    a_pressed: bn::keypad::a_pressed(),
-                    left_held: bn::keypad::left_held(),
-                    right_held: bn::keypad::right_held()
-                }
-            };
+            // Update player, send keypad to other players -----------
+            multiplayer::keypad_data keypad_data_to_send = multiplayer::read_keys();
 
             // Always update own player
             you.update(keypad_data_to_send.keypad_data);
@@ -257,42 +365,19 @@ namespace platforming_level
             log_memory_usage();
 
             // Send if changed
-            if (last_keypad_data_to_send.data != keypad_data_to_send.data) {
-                bn::link::send(keypad_data_to_send.data);   
-                last_keypad_data_to_send.data = keypad_data_to_send.data;
-            }
+            multiplayer::send_if_changed(keypad_data_to_send);
 
 
             // Update other player, receive keypad from other players
-            multiplayer::keypad_data other_player_keypad_data;
+            multiplayer::receive_keypad_data();
 
-            if(bn::optional<bn::link_state> link_state = bn::link::receive())
-            {
-                const bn::link_player& first_other_player = link_state->other_players().front();
-                other_player_keypad_data.data = first_other_player.data();
-
-                BN_LOG(bn::format<40>("received: {}", other_player_keypad_data.data));                
-
-                // Update multiplayer info text
-                if (players_counter != link_state->player_count()) {
-                    players_counter = link_state->player_count();
-                    current_player_id = link_state->current_player_id();
-
-                    // Immediately refresh the other player as well
-                    bn::link::send(keypad_data_to_send.data);   
-                    BN_LOG("change in link");                
-                    bn::string<40> info_text = bn::format<40>("players: {}, player id: {}", players_counter, current_player_id);
-                    printer->print(info_text);
-                }
-            }
-            
             // always update for animations
-            other_player.update(other_player_keypad_data.keypad_data);
+            other_player.update(multiplayer::other_player_keypad_data.keypad_data);
 
 
             // Smooth cam
             camera_follow_smooth(*camera, you.sprite_ptr.position());
-            camera->set_x(constrain(camera->x(), 0, bounds_max_x));
+            camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
             if (bn::keypad::start_pressed()) {
                 bn::music::stop();

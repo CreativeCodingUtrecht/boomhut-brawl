@@ -25,6 +25,7 @@
 
 
 enum class all_characters {
+    empty,
     cate, 
     christine, 
     fabian, 
@@ -36,6 +37,7 @@ enum class all_characters {
     networkninja, 
     rein, 
     saskia, 
+    sietse, 
     sjef, 
     werner
 };
@@ -226,5 +228,5 @@ struct character {
 // Global
 bn::vector<character, 2> players;
 
-
-
+all_characters selected_you;
+all_characters selected_other;

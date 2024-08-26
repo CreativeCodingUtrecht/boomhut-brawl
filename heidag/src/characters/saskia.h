@@ -3,6 +3,8 @@
 #include "-character.h"
 
 
+#include "bn_sprite_items_saskia.h"
+
 
 struct saskia: public character {
     bn::string<20> name = "Saskia";
@@ -22,7 +24,7 @@ struct saskia: public character {
     bool is_falling;
 
     static bn::sprite_item sprite_item()  {
-        return bn::sprite_items::rein_lario;
+        return bn::sprite_items::saskia;
     };
 
     // bn::sprite_item pictogram;
@@ -31,8 +33,8 @@ struct saskia: public character {
 
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
-        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::rein_lario.tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
+        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::saskia.tiles_item(), 
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75
         );
     }
 
