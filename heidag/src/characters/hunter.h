@@ -28,6 +28,10 @@ struct hunter: public character {
     static bn::sprite_item sprite_item()  {
         return bn::sprite_items::hunter;
     };
+    
+    virtual bn::sprite_item spr_item() override {
+        return bn::sprite_items::fabian;
+    }
 
     // bn::sprite_item pictogram;
     bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);

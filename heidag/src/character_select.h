@@ -373,6 +373,52 @@ namespace character_select
         }
     }
 
+    bn::sound_item get_tagline_sound_for_character(all_characters c)
+    {
+        if (c == all_characters::cate) {
+            return bn::sound_items::cat_tagline;
+        }
+        if (c == all_characters::christine) {
+            return bn::sound_items::christine_tagline;
+        }
+        if (c == all_characters::fabian) {
+            return bn::sound_items::fabian_tagline;
+        }
+        if (c == all_characters::fleur) {
+            return bn::sound_items::fleur_tagline;
+        }
+        if (c == all_characters::hunter) {
+            return bn::sound_items::niels_tagline;
+        }
+        if (c == all_characters::joost) {
+            return bn::sound_items::joost_tagline;
+        }
+        if (c == all_characters::laury) {
+            return bn::sound_items::laura_tagline;
+        }
+        if (c == all_characters::mar) {
+            return bn::sound_items::mar_tagline;
+        }
+        if (c == all_characters::networkninja) {
+            return bn::sound_items::timo_tagline;
+        }
+        if (c == all_characters::rein) {
+            return bn::sound_items::timo_tagline;
+        }
+        if (c == all_characters::saskia) {
+            return bn::sound_items::saskia_tagline;
+        }
+        if (c == all_characters::sietse) {
+            return bn::sound_items::sietse_tagline;
+        }
+        if (c == all_characters::sjef) {
+            return bn::sound_items::sjef_tagline;
+        }
+        if (c == all_characters::werner) {
+            return bn::sound_items::werner_tagline;
+        }
+    }
+
 
     // void 
 
@@ -475,6 +521,7 @@ namespace character_select
 
             if (keys_data.keypad_data.a_pressed) {
                 selected_you = character_pictograms[selected_menu_item_x][selected_menu_item_y].character_to_choose;
+                get_tagline_sound_for_character(selected_you).play();
             }
 
             // menu navigation other player

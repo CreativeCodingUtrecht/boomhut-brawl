@@ -6,7 +6,10 @@
 
 
 struct cate: public character {
-    bn::string<20> name = "Space Bard";
+    virtual bn::string<20> name() {
+        return "Space Bard";
+    }
+    
 
     bn::fixed max_health = 100.0;
     bn::fixed health = max_health;
@@ -27,6 +30,10 @@ struct cate: public character {
         return bn::sprite_items::cate;
     };
 
+    virtual bn::sprite_item spr_item() override {
+        return bn::sprite_items::cate;
+    }
+
     // bn::sprite_item pictogram;
     bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
 
@@ -38,23 +45,31 @@ struct cate: public character {
     }
 
 
-    character_animations animations = character_animations {
-        idle: idle_anim(sprite_ptr),
-        run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
-        ),
-        jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            56, 57, 58, 59, 60
-        ),
-        jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            61, 61
-        ),
-        jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
-        )
-    };
+    virtual character_animations animations() override {
+        return {
+            character_animations {
+                idle: idle_anim(sprite_ptr),
+                run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, spr_item().tiles_item(), 
+                    38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
+                ),
+                jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, spr_item().tiles_item(), 
+                    56, 57, 58, 59, 60
+                ),
+                jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, spr_item().tiles_item(), 
+                    61, 61
+                ),
+                jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, spr_item().tiles_item(), 
+                    62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
+                )
+            }
+        };
+    }
 
-    cate() {}
+    character_animations anims;
+
+    cate(): anims(animations()) {
+
+    }
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
@@ -106,8 +121,8 @@ struct cate: public character {
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity);
-            animations.jump_down.reset();
-            animations.jump_up.reset();
+            anims.jump_down.reset();
+            anims.jump_up.reset();
         }
         // running
         if (keypad.left_held) {
@@ -148,22 +163,22 @@ struct cate: public character {
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
-            animations.jump_stay.update();
+            anims.jump_stay.update();
         }
         else if (is_running && !is_jumping) {
-            animations.run.update();
+            anims.run.update();
         }
         else if (is_jumping) {
-            if (animations.jump_up.done()) {
-                animations.jump_stay.update();
+            if (anims.jump_up.done()) {
+                anims.jump_stay.update();
             } else {
-                animations.jump_up.update();
+                anims.jump_up.update();
             }
-        } else if (is_landing && !animations.jump_down.done()) {
-            animations.jump_down.update();
+        } else if (is_landing && !anims.jump_down.done()) {
+            anims.jump_down.update();
         }
         else {
-            animations.idle.update();
+            anims.idle.update();
         }
     } 
 };

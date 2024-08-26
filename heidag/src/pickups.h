@@ -98,13 +98,13 @@ namespace pickups
                 bool close_to_a_player = false;
 
                 // Update for both players
-                for (character &p : players) {
-                    bn::fixed dist = distance(spr.position(), p.sprite_ptr.position());
+                for (character* &p : players) {
+                    bn::fixed dist = distance(spr.position(), p->sprite_ptr().position());
 
                     // Magnetic
                     if (dist < magnetic_range) {
                         close_to_a_player = true;
-                        bn::fixed_point new_pos = lerp(spr.position(), p.sprite_ptr.position(), 0.2);
+                        bn::fixed_point new_pos = lerp(spr.position(), p->sprite_ptr().position(), 0.2);
                         spr.set_position(new_pos);
                         twinkle_spr.set_position(new_pos);
                         spr.set_scale(dist / magnetic_range);

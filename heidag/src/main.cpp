@@ -53,7 +53,7 @@ int main()
     // splash::run();
 
     // Main menu
-    next_scene next = character_select::run();
+    next_scene next = platforming_level::run();
 
     while (true)
     {

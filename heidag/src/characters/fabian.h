@@ -6,15 +6,72 @@
 
 
 struct fabian: public character {
-    bn::string<20> name = "Fabian";
+    bn::string<20> name() {
+        return "Fabian";
+    };
+    bn::fixed max_health() {
+        return 100;
+    };
 
-    bn::fixed max_health = 100.0;
-    bn::fixed health = max_health;
+    bn::fixed health = max_health();
+ 
+
+    bn::fixed run_speed() {
+        return 2.5;
+    };
+
+    bn::fixed jump_velocity() {
+        return -7;
+    };
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
-    bn::fixed jump_velocity = -7.0;
-    bn::fixed run_speed = 2.5;
+
+    bn::sprite_item _sprite_item = bn::sprite_items::fabian;
+    bn::sprite_ptr _sprite_ptr = _sprite_item.create_sprite(position);
+
+    static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
+        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::fabian.tiles_item(), 
+            46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
+        );
+    }
+
+
+    character_animations animations() override {
+        BN_LOG("from  fabian");
+        return {
+            character_animations {
+                idle: idle_anim(_sprite_ptr),
+                run: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+                ),
+                jump_up: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    18, 19, 20, 21, 22, 23, 24, 25, 26
+                ),
+                jump_stay: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    27, 27
+                ),
+                jump_down: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
+                )
+            }
+        };
+    }
+
+    character_animations anims = animations();
+
+
+
+
+
+    bn::sprite_item spr_item() {
+        return _sprite_item;
+    };
+
+    bn::sprite_ptr sprite_ptr() {
+        return _sprite_ptr;
+    };
+
 
     bool is_jumping;
     bool is_running;
@@ -27,35 +84,18 @@ struct fabian: public character {
         return bn::sprite_items::fabian;
     };
 
-    // bn::sprite_item pictogram;
-    bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
 
 
-    static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
-        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::fabian.tiles_item(), 
-            46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
-        );
+    fabian() {
+
     }
 
-    character_animations animations = character_animations {
-        idle: idle_anim(sprite_ptr),
-        run: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
-        ),
-        jump_up: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            18, 19, 20, 21, 22, 23, 24, 25, 26
-        ),
-        jump_stay: bn::create_sprite_animate_action_forever(sprite_ptr, 1, sprite_item().tiles_item(), 
-            27, 27
-        ),
-        jump_down: bn::create_sprite_animate_action_once(sprite_ptr, 1, sprite_item().tiles_item(), 
-            28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
-        )
-    };
 
-    fabian() {}
 
-    void update(multiplayer::keypad_data::keypad_data_struct keypad) {
+    void update(multiplayer::keypad_data::keypad_data_struct keypad) override {
+        BN_LOG("update fabian");
+
+        
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
 
@@ -104,15 +144,15 @@ struct fabian: public character {
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
             is_jumping = true;
             is_landing = false;
-            velocity.set_y(jump_velocity);
-            animations.jump_down.reset();
-            animations.jump_up.reset();
+            velocity.set_y(jump_velocity());
+            anims.jump_down.reset();
+            anims.jump_up.reset();
         }
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed);
-            sprite_ptr.set_horizontal_flip(true);
+            velocity.set_x(-run_speed());
+            sprite_ptr().set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -120,12 +160,12 @@ struct fabian: public character {
         }
 
         if (keypad.right_held) {
-            velocity.set_x(run_speed);
+            velocity.set_x(run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
             }
-            sprite_ptr.set_horizontal_flip(false);
+            _sprite_ptr.set_horizontal_flip(false);
         }
         
         if (!keypad.left_held && !keypad.right_held) {
@@ -143,26 +183,26 @@ struct fabian: public character {
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
         position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
-        sprite_ptr.set_position(position);
+        _sprite_ptr.set_position(position);
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
-            animations.jump_stay.update();
+            anims.jump_stay.update();
         }
         else if (is_running && !is_jumping) {
-            animations.run.update();
+            anims.run.update();
         }
         else if (is_jumping) {
-            if (animations.jump_up.done()) {
-                animations.jump_stay.update();
+            if (anims.jump_up.done()) {
+                anims.jump_stay.update();
             } else {
-                animations.jump_up.update();
+                anims.jump_up.update();
             }
-        } else if (is_landing && !animations.jump_down.done()) {
-            animations.jump_down.update();
+        } else if (is_landing && !anims.jump_down.done()) {
+            anims.jump_down.update();
         }
         else {
-            animations.idle.update();
+            anims.idle.update();
         }
     } 
 };

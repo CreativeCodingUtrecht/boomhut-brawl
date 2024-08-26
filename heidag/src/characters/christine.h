@@ -5,7 +5,9 @@
 #include "bn_sprite_items_fabian.h"
 
 struct christine: public character {
-    bn::string<20> name = "Christine";
+    virtual bn::string<20> name() override {
+        return "Christine";
+    }
 
     bn::fixed max_health = 100.0;
     bn::fixed health = max_health;
@@ -25,6 +27,9 @@ struct christine: public character {
         return bn::sprite_items::rein_lario;
     };
 
+    virtual bn::sprite_item spr_item() override {
+        return bn::sprite_items::fabian;
+    }
 
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {

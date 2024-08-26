@@ -144,19 +144,19 @@ namespace platforming_level
 
 
         // sky and mountains background
-        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-        background.set_z_order(4);
-        background.set_camera(*camera);
+        // bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        // background.set_z_order(4);
+        // background.set_camera(*camera);
 
 
-        // BG and map
+        // // BG and map
         bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
         bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
         bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
         const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
         tilemap.set_camera(*camera);
         // tilemap.set_wrapping_enabled(false);
-        tilemap.set_z_order(-1000);
+        // tilemap.set_z_order(-1000);
 
 
    
@@ -171,7 +171,7 @@ namespace platforming_level
 
         // Trein
         regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
-        trein_bg.set_camera(camera);
+        trein_bg.set_camera(*camera);
         trein_bg.set_z_order(5);
 
 
@@ -192,149 +192,156 @@ namespace platforming_level
         // background.set_camera(*camera);
         // foreground.set_camera(*camera);
 
+        auto fab = fabian();
 
+        character* you;
+        // character* other_player = &fab;
+
+        you = &fab;
+
+        // BN_LOG(bn::format<> you->name());
+
+        printer->print(you->name());
 
 
         // Create player and other player 
         // if (selected_you == all_characters::cate) {
-        //     auto you = cate();
-        //     players.push_back(you);
+        //     auto p = cate();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::christine) {
-        //     auto you = christine();
-        //     players.push_back(you);
+        //     auto p = christine();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::fabian) {
-        //     auto you = fabian();
-        //     players.push_back(you);
+        //     auto p = fabian();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::fleur) {
-        //     auto you = fleur();
-        //     players.push_back(you);
+        //     auto p = fleur();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::hunter) {
-        //     auto you = hunter();
-        //     players.push_back(you);
+        //     auto p = hunter();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::joost) {
-        //     auto you = joost();
-        //     players.push_back(you);
+        //     auto p = joost();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::laury) {
-        //     auto you = laury();
-        //     players.push_back(you);
+        //     auto p = laury();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::mar) {
-        //     auto you = mar();
-        //     players.push_back(you);
+        //     auto p = mar();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::networkninja) {
-        //     auto you = networkninja();
-        //     players.push_back(you);
+        //     auto p = networkninja();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::rein) {
-        //     auto you = rein();
-        //     players.push_back(you);
+        //     auto p = rein();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::saskia) {
-        //     auto you = saskia();
-        //     players.push_back(you);
+        //     auto p = saskia();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::saskia) {
-        //     auto you = sietse();
-        //     players.push_back(you);
+        //     auto p = sietse();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::sjef) {
-        //     auto you = sjef();
-        //     players.push_back(you);
+        //     auto p = sjef();
+        //     you = &p;
         // }
         // if (selected_you == all_characters::werner) {
-        //     auto you = werner();
-        //     players.push_back(you);
+        //     auto p = werner();
+        //     you = &p;
         // }
 
 
         // selected_other = all_characters::fabian;
         // if (selected_other == all_characters::cate) {
-        //     auto o = cate();
-        //     players.push_back(o);
+        //     cate o = cate();
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::christine) {
         //     auto o = christine();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::fabian) {
         //     auto o = fabian();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::fleur) {
         //     auto o = fleur();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::hunter) {
         //     auto o = hunter();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::joost) {
         //     auto o = joost();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::laury) {
         //     auto o = laury();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::mar) {
         //     auto o = mar();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::networkninja) {
         //     auto o = networkninja();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::rein) {
         //     auto o = rein();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::saskia) {
         //     auto o = saskia();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::saskia) {
         //     auto o = sietse();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::sjef) {
         //     auto o = sjef();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
         // if (selected_other == all_characters::werner) {
         //     auto o = werner();
-        //     players.push_back(o);
+        //     players.push_back(&o);
         // }
 
         // auto you = players.at(0);
         // auto other_player = players.at(1);
 
 
-        // players.push_back(you);
-
-        auto you = laury();
-        auto other_player = laury();
+        // auto p = fabian();
+        // auto o = laury();
         players.push_back(you);
-        players.push_back(other_player);
+        // players.push_back(other_player);
 
 
         // Health
-        // healthbars bars = healthbars(bn::sprite_items::rein_pictogram, bn::sprite_items::hunter_pictogram);
+        healthbars bars = healthbars(bn::sprite_items::rein_pictogram, bn::sprite_items::hunter_pictogram);
         // healthbar other_healthbar = healthbar(bn::sprite_items::hunter_pictogram, true);
         
 
 
 
         // Camera
-        you.sprite_ptr.set_camera(*camera);
-        other_player.sprite_ptr.set_camera(*camera);
-        camera->set_position(you.sprite_ptr.position());
+        you->sprite_ptr().set_camera(*camera);
+        // other_player->sprite_ptr.set_camera(*camera);
+        camera->set_position(you->sprite_ptr().position());
 
         // Health bars
 
@@ -357,8 +364,8 @@ namespace platforming_level
             // }
 
             // Moving clouds
-            clouds_x -=  0.1;
-            trein_bg.set_x(trein_bg.x() - 2);
+            // clouds_x -=  0.1;
+            // trein_bg.set_x(trein_bg.x() - 2);
 
             // clouds.set_x(clouds_x + player.position.x() / bn::fixed(40.0));
 
@@ -371,23 +378,23 @@ namespace platforming_level
             multiplayer::keypad_data keypad_data_to_send = multiplayer::read_keys();
 
             // Always update own player
-            you.update(keypad_data_to_send.keypad_data);
+            you->update(keypad_data_to_send.keypad_data);
 
-            // log_memory_usage();
+            // // log_memory_usage();
 
-            // Send if changed
-            multiplayer::send_if_changed(keypad_data_to_send);
-
-
-            // Update other player, receive keypad from other players
-            multiplayer::receive_keypad_data();
-
-            // always update for animations
-            other_player.update(multiplayer::other_player_keypad_data.keypad_data);
+            // // Send if changed
+            // multiplayer::send_if_changed(keypad_data_to_send);
 
 
-            // Smooth cam
-            camera_follow_smooth(*camera, you.sprite_ptr.position());
+            // // Update other player, receive keypad from other players
+            // multiplayer::receive_keypad_data();
+
+            // // always update for animations
+            // // other_player->update(multiplayer::other_player_keypad_data.keypad_data);
+
+
+            // // Smooth cam
+            camera_follow_smooth(*camera, you->sprite_ptr().position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
             // if (bn::keypad::start_pressed()) {

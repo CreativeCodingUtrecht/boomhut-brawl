@@ -30,6 +30,9 @@ struct saskia: public character {
     // bn::sprite_item pictogram;
     bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
 
+    virtual bn::sprite_item spr_item() override {
+        return bn::sprite_items::fabian;
+    }
 
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {

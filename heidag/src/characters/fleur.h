@@ -24,13 +24,13 @@ struct fleur: public character {
     bool is_falling;
 
 
-    static bn::sprite_item sprite_item()  {
-        return bn::sprite_items::fleur;
-    };
 
     // bn::sprite_item pictogram;
     bn::sprite_ptr sprite_ptr = sprite_item().create_sprite(spawn_point);
 
+    static bn::sprite_item sprite_item()  {
+        return bn::sprite_items::fabian;
+    }
 
     // Animations
     static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
