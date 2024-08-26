@@ -3,11 +3,16 @@
 #include "-character.h"
 
 #include "bn_sprite_items_cate.h";
+#include "bn_sprite_items_avatar_cate.h";
 
 
 struct cate: public character {
-    virtual bn::string<20> name() {
+    bn::string<20> name() {
         return "Space Bard";
+    }
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_cate;
     }
     
     bn::fixed max_health() {

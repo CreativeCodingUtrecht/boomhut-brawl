@@ -4,11 +4,16 @@
 
 
 #include "bn_sprite_items_joost.h"
+#include "bn_sprite_items_avatar_joost.h"
 
 
 struct joost: public character {
     virtual bn::string<20> name() {
         return "Joost";
+    }
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_joost;
     }
 
     bn::fixed max_health() {

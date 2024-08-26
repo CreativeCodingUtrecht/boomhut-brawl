@@ -3,6 +3,7 @@
 #include "-character.h"
 
 #include "bn_sprite_items_laury.h"
+#include "bn_sprite_items_avatar_laura.h"
 
 
 struct laury: public character {
@@ -10,6 +11,9 @@ struct laury: public character {
         return "Laury";
     }
 
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_laura;
+    }
 
     bn::fixed max_health() {
         return 100;

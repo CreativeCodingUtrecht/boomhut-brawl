@@ -3,11 +3,17 @@
 #include "-character.h"
 
 #include "bn_sprite_items_sjef.h"
+#include "bn_sprite_items_avatar_sjef.h"
 
 
 struct sjef: public character {
     virtual bn::string<20> name() {
         return "Sjef";
+    }
+
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_sjef;
     }
 
 
@@ -82,7 +88,7 @@ struct sjef: public character {
 
 
     character_animations anims = animations();
-    
+
 
     sjef() {}
 

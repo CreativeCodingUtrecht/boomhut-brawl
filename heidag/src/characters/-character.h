@@ -59,6 +59,7 @@ struct character_animations {
 // Abstract character
 struct character {
     virtual bn::string<20> name();
+    virtual bn::sprite_item avatar();
     virtual bn::fixed max_health();
     virtual bn::fixed run_speed();
     virtual bn::fixed jump_velocity();

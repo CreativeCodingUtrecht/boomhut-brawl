@@ -3,12 +3,18 @@
 #include "-character.h"
 
 #include "bn_sprite_items_fabian.h"
+#include "bn_sprite_items_avatar_fabian.h"
 
 
 struct fabian: public character {
     bn::string<20> name() {
         return "Fabian";
     };
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_fabian;
+    }
+    
     bn::fixed max_health() {
         return 100;
     };

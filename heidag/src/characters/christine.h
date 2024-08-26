@@ -3,10 +3,15 @@
 #include "-character.h"
 
 #include "bn_sprite_items_fabian.h"
+#include "bn_sprite_items_avatar_christine.h"
 
 struct christine: public character {
     virtual bn::string<20> name() override {
         return "Christine";
+    }
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_christine;
     }
 
     bn::fixed max_health() {

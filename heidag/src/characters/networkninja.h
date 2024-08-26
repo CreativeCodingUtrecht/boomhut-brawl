@@ -3,18 +3,21 @@
 #include "-character.h"
 
 #include "bn_sprite_items_timo.h"
+#include "bn_sprite_items_avatar_networkninja.h"
 
 
 struct networkninja: public character {
     bn::string<20> name() {
         return "Network Ninja";
     };
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_networkninja;
+    }
+    
     bn::fixed max_health() {
         return 100;
     };
-
-    bn::fixed health = max_health();
- 
 
     bn::fixed run_speed() {
         return 4;
@@ -23,6 +26,11 @@ struct networkninja: public character {
     bn::fixed jump_velocity() {
         return -7;
     };
+
+    bn::fixed health = max_health();
+ 
+
+    
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;

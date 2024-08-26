@@ -4,11 +4,16 @@
 
 
 #include "bn_sprite_items_saskia.h"
+#include "bn_sprite_items_avatar_saskia.h"
 
 
 struct saskia: public character {
     virtual bn::string<20> name() {
         return "Saskia";
+    }
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_saskia;
     }
 
     bn::fixed max_health() {

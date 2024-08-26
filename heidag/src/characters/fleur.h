@@ -4,11 +4,16 @@
 
 
 #include "bn_sprite_items_fleur.h"
+#include "bn_sprite_items_avatar_fleur.h"
 
 
 struct fleur: public character {
     virtual bn::string<20> name() {
         return "Fleur";
+    }
+
+    bn::sprite_item avatar() {
+        return bn::sprite_items::avatar_fleur;
     }
 
     bn::fixed health = max_health();

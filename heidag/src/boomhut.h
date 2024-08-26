@@ -71,22 +71,29 @@ using namespace bn;
 struct healthbars
 {
     bn::sprite_ptr pictogram;
-    // bn::sprite_ptr pictogram2;
+    bn::sprite_ptr pictogram2;
+    
 
-    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 12, -bn::display::height() / 2 + 20);
+    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20);
     bn::sprite_ptr boss_frame = bn::sprite_items::pictogram_frame.create_sprite(position_1);
     bn::sprite_ptr healthbar_fill = bn::sprite_items::healthbar_fill.create_sprite(position_1.x() + 48, position_1.y()+3);
     bn::sprite_ptr healthbar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + 48, position_1.y());
 
-    bn::fixed_point position_2 = bn::fixed_point(-bn::display::width() / 2 + 24, -bn::display::height() / 2 + 24);;
-    bn::sprite_ptr boss_frame2 = bn::sprite_items::pictogram_frame.create_sprite(bn::display::width() / 2 + 24, bn::display::height() / 2 + 24);
+    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20);;
+    bn::sprite_ptr boss_frame2 = bn::sprite_items::pictogram_frame.create_sprite(position_2);
     bn::sprite_ptr healthbar_fill2 = bn::sprite_items::healthbar_fill.create_sprite(position_2.x() - 48, position_2.y()+3);
     bn::sprite_ptr healthbar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
 
     healthbars(bn::sprite_item boss_spr_item, bn::sprite_item boss_spr_item2):
-        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 12, -bn::display::height() / 2 + 20))
+        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20)),
+        pictogram2(boss_spr_item2.create_sprite(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20))
     {
-        pictogram.set_z_order(-1);
+        pictogram.set_z_order(2);
+        pictogram2.set_z_order(2);
+
+        boss_frame2.set_horizontal_flip(true);
+        healthbar_frame2.set_horizontal_flip(true);
+        healthbar_fill2.set_horizontal_flip(true);
     }
 
 
@@ -200,11 +207,9 @@ namespace platforming_level
         // BN_LOG(bn::format<> you->name());
 
         // printer->print(you->name());
+        // }
 
-        if (true) {
-            you.reset(new networkninja());
-        }
-
+        selected_you = all_characters::networkninja;
 
         // Create player and other player 
         if (selected_you == all_characters::cate) {
@@ -297,7 +302,7 @@ namespace platforming_level
 
 
         // Health
-        healthbars bars = healthbars(bn::sprite_items::rein_pictogram, bn::sprite_items::hunter_pictogram);
+        healthbars bars = healthbars(you->avatar(), other_player->avatar());
         // healthbar other_healthbar = healthbar(bn::sprite_items::hunter_pictogram, true);
         
 
