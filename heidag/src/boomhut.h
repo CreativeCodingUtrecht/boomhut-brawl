@@ -186,8 +186,8 @@ namespace platforming_level
 
 
         // Player and other player 
-        auto you = fabian();
-        auto other_player = laury();
+        auto you = hunter();
+        auto other_player = networkninja();
 
         players.push_back(you);
         players.push_back(other_player);

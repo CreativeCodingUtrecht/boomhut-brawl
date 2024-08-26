@@ -22,7 +22,7 @@ struct rein: public character {
     bool is_landing;
     bool is_falling;
 
-    bn::sprite_item sprite_item() {
+    virtual bn::sprite_item sprite_item() override {
         return bn::sprite_items::rein_lario;
     };
 
@@ -31,8 +31,8 @@ struct rein: public character {
 
 
     // Animations
-    bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr) {
-        bn::create_sprite_animate_action_forever(spr, 1, sprite_item().tiles_item(), 
+    virtual bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr) override {
+        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::rein_lario.tiles_item(), 
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
         );
     }
