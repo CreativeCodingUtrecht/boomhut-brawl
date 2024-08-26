@@ -5,6 +5,7 @@
 #include "bn_keypad.h"
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_sprite_item.h"
 #include "bn_sprite_animate_actions.h"
 #include "bn_regular_bg_map_cell_info.h"
 #include "bn_regular_bg_map_cell_info.h"
@@ -28,9 +29,14 @@
 #include "bn_regular_bg_items_foreground.h"
 #include "bn_regular_bg_items_trein_bg.h"
 
+
 // Sprites
-#include "bn_sprite_items_trein_kop.h"
-#include "bn_sprite_items_trein_middel.h"
+#include "bn_sprite_items_pictogram_frame.h"
+#include "bn_sprite_items_healthbar_fill.h"
+#include "bn_sprite_items_healthbar_frame.h"
+#include "bn_sprite_items_rein_pictogram.h"
+#include "bn_sprite_items_hunter_pictogram.h"
+
 
 
 // Includes
@@ -50,6 +56,44 @@
 
 
 using namespace bn;
+
+
+struct healthbars
+{
+    bn::sprite_ptr pictogram;
+    // bn::sprite_ptr pictogram2;
+
+    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 12, -bn::display::height() / 2 + 20);
+    bn::sprite_ptr boss_frame = bn::sprite_items::pictogram_frame.create_sprite(position_1);
+    bn::sprite_ptr healthbar_fill = bn::sprite_items::healthbar_fill.create_sprite(position_1.x() + 48, position_1.y()+3);
+    bn::sprite_ptr healthbar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + 48, position_1.y());
+
+    bn::fixed_point position_2 = bn::fixed_point(-bn::display::width() / 2 + 24, -bn::display::height() / 2 + 24);;
+    bn::sprite_ptr boss_frame2 = bn::sprite_items::pictogram_frame.create_sprite(bn::display::width() / 2 + 24, bn::display::height() / 2 + 24);
+    bn::sprite_ptr healthbar_fill2 = bn::sprite_items::healthbar_fill.create_sprite(position_2.x() - 48, position_2.y()+3);
+    bn::sprite_ptr healthbar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
+
+    healthbars(bn::sprite_item boss_spr_item, bn::sprite_item boss_spr_item2):
+        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 24, -bn::display::height() / 2 + 24))
+    {
+        pictogram.set_z_order(-1);
+    }
+
+
+    // 0 - 1
+    void set_health_left(bn::fixed health)
+    {
+        healthbar_fill.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
+        healthbar_fill.set_x(position_1.x() + map(health, 0, 1, 16, 48));
+    }
+
+    // 0 - 1
+    void set_health_right(bn::fixed health)
+    {
+        healthbar_fill.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
+        // healthbar_fill.set_x(position_2.x() + map(health, 0, 1, 16, 48));
+    }
+};
 
 
 
@@ -140,13 +184,16 @@ namespace platforming_level
 
 
         // Player and other player 
-        auto you = fleur();
+        auto you = rein();
         auto other_player = hunter();
 
         players.push_back(you);
         players.push_back(other_player);
 
-        
+
+        // Health
+        healthbars bars = healthbars(bn::sprite_items::rein_pictogram, bn::sprite_items::hunter_pictogram);
+        // healthbar other_healthbar = healthbar(bn::sprite_items::hunter_pictogram, true);
         
 
         // Multiplayer
