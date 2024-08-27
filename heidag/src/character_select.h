@@ -422,15 +422,15 @@ namespace character_select
 
 
         // Text generators
-        bn::sprite_text_generator text_generator_you(common::variable_8x8_sprite_font);
-        text_generator_you.set_left_alignment();
+        bn::optional<bn::sprite_text_generator> text_generator_you = bn::optional(bn::sprite_text_generator(common::variable_8x8_sprite_font));
+        text_generator_you->set_left_alignment();
         bn::vector<bn::sprite_ptr, 4> text_sprites;
-        text_generator_you.generate(-112, 2, you->name(), text_sprites);
+        text_generator_you->generate(-112, 2, you->name(), text_sprites);
 
-        bn::sprite_text_generator text_generator_other(common::variable_8x8_sprite_font);
-        text_generator_other.set_right_alignment();
+        bn::optional<bn::sprite_text_generator> text_generator_other = bn::optional(bn::sprite_text_generator(common::variable_8x8_sprite_font));
+        text_generator_other->set_right_alignment();
         bn::vector<bn::sprite_ptr, 4> text_sprites_other;
-        text_generator_other.generate(112, 2, other_player->name(), text_sprites_other);
+        text_generator_other->generate(112, 2, other_player->name(), text_sprites_other);
 
 
         while (true) 
@@ -448,6 +448,10 @@ namespace character_select
 
             if (multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
                 BN_LOG("start received");
+                text_sprites.clear();
+                text_sprites_other.clear();
+                text_generator_you.reset();
+                text_generator_other.reset();
                 return next_scene::platforming;
             }
 
@@ -479,7 +483,7 @@ namespace character_select
                 you->unload(); // unload previous
                 create_character(you, c);
                 text_sprites.clear();
-                text_generator_you.generate(-112, 2, you->name(), text_sprites);
+                text_generator_you->generate(-112, 2, you->name(), text_sprites);
 
                 if (c == all_characters::empty) {
                     selected_menu_item_x = last_menu_item_x;
@@ -493,6 +497,7 @@ namespace character_select
 
 
             if (keys_data.keypad_data.a_pressed) {
+                
                 selected_you = character_pictograms[selected_menu_item_x][selected_menu_item_y].character_to_choose;
                 get_tagline_sound_for_character(*selected_you).play();
             }
@@ -524,7 +529,7 @@ namespace character_select
                 other_player->unload(); // unload previous
                 create_character(other_player, c);
                 text_sprites_other.clear();
-                text_generator_other.generate(112, 2, other_player->name(), text_sprites_other);
+                text_generator_other->generate(112, 2, other_player->name(), text_sprites_other);
 
                 if (c == all_characters::empty) {
                     other_selected_menu_item_x = last_menu_item_x;
@@ -557,6 +562,10 @@ namespace character_select
 
 
             if (keys_data.keypad_data.start_pressed) {
+                text_sprites.clear();
+                text_sprites_other.clear();
+                text_generator_you.reset();
+                text_generator_other.reset();
                 // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::platforming;
             }

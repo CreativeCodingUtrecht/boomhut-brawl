@@ -195,121 +195,17 @@ namespace platforming_level
         // Foreground 
         // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
 
-
-        // background.set_camera(*camera);
-        // foreground.set_camera(*camera);
-
-
-        // you = &fabian();
-        // character* other_player = &fab;
-
-
-        // BN_LOG(bn::format<> you->name());
-
-        // printer->print(you->name());
-        // }
-
-        if (!selected_you) {
-            selected_you = all_characters::networkninja;
-        }
-
-        // Create player and other player 
-        if (selected_you == all_characters::cate) {
-            you.reset(new cate());
-        }
-        if (selected_you == all_characters::christine) {
-            you.reset(new christine());
-        }
-        if (selected_you == all_characters::fabian) {
+        if (!you) {
             you.reset(new fabian());
         }
-        if (selected_you == all_characters::fleur) {
-            you.reset(new fleur());
-        }
-        if (selected_you == all_characters::hunter) {
-            you.reset(new hunter());
-        }
-        if (selected_you == all_characters::joost) {
-            you.reset(new joost());
-        }
-        if (selected_you == all_characters::laury) {
-            you.reset(new laury());
-        }
-        if (selected_you == all_characters::mar) {
-            you.reset(new mar());
-        }
-        if (selected_you == all_characters::networkninja) {
-            you.reset(new networkninja());
-        }
-        if (selected_you == all_characters::rein) {
-            you.reset(new rein());
-        }
-        if (selected_you == all_characters::saskia) {
-            you.reset(new saskia());
-        }
-        if (selected_you == all_characters::sietse) {
-            you.reset(new sietse());
-        }
-        if (selected_you == all_characters::sjef) {
-            you.reset(new sjef());
-        }
-        if (selected_you == all_characters::werner) {
-            you.reset(new werner());
-        }
 
-
-        if (!selected_other) {
-            selected_other = all_characters::fabian;
-        }
-        if (selected_other == all_characters::cate) {
-            other_player.reset(new cate());
-        }
-        if (selected_other == all_characters::christine) {
-            other_player.reset(new christine());
-        }
-        if (selected_other == all_characters::fabian) {
+        if (!other_player) {
             other_player.reset(new fabian());
         }
-        if (selected_other == all_characters::fleur) {
-            other_player.reset(new fleur());
-        }
-        if (selected_other == all_characters::hunter) {
-            other_player.reset(new hunter());
-        }
-        if (selected_other == all_characters::joost) {
-            other_player.reset(new joost());
-        }
-        if (selected_other == all_characters::laury) {
-            other_player.reset(new laury());
-        }
-        if (selected_other == all_characters::mar) {
-            other_player.reset(new mar());
-        }
-        if (selected_other == all_characters::networkninja) {
-            other_player.reset(new networkninja());
-        }
-        if (selected_other == all_characters::rein) {
-            other_player.reset(new rein());
-        }
-        if (selected_other == all_characters::saskia) {
-            other_player.reset(new saskia());
-        }
-        if (selected_other == all_characters::sietse) {
-            other_player.reset(new sietse());
-        }
-        if (selected_other == all_characters::sjef) {
-            other_player.reset(new sjef());
-        }
-        if (selected_other == all_characters::werner) {
-            other_player.reset(new werner());
-        }
 
 
-        // Health
-        healthbars bars = healthbars(you->avatar(), other_player->avatar());
-        // healthbar other_healthbar = healthbar(bn::sprite_items::hunter_pictogram, true);
-        
-
+        // Health bars
+        healthbars bars = healthbars(you->avatar(), other_player->avatar());        
 
 
         // Camera
@@ -317,17 +213,15 @@ namespace platforming_level
         other_player->sprite_ptr()->set_camera(*camera);
         camera->set_position(you->sprite_ptr()->position());
 
-        // Health bars
-
 
         while(true)
         {
             // Update animals
-            // bee.update();
-            // rat.update();
+            bee.update();
+            rat.update();
             
-            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
-            printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
+            printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
             // Update level
             // Lipje pickup items
