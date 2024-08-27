@@ -60,9 +60,9 @@ struct fleur: public character {
 
 
     // bn::sprite_item pictogram;
-    bn::sprite_ptr _sprite_ptr = sprite_item().create_sprite(spawn_point);
+    bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
 
-    bn::sprite_ptr sprite_ptr() {
+    bn::optional<bn::sprite_ptr> sprite_ptr() {
         return _sprite_ptr;
     };
 
@@ -85,28 +85,33 @@ struct fleur: public character {
     virtual character_animations animations() override {
         return {
             character_animations {
-                idle: idle_anim(_sprite_ptr),
-                run: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                idle: idle_anim(*_sprite_ptr),
+                run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
                 ),
-                jump_up: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_up: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10
                 ),
-                jump_stay: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_stay: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                 10, 10
                 ),
-                jump_down: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_down: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
                 )
             }
         };
     }
 
-    character_animations anims = animations();
+    bn::optional<character_animations> anims = animations();
 
 
     fleur() {}
 
+
+    void unload() {
+        anims.reset();
+        _sprite_ptr.reset();
+    }
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
@@ -159,14 +164,14 @@ struct fleur: public character {
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());
-            anims.jump_down.reset();
-            anims.jump_up.reset();
+            anims->jump_down.reset();
+            anims->jump_up.reset();
         }
         // running
         if (keypad.left_held) {
             is_landing = false;
             velocity.set_x(-run_speed());
-            _sprite_ptr.set_horizontal_flip(true);
+            _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -179,7 +184,7 @@ struct fleur: public character {
                 is_running = true;
                 is_landing = false;
             }
-            _sprite_ptr.set_horizontal_flip(false);
+            _sprite_ptr->set_horizontal_flip(false);
         }
         
         if (!keypad.left_held && !keypad.right_held) {
@@ -197,26 +202,26 @@ struct fleur: public character {
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
         position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
-        _sprite_ptr.set_position(position);
+        _sprite_ptr->set_position(position);
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
-            anims.jump_stay.update();
+            anims->jump_stay.update();
         }
         else if (is_running && !is_jumping) {
-            anims.run.update();
+            anims->run.update();
         }
         else if (is_jumping) {
-            if (anims.jump_up.done()) {
-                anims.jump_stay.update();
+            if (anims->jump_up.done()) {
+                anims->jump_stay.update();
             } else {
-                anims.jump_up.update();
+                anims->jump_up.update();
             }
-        } else if (is_landing && !anims.jump_down.done()) {
-            anims.jump_down.update();
+        } else if (is_landing && !anims->jump_down.done()) {
+            anims->jump_down.update();
         }
         else {
-            anims.idle.update();
+            anims->idle.update();
         }
     } 
 };

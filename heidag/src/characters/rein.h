@@ -61,13 +61,13 @@ struct rein: public character {
     };
 
     // bn::sprite_item pictogram;
-    bn::sprite_ptr _sprite_ptr = sprite_item().create_sprite(position);
+    bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(position);
 
     virtual bn::sprite_item spr_item() override {
         return bn::sprite_items::fabian;
     }
 
-    bn::sprite_ptr sprite_ptr() {
+    bn::optional<bn::sprite_ptr> sprite_ptr() {
         return _sprite_ptr;
     };
 
@@ -83,17 +83,17 @@ struct rein: public character {
     virtual character_animations animations() override {
         return {
             character_animations {
-                idle: idle_anim(_sprite_ptr),
-                run: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                idle: idle_anim(*_sprite_ptr),
+                run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
                 ),
-                jump_up: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_up: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     56, 57, 58, 59, 60
                 ),
-                jump_stay: bn::create_sprite_animate_action_forever(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_stay: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     61, 61
                 ),
-                jump_down: bn::create_sprite_animate_action_once(_sprite_ptr, 1, sprite_item().tiles_item(), 
+                jump_down: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
                 )
             }
@@ -101,10 +101,14 @@ struct rein: public character {
     }
 
 
-    character_animations anims = animations();
+    bn::optional<character_animations> anims = animations();
 
     rein() {}
 
+    void unload() {
+        anims.reset();
+        _sprite_ptr.reset();
+    }
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         // Watch for gravity
@@ -157,14 +161,14 @@ struct rein: public character {
             is_jumping = true;
             is_landing = false;
             velocity.set_y(jump_velocity());
-            anims.jump_down.reset();
-            anims.jump_up.reset();
+            anims->jump_down.reset();
+            anims->jump_up.reset();
         }
         // running
         if (keypad.left_held) {
             is_landing = false;
             velocity.set_x(-run_speed());
-            _sprite_ptr.set_horizontal_flip(true);
+            _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -177,7 +181,7 @@ struct rein: public character {
                 is_running = true;
                 is_landing = false;
             }
-            _sprite_ptr.set_horizontal_flip(false);
+            _sprite_ptr->set_horizontal_flip(false);
         }
         
         if (!keypad.left_held && !keypad.right_held) {
@@ -195,26 +199,26 @@ struct rein: public character {
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
         position.set_y(constrain(position.y(), bounds_min_y, bounds_max_y));
 
-        _sprite_ptr.set_position(position);
+        _sprite_ptr->set_position(position);
 
         // Update the right animation
         if (is_falling && !is_jumping && !is_landing) {
-            anims.jump_stay.update();
+            anims->jump_stay.update();
         }
         else if (is_running && !is_jumping) {
-            anims.run.update();
+            anims->run.update();
         }
         else if (is_jumping) {
-            if (anims.jump_up.done()) {
-                anims.jump_stay.update();
+            if (anims->jump_up.done()) {
+                anims->jump_stay.update();
             } else {
-                anims.jump_up.update();
+                anims->jump_up.update();
             }
-        } else if (is_landing && !anims.jump_down.done()) {
-            anims.jump_down.update();
+        } else if (is_landing && !anims->jump_down.done()) {
+            anims->jump_down.update();
         }
         else {
-            anims.idle.update();
+            anims->idle.update();
         }
     } 
 };

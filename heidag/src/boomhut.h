@@ -313,9 +313,9 @@ namespace platforming_level
 
 
         // Camera
-        you->sprite_ptr().set_camera(*camera);
-        other_player->sprite_ptr().set_camera(*camera);
-        camera->set_position(you->sprite_ptr().position());
+        you->sprite_ptr()->set_camera(*camera);
+        other_player->sprite_ptr()->set_camera(*camera);
+        camera->set_position(you->sprite_ptr()->position());
 
         // Health bars
 
@@ -326,8 +326,8 @@ namespace platforming_level
             // bee.update();
             // rat.update();
             
-            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr().position());
-            printer->print_map_tile_and_position(map_item, you->sprite_ptr().position());
+            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
             // Update level
             // Lipje pickup items
@@ -366,7 +366,7 @@ namespace platforming_level
 
 
             // Smooth cam
-            camera_follow_smooth(*camera, you->sprite_ptr().position());
+            camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
             // if (bn::keypad::start_pressed()) {

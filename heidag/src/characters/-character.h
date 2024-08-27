@@ -71,9 +71,11 @@ struct character {
     virtual bn::sound_item sound_jump();
     virtual bn::sound_item sound_hit();
 
+    // sprites and animations
     virtual character_animations animations();
     virtual bn::sprite_item spr_item();
-    virtual bn::sprite_ptr sprite_ptr();
+    virtual bn::optional<bn::sprite_ptr> sprite_ptr();
+    virtual void unload();
 
     virtual void update(multiplayer::keypad_data::keypad_data_struct keypad);
 };

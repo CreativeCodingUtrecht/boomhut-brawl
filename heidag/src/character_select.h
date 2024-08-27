@@ -483,7 +483,12 @@ namespace character_select
 
 
         // Characters / players
-        
+        auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
+        create_character(you, selected.character_to_choose);
+
+        auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
+        create_character(other_player, other_selected.character_to_choose);
+
 
         bn::sprite_ptr you_spr = cate::sprite_item().create_sprite(-spacing_x,-45);
         bn::sprite_ptr other_spr = cate::sprite_item().create_sprite(spacing_x,-45);
@@ -496,14 +501,12 @@ namespace character_select
         bn::sprite_text_generator text_generator_you(common::variable_8x8_sprite_font);
         text_generator_you.set_left_alignment();
         bn::vector<bn::sprite_ptr, 4> text_sprites;
-        auto m = character_pictograms[selected_menu_item_x][selected_menu_item_y];
-        text_generator_you.generate(-112, 2, m.name, text_sprites);
+        text_generator_you.generate(-112, 2, you->name(), text_sprites);
 
         bn::sprite_text_generator text_generator_other(common::variable_8x8_sprite_font);
         text_generator_other.set_right_alignment();
         bn::vector<bn::sprite_ptr, 4> text_sprites_other;
-        auto n = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
-        text_generator_other.generate(112, 2, n.name, text_sprites_other);
+        text_generator_other.generate(112, 2, other_player->name(), text_sprites_other);
 
 
         while (true) 
@@ -549,9 +552,10 @@ namespace character_select
 
                 auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
                 auto c = selected.character_to_choose;
-                // create_character(you, c);
+                you->unload(); // unload previous
+                create_character(you, c);
                 text_sprites.clear();
-                text_generator_you.generate(-112, 2, selected.name, text_sprites);
+                text_generator_you.generate(-112, 2, you->name(), text_sprites);
 
                 if (c == all_characters::empty) {
                     selected_menu_item_x = last_menu_item_x;
@@ -593,8 +597,10 @@ namespace character_select
 
                 auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
                 auto c = selected.character_to_choose;
+                other_player->unload(); // unload previous
+                create_character(other_player, c);
                 text_sprites_other.clear();
-                text_generator_other.generate(112, 2, selected.name, text_sprites_other);
+                text_generator_other.generate(112, 2, other_player->name(), text_sprites_other);
 
                 if (c == all_characters::empty) {
                     other_selected_menu_item_x = last_menu_item_x;
