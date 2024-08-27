@@ -70,8 +70,8 @@ using namespace bn;
 
 struct healthbars
 {
-    bn::sprite_ptr pictogram;
-    bn::sprite_ptr pictogram2;
+    bn::optional<bn::sprite_ptr> pictogram;
+    bn::optional<bn::sprite_ptr> pictogram2;
     
 
     const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20);
@@ -88,8 +88,8 @@ struct healthbars
         pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20)),
         pictogram2(boss_spr_item2.create_sprite(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20))
     {
-        pictogram.set_z_order(2);
-        pictogram2.set_z_order(2);
+        pictogram->set_z_order(2);
+        pictogram2->set_z_order(2);
 
         boss_frame2.set_horizontal_flip(true);
         healthbar_frame2.set_horizontal_flip(true);
@@ -222,7 +222,7 @@ namespace platforming_level
             bee.update();
             rat.update();
             
-            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
             // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
@@ -266,9 +266,11 @@ namespace platforming_level
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
-            // if (bn::keypad::start_pressed()) {
-            //     return next_scene::character_select;
-            // }
+            if (bn::keypad::select_pressed()) {
+                bars.pictogram.reset();
+                bars.pictogram2.reset();
+                return next_scene::character_select;
+            }
 
             bn::core::update();
         }

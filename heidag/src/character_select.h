@@ -249,7 +249,7 @@ namespace character_select
         bn::optional<bn::sprite_ptr> selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
 
         // Characters / players
-        if (you.get()) {
+        if (you) {
             you->unload();
         }
 
@@ -258,16 +258,20 @@ namespace character_select
         you->set_preview_mode(true);
         you->sprite_ptr()->set_position(-spacing_x, -45);
 
-        if (other_player.get()) {
+
+        if (other_player) {
             other_player->unload();
         }
-        
+
         auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
         create_character(other_player, other_selected.character_to_choose);
         other_player->set_preview_mode(true);
         other_player->sprite_ptr()->set_position(spacing_x, -45);
 
+        camera->set_position(0,0);
+
         // Text generators
+        printer->info_text_sprites.clear();
         generate_character_names();
 
 
@@ -401,12 +405,13 @@ namespace character_select
 
 
             if (keys_data.keypad_data.start_pressed) {
-                you->set_preview_mode(false);
-                other_player->set_preview_mode(false);
-
                 printer->info_text_sprites.clear();
                 selector_you.reset();
                 selector_other_player.reset();
+
+                you->set_preview_mode(false);
+                other_player->set_preview_mode(false);
+
                 // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::platforming;
             }
