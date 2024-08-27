@@ -60,7 +60,6 @@ namespace character_select
         all_characters character_to_choose;
         int x_offset = 0;
         int y_offset = 0;
-        // bn::sprite_animate_action<400> anim;
     };
 
     const int menu_items_x = 5;
@@ -69,9 +68,6 @@ namespace character_select
     int y_offset = 0;
     int spacing_x = 85;
 
-
-    // bn::sprite_ptr you_spr = bn::sprite_items::fabian.create_sprite(-spacing_x,-45);
-    // bn::sprite_ptr other_spr = bn::sprite_items::fabian.create_sprite(spacing_x,-45);
 
     character_pictogram character_pictograms[menu_items_y][menu_items_x] = 
     {
@@ -177,167 +173,6 @@ namespace character_select
         }
     };
 
-    bn::sprite_animate_action<400> get_animation_for_character(all_characters c, bn::sprite_ptr spr) 
-    {
-        if (c == all_characters::cate) {
-            return cate::idle_anim(spr);
-        }
-        if (c == all_characters::christine) {
-            return christine::idle_anim(spr);
-        }
-
-        if (c == all_characters::fabian) {
-            return fabian::idle_anim(spr);
-        }
-        if (c == all_characters::fleur) {
-            return fleur::idle_anim(spr);
-        }
-        if (c == all_characters::hunter) {
-            return hunter::idle_anim(spr);
-        }
-        if (c == all_characters::joost) {
-            return joost::idle_anim(spr);
-        }
-        if (c == all_characters::laury) {
-            return laury::idle_anim(spr);
-        }
-        if (c == all_characters::mar) {
-            return mar::idle_anim(spr);
-        }
-        if (c == all_characters::networkninja) {
-            return networkninja::idle_anim(spr);
-        }
-        if (c == all_characters::rein) {
-            return rein::idle_anim(spr);
-        }
-        if (c == all_characters::saskia) {
-            return saskia::idle_anim(spr);
-        }
-        if (c == all_characters::sietse) {
-            return sietse::idle_anim(spr);
-        }
-        if (c == all_characters::sjef) {
-            return sjef::idle_anim(spr);
-        }
-        if (c == all_characters::werner) {
-            return werner::idle_anim(spr);
-        }
-    }
-
-
-
-    bn::sound_item get_sound_for_character(all_characters c)
-    {
-        if (c == all_characters::cate) {
-            return bn::sound_items::cat_naam;
-        }
-        if (c == all_characters::christine) {
-            return bn::sound_items::christine_naam;
-        }
-        if (c == all_characters::fabian) {
-            return bn::sound_items::fabian_naam;
-        }
-        if (c == all_characters::fleur) {
-            return bn::sound_items::fleur_naam;
-        }
-        if (c == all_characters::hunter) {
-            return bn::sound_items::niels_naam;
-        }
-        if (c == all_characters::joost) {
-            return bn::sound_items::joost_naam;
-        }
-        if (c == all_characters::laury) {
-            return bn::sound_items::laura_naam;
-        }
-        if (c == all_characters::mar) {
-            return bn::sound_items::mar_naam;
-        }
-        if (c == all_characters::networkninja) {
-            return bn::sound_items::timo_naam;
-        }
-        if (c == all_characters::rein) {
-            return bn::sound_items::rein_naam;
-        }
-        if (c == all_characters::saskia) {
-            return bn::sound_items::saskia_naam;
-        }
-        if (c == all_characters::sietse) {
-            return bn::sound_items::sietse_naam;
-        }
-        if (c == all_characters::sjef) {
-            return bn::sound_items::sjef_naam;
-        }
-        if (c == all_characters::werner) {
-            return bn::sound_items::werner_naam;
-        }
-    }
-
-    bn::sound_item get_tagline_sound_for_character(all_characters c)
-    {
-        if (c == all_characters::cate) {
-            return bn::sound_items::cat_tagline;
-        }
-        if (c == all_characters::christine) {
-            return bn::sound_items::christine_tagline;
-        }
-        if (c == all_characters::fabian) {
-            return bn::sound_items::fabian_tagline;
-        }
-        if (c == all_characters::fleur) {
-            return bn::sound_items::fleur_tagline;
-        }
-        if (c == all_characters::hunter) {
-            return bn::sound_items::niels_tagline;
-        }
-        if (c == all_characters::joost) {
-            return bn::sound_items::joost_tagline;
-        }
-        if (c == all_characters::laury) {
-            return bn::sound_items::laura_tagline;
-        }
-        if (c == all_characters::mar) {
-            return bn::sound_items::mar_tagline;
-        }
-        if (c == all_characters::networkninja) {
-            return bn::sound_items::timo_tagline;
-        }
-        if (c == all_characters::rein) {
-            return bn::sound_items::timo_tagline;
-        }
-        if (c == all_characters::saskia) {
-            return bn::sound_items::saskia_tagline;
-        }
-        if (c == all_characters::sietse) {
-            return bn::sound_items::sietse_tagline;
-        }
-        if (c == all_characters::sjef) {
-            return bn::sound_items::sjef_tagline;
-        }
-        if (c == all_characters::werner) {
-            return bn::sound_items::werner_tagline;
-        }
-    }
-
-
-    // void 
-
-    next_scene start_game(int selected_menu_item_x, int selected_menu_item_y) 
-    {   
-        // bn::sound_items::into.play();
-        // // bn::sound_items::shield.play();
-        
-        // for (int x = 0; x < menu_items_x; x++) {
-        //     for (int y = 0; y < menu_items_x; y++) {
-        //         menu_item *item = &menu_items[x][y];
-        //         item->spr.reset();
-        //     }
-        // }
-
-        // return menu_items[selected_menu_item_x][selected_menu_item_y].scene;
-    }
-
-
-
     void create_character(bn::unique_ptr<character> &ptr,  all_characters c) 
     {
         if (c == all_characters::cate) {
@@ -385,6 +220,14 @@ namespace character_select
     }
     
 
+    void generate_character_names()
+    {
+        printer->info_text_sprites.clear();
+        printer->text_generator->set_left_alignment();
+        printer->text_generator->generate(-114, 2, you->name(), printer->info_text_sprites);
+        printer->text_generator->generate(53, 2, other_player->name(), printer->info_text_sprites);
+    }
+
     next_scene run() 
     {
         int t = 0;
@@ -402,9 +245,8 @@ namespace character_select
         bn::regular_bg_ptr bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
 
         // Selectors
-        bn::sprite_ptr selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
-        bn::sprite_ptr selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
-
+        bn::optional<bn::sprite_ptr> selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
+        bn::optional<bn::sprite_ptr> selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
 
         // Characters / players
         auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
@@ -413,45 +255,32 @@ namespace character_select
         auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
         create_character(other_player, other_selected.character_to_choose);
 
-
-        bn::sprite_ptr you_spr = cate::sprite_item().create_sprite(-spacing_x,-45);
-        bn::sprite_ptr other_spr = cate::sprite_item().create_sprite(spacing_x,-45);
-
-        bn::optional<bn::sprite_animate_action<400>> you_anim = cate::idle_anim(you_spr);
-        bn::optional<bn::sprite_animate_action<400>> other_anim = cate::idle_anim(other_spr);
-
-
         // Text generators
-        bn::optional<bn::sprite_text_generator> text_generator_you = bn::optional(bn::sprite_text_generator(common::variable_8x8_sprite_font));
-        text_generator_you->set_left_alignment();
-        bn::vector<bn::sprite_ptr, 4> text_sprites;
-        text_generator_you->generate(-112, 2, you->name(), text_sprites);
-
-        bn::optional<bn::sprite_text_generator> text_generator_other = bn::optional(bn::sprite_text_generator(common::variable_8x8_sprite_font));
-        text_generator_other->set_right_alignment();
-        bn::vector<bn::sprite_ptr, 4> text_sprites_other;
-        text_generator_other->generate(112, 2, other_player->name(), text_sprites_other);
+        generate_character_names();
 
 
         while (true) 
         {
             t++;
 
-            you_anim->update();
-            other_anim->update();
 
             // multiplayer
             multiplayer::keypad_data keys_data = multiplayer::read_keys();
             multiplayer::send_if_changed(keys_data);
             multiplayer::receive_keypad_data();
 
+            you->update(keys_data.keypad_data);
+            other_player->update(multiplayer::other_player_keypad_data.keypad_data);
+
+            you->sprite_ptr()->set_camera(*camera);
+            other_player->sprite_ptr()->set_camera(*camera);
+            camera->set_position(you->sprite_ptr()->position());
+
 
             if (multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
                 BN_LOG("start received");
-                text_sprites.clear();
-                text_sprites_other.clear();
-                text_generator_you.reset();
-                text_generator_other.reset();
+                selector_you.reset();
+                selector_other_player.reset();
                 return next_scene::platforming;
             }
 
@@ -482,24 +311,19 @@ namespace character_select
                 auto c = selected.character_to_choose;
                 you->unload(); // unload previous
                 create_character(you, c);
-                text_sprites.clear();
-                text_generator_you->generate(-112, 2, you->name(), text_sprites);
+                generate_character_names();
 
                 if (c == all_characters::empty) {
                     selected_menu_item_x = last_menu_item_x;
                     selected_menu_item_y = last_menu_item_y;
                 }
 
-                you_anim = get_animation_for_character(c, you_spr);
-
-                get_sound_for_character(c).play();
+                you->sound_naam().play();
             }
 
 
             if (keys_data.keypad_data.a_pressed) {
-                
-                selected_you = character_pictograms[selected_menu_item_x][selected_menu_item_y].character_to_choose;
-                get_tagline_sound_for_character(*selected_you).play();
+                you->sound_tagline().play();
             }
 
             // menu navigation other player
@@ -528,15 +352,12 @@ namespace character_select
                 auto c = selected.character_to_choose;
                 other_player->unload(); // unload previous
                 create_character(other_player, c);
-                text_sprites_other.clear();
-                text_generator_other->generate(112, 2, other_player->name(), text_sprites_other);
+                generate_character_names();
 
                 if (c == all_characters::empty) {
                     other_selected_menu_item_x = last_menu_item_x;
                     other_selected_menu_item_y = last_menu_item_y;
                 }
-
-                other_anim = get_animation_for_character(c, other_spr);
             }
 
             if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
@@ -549,23 +370,22 @@ namespace character_select
                     character_pictogram *item = &character_pictograms[x][y];
 
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
-                        selector_you.set_x(x_offset + item->x_offset);
-                        selector_you.set_y(y_offset + item->y_offset);
+                        selector_you->set_x(x_offset + item->x_offset);
+                        selector_you->set_y(y_offset + item->y_offset);
                     }
 
                     if (x == other_selected_menu_item_x && y == other_selected_menu_item_y) {
-                        selector_other_player.set_x(x_offset + item->x_offset);
-                        selector_other_player.set_y(y_offset + item->y_offset);
+                        selector_other_player->set_x(x_offset + item->x_offset);
+                        selector_other_player->set_y(y_offset + item->y_offset);
                     }
                 }
             }
 
 
             if (keys_data.keypad_data.start_pressed) {
-                text_sprites.clear();
-                text_sprites_other.clear();
-                text_generator_you.reset();
-                text_generator_other.reset();
+                printer->info_text_sprites.clear();
+                selector_you.reset();
+                selector_other_player.reset();
                 // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::platforming;
             }

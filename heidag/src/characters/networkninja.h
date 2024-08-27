@@ -9,7 +9,7 @@
 
 struct networkninja: public character {
     bn::string<20> name() {
-        return "Network Ninja";
+        return "Netw. Ninja";
     };
 
     bn::sprite_item avatar() {

@@ -213,6 +213,8 @@ namespace platforming_level
         other_player->sprite_ptr()->set_camera(*camera);
         camera->set_position(you->sprite_ptr()->position());
 
+        printer->text_generator->set_center_alignment();
+        
 
         while(true)
         {
@@ -221,6 +223,7 @@ namespace platforming_level
             rat.update();
             
             printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
             // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
             // Update level

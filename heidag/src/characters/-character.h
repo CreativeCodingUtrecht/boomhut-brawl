@@ -77,6 +77,9 @@ struct character {
     virtual bn::optional<bn::sprite_ptr> sprite_ptr();
     virtual void unload();
 
+
+    // behaviour
+    // virtual void set_preview_mode(bool); 
     virtual void update(multiplayer::keypad_data::keypad_data_struct keypad);
 };
 

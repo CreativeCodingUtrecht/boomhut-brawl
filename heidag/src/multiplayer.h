@@ -40,8 +40,8 @@ namespace multiplayer
 
 
     // Multiplayer
-    int players_counter;
-    int current_player_id;
+    int players_counter = 1;
+    int current_player_id = 0; 
 
     keypad_data last_keypad_data_to_send;
     keypad_data other_player_keypad_data;

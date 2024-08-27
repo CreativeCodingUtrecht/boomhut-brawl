@@ -182,7 +182,7 @@ class info_printer
     public: 
 
     bn::optional<bn::sprite_text_generator> text_generator;
-    bn::vector<bn::sprite_ptr, 5> info_text_sprites;
+    bn::vector<bn::sprite_ptr, 8> info_text_sprites;
 
     info_printer(bn::sprite_font font) 
     {
