@@ -214,7 +214,7 @@ namespace platforming_level
         camera->set_position(you->sprite_ptr()->position());
 
         printer->text_generator->set_center_alignment();
-        
+
 
         while(true)
         {
@@ -222,7 +222,7 @@ namespace platforming_level
             bee.update();
             rat.update();
             
-            printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
             // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
@@ -267,9 +267,7 @@ namespace platforming_level
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
             // if (bn::keypad::start_pressed()) {
-            //     bn::music::stop();
-            //     players.clear();
-            //     return next_scene::main_menu;
+            //     return next_scene::character_select;
             // }
 
             bn::core::update();

@@ -79,7 +79,7 @@ struct character {
 
 
     // behaviour
-    // virtual void set_preview_mode(bool); 
+    virtual void set_preview_mode(bool); 
     virtual void update(multiplayer::keypad_data::keypad_data_struct keypad);
 };
 

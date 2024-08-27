@@ -121,7 +121,18 @@ struct networkninja: public character {
         _sprite_ptr.reset();
     }
 
-    void update(multiplayer::keypad_data::keypad_data_struct keypad) override {
+    bool _preview_mode;
+    void set_preview_mode(bool on_or_off) {
+        _preview_mode = on_or_off;
+    }
+
+
+    void update(multiplayer::keypad_data::keypad_data_struct keypad) {
+        if (_preview_mode) {
+            anims->idle.update();
+            return;
+        }
+        
         BN_LOG("update networkninja");
 
         

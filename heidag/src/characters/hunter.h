@@ -114,8 +114,18 @@ struct hunter: public character {
         _sprite_ptr.reset();
     }
     
+    bool _preview_mode;
+    void set_preview_mode(bool on_or_off) {
+        _preview_mode = on_or_off;
+    }
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
+        if (_preview_mode) {
+            anims->idle.update();
+            return;
+        }
+        
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
 
