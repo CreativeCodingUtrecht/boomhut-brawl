@@ -173,49 +173,49 @@ namespace character_select
         }
     };
 
-    void create_character(bn::unique_ptr<character> &ptr,  all_characters c) 
+    void create_character(character **ptr,  all_characters c) 
     {
         if (c == all_characters::cate) {
-            ptr.reset(new cate());
+            *ptr = new cate();
         }
         if (c == all_characters::christine) {
-            ptr.reset(new christine());
+            *ptr = new christine();
         }
         if (c == all_characters::fabian) {
-            ptr.reset(new fabian());
+            *ptr = new fabian();
         }
         if (c == all_characters::fleur) {
-            ptr.reset(new fleur());
+            *ptr = new fleur();
         }
         if (c == all_characters::hunter) {
-            ptr.reset(new hunter());
+            *ptr = new hunter();
         }
         if (c == all_characters::joost) {
-            ptr.reset(new joost());
+            *ptr = new joost();
         }
         if (c == all_characters::laury) {
-            ptr.reset(new laury());
+            *ptr = new laury();
         }
         if (c == all_characters::mar) {
-            ptr.reset(new mar());
+            *ptr = new mar();
         }
         if (c == all_characters::networkninja) {
-            ptr.reset(new networkninja());
+            *ptr = new networkninja();
         }
         if (c == all_characters::rein) {
-            ptr.reset(new rein());
+            *ptr = new rein();
         }
         if (c == all_characters::saskia) {
-            ptr.reset(new saskia());
+            *ptr = new saskia();
         }
         if (c == all_characters::sietse) {
-            ptr.reset(new sietse());
+            *ptr = new sietse();
         }
         if (c == all_characters::sjef) {
-            ptr.reset(new sjef());
+            *ptr = new sjef();
         }
         if (c == all_characters::werner) {
-            ptr.reset(new werner());
+            *ptr = new werner();
         }
     }
     
@@ -254,7 +254,7 @@ namespace character_select
         }
 
         auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
-        create_character(you, selected.character_to_choose);
+        create_character(&you, selected.character_to_choose);
         you->set_preview_mode(true);
         you->sprite_ptr()->set_position(-spacing_x, -45);
 
@@ -264,7 +264,7 @@ namespace character_select
         }
 
         auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
-        create_character(other_player, other_selected.character_to_choose);
+        create_character(&other_player, other_selected.character_to_choose);
         other_player->set_preview_mode(true);
         other_player->sprite_ptr()->set_position(spacing_x, -45);
 
@@ -290,7 +290,7 @@ namespace character_select
 
             you->sprite_ptr()->set_camera(*camera);
             other_player->sprite_ptr()->set_camera(*camera);
-            // camera->set_position(you->sprite_ptr()->position());
+            // camera->set_position(you->sprite_ptr()->position();
 
 
             if (multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
@@ -328,7 +328,7 @@ namespace character_select
                 auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
                 auto c = selected.character_to_choose;
                 you->unload(); // unload previous
-                create_character(you, c);
+                create_character(&you, c);
                 you->set_preview_mode(true);
                 you->sprite_ptr()->set_position(-spacing_x, -45);
                 generate_character_names();
@@ -375,7 +375,7 @@ namespace character_select
                 auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
                 auto c = selected.character_to_choose;
                 other_player->unload(); // unload previous
-                create_character(other_player, c);
+                create_character(&other_player, c);
                 other_player->set_preview_mode(true);
                 other_player->sprite_ptr()->set_position(spacing_x, -45);
                 generate_character_names();

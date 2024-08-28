@@ -292,11 +292,18 @@ struct hunter: public character {
             a.spr.set_x(a.spr.x() + 10 * a.direction);
             a.spr.set_horizontal_flip(a.direction == -1);
 
+            BN_LOG(you == this);
+            
             // hitting people
-            if (distance(a.spr.position(), other_player->sprite_ptr()->position()) < 32) {
-                other_player->sound_hit().play();
-                arrows.erase(arrows.begin() + i);
-                other_player->take_damage(10);
+            auto ps = players();
+            for (character* p : ps) {
+                if (p != this) {
+                    if (distance(a.spr.position(), p->sprite_ptr()->position()) < 32) {
+                        p->sound_hit().play();
+                        arrows.erase(arrows.begin() + i);
+                        p->take_damage(10);
+                    }
+                }
             }
 
             if (a.spr.x() > bounds_max_x || a.spr.x() < bounds_min_x) {

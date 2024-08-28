@@ -100,10 +100,16 @@ struct character {
 
 
 // Global
-// bn::vector<bn::unique_ptr<character>, 2> players;
+character* you;
+character* other_player;
 
-bn::unique_ptr<character> you;
-bn::unique_ptr<character> other_player;
+bn::vector<character*, 2> players() {
+    bn::vector<character*, 2> vec;
+    vec.push_back(you);
+    vec.push_back(other_player);
+    return vec;
+}
+
 
 bn::optional<all_characters> selected_you;
 bn::optional<all_characters> selected_other;

@@ -198,11 +198,11 @@ namespace platforming_level
         // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
 
         if (!you) {
-            you.reset(new fabian());
+            you = new fabian();
         }
 
         if (!other_player) {
-            other_player.reset(new fabian());
+            other_player = new fabian();
         }
 
 
