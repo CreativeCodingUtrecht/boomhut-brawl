@@ -317,7 +317,7 @@ namespace character_select
                 other_player->set_preview_mode(false);
                 selector_you.reset();
                 selector_other_player.reset();
-                return next_scene::platforming;
+                return next_scene::battle;
             }
 
 
@@ -444,13 +444,13 @@ namespace character_select
                 other_player->sprite_ptr()->set_mosaic_enabled(true);
 
                 // bn::link::send(multiplayer::signal_start_game);
-                return next_scene::platforming;
+                return next_scene::battle;
             }
 
             bn::core::update();
         }
 
-        return next_scene::platforming;
+        return next_scene::battle;
     }
 
 

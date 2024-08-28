@@ -56,6 +56,7 @@ struct character_animations {
 };
 
 
+// Will be shown in the character select screen
 struct weapon_info {
     bn::string<20> name;
     bn::sprite_item avatar;

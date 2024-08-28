@@ -50,7 +50,7 @@ namespace main_menu
         {
             menu_item 
             {
-                next_scene::platforming,
+                next_scene::battle,
                 bn::sprite_items::menu_platforming,
                 0,
                 0
@@ -208,7 +208,7 @@ namespace main_menu
             bn::core::update();
         }
 
-        return next_scene::platforming;
+        return next_scene::battle;
     }
 
 
