@@ -29,19 +29,19 @@ struct rein: public character {
     };
 
     bn::sound_item sound_naam() {
-        return bn::sound_items::timo_naam;
+        return bn::sound_items::rein_naam;
     }
 
     bn::sound_item sound_tagline() {
-        return bn::sound_items::timo_tagline;
+        return bn::sound_items::rein_tagline;
     }
 
     bn::sound_item sound_jump() {
-        return bn::sound_items::timo_jump;
+        return bn::sound_items::rein_jump;
     }
 
     bn::sound_item sound_hit() {
-        return bn::sound_items::timo_hit;
+        return bn::sound_items::rein_hit;
     }
 
     bn::optional<weapon_info> get_weapon_info() {}
