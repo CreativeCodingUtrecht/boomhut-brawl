@@ -44,6 +44,8 @@ struct rein: public character {
         return bn::sound_items::timo_hit;
     }
 
+    bn::optional<weapon_info> get_weapon_info() {}
+
     bn::fixed health = max_health();
 
     bn::fixed_point position = spawn_point;
@@ -73,17 +75,13 @@ struct rein: public character {
 
 
     // Animations
-    static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
-        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::rein_lario.tiles_item(), 
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
-        );
-    }
-
 
     virtual character_animations animations() override {
         return {
             character_animations {
-                idle: idle_anim(*_sprite_ptr),
+                idle: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
+                ),
                 run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
                 ),

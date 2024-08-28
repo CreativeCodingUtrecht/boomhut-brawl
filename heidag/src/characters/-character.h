@@ -56,6 +56,12 @@ struct character_animations {
 };
 
 
+struct weapon_info {
+    bn::string<20> name;
+    bn::sprite_item avatar;
+};
+
+
 
 // Abstract character
 struct character {
@@ -77,6 +83,8 @@ struct character {
     virtual bn::optional<bn::sprite_ptr> sprite_ptr();
     virtual void unload();
 
+    // weapons
+    virtual bn::optional<weapon_info> get_weapon_info();
 
     // behaviour
     virtual void set_preview_mode(bool); 

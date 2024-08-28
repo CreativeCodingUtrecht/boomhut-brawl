@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_timo.h"
 #include "bn_sprite_items_avatar_networkninja.h"
+#include "bn_sprite_items_rat.h"
 #include "bn_sound_items.h"
 
 
@@ -46,7 +47,16 @@ struct networkninja: public character {
     }
 
     bn::fixed health = max_health();
- 
+    
+
+
+    bn::optional<weapon_info> get_weapon_info() {
+        return weapon_info {
+            name: "keyboard",
+            avatar: bn::sprite_items::rat 
+        };
+    }
+
 
     
 
@@ -56,18 +66,14 @@ struct networkninja: public character {
     bn::sprite_item _sprite_item = bn::sprite_items::timo;
     bn::optional<bn::sprite_ptr>_sprite_ptr = _sprite_item.create_sprite(position);
 
-    static bn::sprite_animate_action<400> idle_anim(bn::sprite_ptr spr)  {
-        return bn::create_sprite_animate_action_forever(spr, 1, bn::sprite_items::timo.tiles_item(), 
-            46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
-        );
-    }
-
 
     character_animations animations() override {
         BN_LOG("from  fabian");
         return {
             character_animations {
-                idle: idle_anim(*_sprite_ptr),
+                idle: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::timo.tiles_item(), 
+                    46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
+                ),
                 run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
                 ),
@@ -125,7 +131,6 @@ struct networkninja: public character {
     void set_preview_mode(bool on_or_off) {
         _preview_mode = on_or_off;
     }
-
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
