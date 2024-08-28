@@ -26,7 +26,7 @@
 
 // scenes
 #include "scene.h"
-#include "boomhut.h"
+#include "battle.h"
 #include "splash.h"
 #include "main_menu.h"
 #include "character_select.h"

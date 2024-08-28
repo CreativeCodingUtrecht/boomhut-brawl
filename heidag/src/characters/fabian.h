@@ -42,6 +42,14 @@ struct fabian: public character {
 
     bn::fixed health = max_health();
  
+ 
+    bn::fixed get_health() {
+        return health;
+    }
+
+    void take_damage(bn::fixed amount) {
+        health -= amount;
+    }
 
     bn::fixed run_speed() {
         return 2.5;

@@ -49,6 +49,13 @@ struct networkninja: public character {
     bn::fixed health = max_health();
     
 
+    bn::fixed get_health() {
+        return health;
+    }
+
+    void take_damage(bn::fixed amount) {
+        health -= amount;
+    }
 
     bn::optional<weapon_info> get_weapon_info() {
         return weapon_info {

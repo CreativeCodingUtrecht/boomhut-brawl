@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_hunter.h"
 #include "bn_sprite_items_avatar_hunter.h"
+#include "bn_sprite_items_hunter_arrow.h"
 #include "bn_sound_items.h"
 
 
@@ -48,8 +49,13 @@ struct hunter: public character {
     bn::fixed health = max_health();
 
 
-    bn::optional<weapon_info> get_weapon_info() {}
+    bn::fixed get_health() {
+        return health;
+    }
 
+    void take_damage(bn::fixed amount) {
+        health -= amount;
+    }
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
@@ -61,6 +67,7 @@ struct hunter: public character {
     bool flipped;
     bool is_landing;
     bool is_falling;
+
 
     int spr_y_offset = 2;
 
@@ -82,6 +89,13 @@ struct hunter: public character {
 
     
     // Animations
+    bn::optional<bn::sprite_animate_action<5>> attack_anim_load = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, bn::sprite_items::hunter.tiles_item(), 
+        187, 188, 189, 190, 191
+    );
+
+    bn::optional<bn::sprite_animate_action<18>> attack_anim_unload = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, bn::sprite_items::hunter.tiles_item(), 
+        192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209
+    );
     
     virtual character_animations animations() override {
         return {
@@ -111,6 +125,8 @@ struct hunter: public character {
 
     void unload() {
         anims.reset();
+        attack_anim_load.reset();
+        attack_anim_unload.reset();
         _sprite_ptr.reset();
     }
     
@@ -119,6 +135,31 @@ struct hunter: public character {
         _preview_mode = on_or_off;
     }
 
+
+
+
+    // weapon
+    bn::optional<weapon_info> get_weapon_info() {
+        return weapon_info {
+            name: "Arrow",
+            avatar: bn::sprite_items::hunter_arrow
+        };
+    }
+
+    bool is_aiming;
+    bool is_unloading;
+    int max_aiming_countdown = 60;
+    int aiming_countdown = 60;
+
+   struct arrow {
+        bn::sprite_ptr spr;
+        int direction;
+    };
+
+    bn::vector<arrow, 4> arrows;   
+
+ 
+ 
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
@@ -217,8 +258,69 @@ struct hunter: public character {
         _sprite_ptr->set_x(position.x());
         _sprite_ptr->set_y(position.y() + spr_y_offset);
 
+
+
+        // Aiming!
+        if (keypad.b_pressed) {
+        }
+        if (keypad.b_held) {
+            is_aiming = true;
+            // Shoot!
+            if (aiming_countdown == 0) {
+                
+            } else {
+                aiming_countdown--;
+            }
+        }
+        if (!keypad.b_held && is_aiming) {
+            is_aiming = false;
+            bn::sound_items::hunter_bow.play_with_priority(3000);
+            attack_anim_load->reset();
+            aiming_countdown = 60;
+            arrow new_arrow = arrow {
+                spr: bn::sprite_items::hunter_arrow.create_sprite(position.x(), position.y() - 8),
+                direction: _sprite_ptr->horizontal_flip() ? -1 : 1
+            };
+
+            new_arrow.spr.set_camera(camera);
+            arrows.push_back(new_arrow);
+        }
+
+        // Animate arrow
+        for (int i = 0; i < arrows.size(); i++) {
+            arrow a = arrows.at(i);
+            a.spr.set_x(a.spr.x() + 10 * a.direction);
+            a.spr.set_horizontal_flip(a.direction == -1);
+
+            // hitting people
+            if (distance(a.spr.position(), other_player->sprite_ptr()->position()) < 32) {
+                other_player->sound_hit().play();
+                arrows.erase(arrows.begin() + i);
+                other_player->take_damage(10);
+            }
+
+            if (a.spr.x() > bounds_max_x || a.spr.x() < bounds_min_x) {
+                arrows.erase(arrows.begin() + i);
+            }
+        }
+        
         // Update the right animation
-        if (is_falling && !is_jumping && !is_landing) {
+        if (is_aiming) {
+            if (!attack_anim_load->done()) {
+                attack_anim_load->update();
+            } else {
+                is_unloading = true;
+            }
+        } 
+        else if (is_unloading) {
+            if (!attack_anim_unload->done()) {
+                attack_anim_unload->update();
+            } else {
+                is_unloading = false;
+                attack_anim_unload->reset();
+            }
+        }
+        else if (is_falling && !is_jumping && !is_landing) {
             anims->jump_stay.update();
         }
         else if (is_running && !is_jumping) {

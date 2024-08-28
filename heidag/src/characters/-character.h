@@ -71,6 +71,10 @@ struct character {
     virtual bn::fixed run_speed();
     virtual bn::fixed jump_velocity();
 
+    virtual bn::fixed get_health();
+    virtual void take_damage(bn::fixed);
+
+
     // sounds
     virtual bn::sound_item sound_naam();
     virtual bn::sound_item sound_tagline();

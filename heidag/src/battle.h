@@ -79,9 +79,10 @@ struct healthbars
     bn::sprite_ptr healthbar_fill = bn::sprite_items::healthbar_fill.create_sprite(position_1.x() + 48, position_1.y()+3);
     bn::sprite_ptr healthbar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + 48, position_1.y());
 
-    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20);;
+    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20);
+    const bn::fixed_point healthbar_fill_position_2 = bn::fixed_point(position_2.x() - 48, position_2.y()+3);
     bn::sprite_ptr boss_frame2 = bn::sprite_items::pictogram_frame.create_sprite(position_2);
-    bn::sprite_ptr healthbar_fill2 = bn::sprite_items::healthbar_fill.create_sprite(position_2.x() - 48, position_2.y()+3);
+    bn::sprite_ptr healthbar_fill2 = bn::sprite_items::healthbar_fill.create_sprite(healthbar_fill_position_2);
     bn::sprite_ptr healthbar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
 
     healthbars(bn::sprite_item boss_spr_item, bn::sprite_item boss_spr_item2):
@@ -107,7 +108,8 @@ struct healthbars
     // 0 - 1
     void set_health_right(bn::fixed health)
     {
-        healthbar_fill.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
+        healthbar_fill2.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
+        healthbar_fill2.set_position(healthbar_fill_position_2.x() + 32 - health * 32, healthbar_fill_position_2.y());
         // healthbar_fill.set_x(position_2.x() + map(health, 0, 1, 16, 48));
     }
 };
@@ -265,6 +267,12 @@ namespace platforming_level
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
+
+
+
+            // Health bars
+            bars.set_health_left(you->get_health() / you->max_health());
+            bars.set_health_right(other_player->get_health() / other_player->max_health());
 
             if (bn::keypad::select_pressed()) {
                 bars.pictogram.reset();

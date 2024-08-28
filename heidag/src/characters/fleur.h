@@ -40,6 +40,14 @@ struct fleur: public character {
 
     bn::fixed health = max_health();
 
+    bn::fixed get_health() {
+        return health;
+    }
+
+    void take_damage(bn::fixed amount) {
+        health -= amount;
+    }
+
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
 

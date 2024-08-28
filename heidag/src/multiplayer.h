@@ -17,6 +17,7 @@ namespace multiplayer
             int right_pressed: 1;
             int a_pressed : 1;
             int b_pressed : 1;
+            int b_held : 1;
 
             int left_held : 1;
             int right_held : 1;
@@ -59,9 +60,12 @@ namespace multiplayer
                 left_pressed: bn::keypad::left_pressed(),
                 right_pressed: bn::keypad::right_pressed(),
                 a_pressed: bn::keypad::a_pressed(),
+                b_pressed: bn::keypad::b_held(),
+                b_held: bn::keypad::b_held(),
                 left_held: bn::keypad::left_held(),
                 right_held: bn::keypad::right_held(),
-                select_pressed: bn::keypad::select_pressed()
+                select_pressed: bn::keypad::select_pressed(),
+
             }
         };
     }

@@ -346,6 +346,10 @@ namespace character_select
                 you->sound_tagline().play();
             }
 
+            if (keys_data.keypad_data.b_pressed) {
+                bn::sound_items::fight_countdown.play();
+            }
+
             // menu navigation other player
             if (multiplayer::other_player_keypad_data.keypad_data.up_pressed || multiplayer::other_player_keypad_data.keypad_data.down_pressed || 
                 multiplayer::other_player_keypad_data.keypad_data.left_pressed || multiplayer::other_player_keypad_data.keypad_data.right_pressed) {
