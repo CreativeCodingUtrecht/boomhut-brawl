@@ -63,113 +63,34 @@ namespace character_select
     };
 
     const int menu_items_x = 5;
-    const int menu_items_y = 5;
+    const int menu_items_y = 3;
 
-    int y_offset = 0;
-    int spacing_x = 85;
-
-
-    character_pictogram character_pictograms[menu_items_y][menu_items_x] = 
+    character_pictogram character_pictograms[menu_items_x][menu_items_y] = 
     {
         {
-            character_pictogram 
-            {
-                all_characters::cate,
-                -33,
-                -62
-            },
-            character_pictogram 
-            {
-                all_characters::christine,
-                -2,
-                -62
-            },
-            character_pictogram 
-            {
-                all_characters::fabian,
-                29,
-                -62
-            },
+            character_pictogram(all_characters::cate, -33, -62),
+            character_pictogram(all_characters::christine, -2, -62),
+            character_pictogram(all_characters::fabian, 29, -62),
         },
         {
-            character_pictogram 
-            {
-                all_characters::fleur,
-                -33,
-                -31
-            },
-            character_pictogram 
-            {
-                all_characters::hunter,
-                -2,
-                -31,
-            },
-            character_pictogram 
-            {
-                all_characters::joost,
-                29,
-                -31,
-            },
-        }
-        ,{
-            character_pictogram 
-            {
-                all_characters::laury,
-                -33,
-                -0
-            },
-            character_pictogram 
-            {
-                all_characters::mar,
-                -2,
-                -0
-            },
-            character_pictogram 
-            {
-                all_characters::networkninja,
-                29,
-                -0
-            },
+            character_pictogram(all_characters::fleur, -33, -31),
+            character_pictogram(all_characters::hunter, -2, -31),
+            character_pictogram(all_characters::joost, 29, -31),
         },
         {
-            character_pictogram 
-            {
-                all_characters::rein,
-                -33,
-                31
-            },
-            character_pictogram 
-            {
-                all_characters::saskia,
-                -2,
-                31
-            },
-            character_pictogram 
-            {
-                all_characters::sjef,
-                29,
-                31
-            },
+            character_pictogram(all_characters::laury, -33, -0),
+            character_pictogram(all_characters::mar, -2, -0),
+            character_pictogram(all_characters::networkninja, 29, -0)
         },
         {
-            character_pictogram 
-            {
-                all_characters::werner,
-                -33,
-                62
-            },
-            character_pictogram 
-            {
-                all_characters::sietse,
-                -2,
-                62
-            },
-            character_pictogram 
-            {
-                all_characters::empty,
-                29,
-                62
-            },
+            character_pictogram(all_characters::rein, -33, 31),
+            character_pictogram(all_characters::saskia, -2, 31),
+            character_pictogram(all_characters::sjef, 29, 31),
+        },
+        {
+            character_pictogram(all_characters::werner, -33, 62),
+            character_pictogram(all_characters::sietse, -2, 62),
+            character_pictogram(all_characters::empty, 29, 62),
         }
     };
 
@@ -233,9 +154,6 @@ namespace character_select
         int t = 0;
         bool connected = false;
 
-        int x_offset = 0;
-        int y_offset = 0;
-
         int selected_menu_item_x = 0;
         int selected_menu_item_y = 0;
         int other_selected_menu_item_x = 0;
@@ -252,21 +170,20 @@ namespace character_select
         int mosaic_timer_you = 20;
         int mosaic_timer_other = 20;
 
-        // Characters / players
-        if (you) {
-            you->unload();
-        }
 
+        // Characters / players
+        int y_offset = -45;
+        int spacing_x = 85;
+
+        if (you) you->unload();
         auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
         create_character(&you, selected.character_to_choose);
         you->set_preview_mode(true);
         you->sprite_ptr()->set_position(-spacing_x, -45);
         you->sprite_ptr()->set_mosaic_enabled(true);
 
-        if (other_player) {
-            other_player->unload();
-        }
 
+        if (other_player) other_player->unload();
         auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
         create_character(&other_player, other_selected.character_to_choose);
         other_player->set_preview_mode(true);
@@ -346,20 +263,19 @@ namespace character_select
 
                 auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
                 auto c = selected.character_to_choose;
-                you->unload(); // unload previous
-                create_character(&you, c);
-                you->set_preview_mode(true);
-                you->sprite_ptr()->set_position(-spacing_x, -45);
-                you->sprite_ptr()->set_mosaic_enabled(true);
-
-                generate_character_names();
 
                 if (c == all_characters::empty) {
                     selected_menu_item_x = last_menu_item_x;
                     selected_menu_item_y = last_menu_item_y;
+                } else {
+                    you->unload(); // unload previous
+                    create_character(&you, c);
+                    you->set_preview_mode(true);
+                    you->sprite_ptr()->set_position(-spacing_x, -45);
+                    you->sprite_ptr()->set_mosaic_enabled(true);
+                    generate_character_names();
+                    you->sound_naam().play();
                 }
-
-                you->sound_naam().play();
             }
 
 
@@ -397,16 +313,17 @@ namespace character_select
 
                 auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
                 auto c = selected.character_to_choose;
-                other_player->unload(); // unload previous
-                create_character(&other_player, c);
-                other_player->set_preview_mode(true);
-                other_player->sprite_ptr()->set_position(spacing_x, -45);
-                other_player->sprite_ptr()->set_mosaic_enabled(true);
-                generate_character_names();
-
+                
                 if (c == all_characters::empty) {
                     other_selected_menu_item_x = last_menu_item_x;
                     other_selected_menu_item_y = last_menu_item_y;
+                } else {
+                    other_player->unload(); // unload previous
+                    create_character(&other_player, c);
+                    other_player->set_preview_mode(true);
+                    other_player->sprite_ptr()->set_position(spacing_x, -45);
+                    other_player->sprite_ptr()->set_mosaic_enabled(true);
+                    generate_character_names();
                 }
             }
 
@@ -420,13 +337,13 @@ namespace character_select
                     character_pictogram *item = &character_pictograms[x][y];
 
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
-                        selector_you->set_x(x_offset + item->x_offset);
-                        selector_you->set_y(y_offset + item->y_offset);
+                        selector_you->set_x(item->x_offset);
+                        selector_you->set_y(item->y_offset);
                     }
 
                     if (x == other_selected_menu_item_x && y == other_selected_menu_item_y) {
-                        selector_other_player->set_x(x_offset + item->x_offset);
-                        selector_other_player->set_y(y_offset + item->y_offset);
+                        selector_other_player->set_x(item->x_offset);
+                        selector_other_player->set_y(item->y_offset);
                     }
                 }
             }
