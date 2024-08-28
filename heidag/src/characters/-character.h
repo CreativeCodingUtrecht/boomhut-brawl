@@ -73,6 +73,7 @@ struct character {
 
     virtual bn::fixed get_health();
     virtual void take_damage(bn::fixed);
+    virtual void apply_force(bn::fixed_point) {}; // TODO implement everywhere, remove impl. here
 
 
     // sounds

@@ -22,7 +22,7 @@ struct hunter: public character {
     };
 
     bn::fixed run_speed() {
-        return 4;
+        return 1;
     };
 
     bn::fixed jump_velocity() {
@@ -223,7 +223,7 @@ struct hunter: public character {
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed());
+            velocity.set_x(velocity.x() - run_speed());
             _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
@@ -232,7 +232,7 @@ struct hunter: public character {
         }
 
         if (keypad.right_held) {
-            velocity.set_x(run_speed());
+            velocity.set_x(velocity.x() + run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -241,7 +241,7 @@ struct hunter: public character {
         }
         
         if (!keypad.left_held && !keypad.right_held) {
-            velocity.set_x(0);
+            // velocity.set_x(0);
             if (is_running) {
                 is_running = false;
             }
@@ -250,6 +250,9 @@ struct hunter: public character {
 
         // Apply velocity to position
         position += velocity;
+        BN_LOG(velocity.x());
+        bn::fixed drg = .75;
+        velocity.set_x(velocity.x() * drg);
 
         // Map bounds
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
@@ -295,14 +298,13 @@ struct hunter: public character {
             BN_LOG(you == this);
             
             // hitting people
-            auto ps = players();
-            for (character* p : ps) {
-                if (p != this) {
-                    if (distance(a.spr.position(), p->sprite_ptr()->position()) < 32) {
-                        p->sound_hit().play();
-                        arrows.erase(arrows.begin() + i);
-                        p->take_damage(10);
-                    }
+            for (character* p : players()) {
+                if (p != this && distance(a.spr.position(), p->sprite_ptr()->position()) < 32) {
+                    p->sound_hit().play();
+                    arrows.erase(arrows.begin() + i);
+                    p->take_damage(10);
+                    bn::fixed f = 10;
+                    p->apply_force(bn::fixed_point(f * a.direction, 0));
                 }
             }
 

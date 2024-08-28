@@ -13,6 +13,7 @@
         "span": "cpp",
         "random": "cpp",
         "*.tcc": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "system_error": "cpp"
     }
 }

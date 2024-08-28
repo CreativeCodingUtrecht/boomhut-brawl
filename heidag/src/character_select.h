@@ -248,6 +248,10 @@ namespace character_select
         bn::optional<bn::sprite_ptr> selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
         bn::optional<bn::sprite_ptr> selector_other_player = bn::sprite_items::pictogram_selector_other_player.create_sprite(0,0);
 
+        // Mosaic timers
+        int mosaic_timer_you = 20;
+        int mosaic_timer_other = 20;
+
         // Characters / players
         if (you) {
             you->unload();
@@ -257,7 +261,7 @@ namespace character_select
         create_character(&you, selected.character_to_choose);
         you->set_preview_mode(true);
         you->sprite_ptr()->set_position(-spacing_x, -45);
-
+        you->sprite_ptr()->set_mosaic_enabled(true);
 
         if (other_player) {
             other_player->unload();
@@ -267,6 +271,7 @@ namespace character_select
         create_character(&other_player, other_selected.character_to_choose);
         other_player->set_preview_mode(true);
         other_player->sprite_ptr()->set_position(spacing_x, -45);
+        you->sprite_ptr()->set_mosaic_enabled(true);
 
         camera->set_position(0,0);
 
@@ -279,6 +284,19 @@ namespace character_select
         {
             t++;
 
+            if (mosaic_timer_you > 0) {
+                mosaic_timer_you -= 1;
+            } else {
+                you->sprite_ptr()->set_mosaic_enabled(false);
+            }
+
+            if (mosaic_timer_other > 0) {
+                mosaic_timer_other -= 1;
+                other_player->sprite_ptr()->set_mosaic_enabled(false);
+            }
+
+            bn::sprites_mosaic::set_stretch(map(bn::max(mosaic_timer_you, mosaic_timer_other), 20, 0, 1, 0));
+            
 
             // multiplayer
             multiplayer::keypad_data keys_data = multiplayer::read_keys();
@@ -308,6 +326,7 @@ namespace character_select
                 keys_data.keypad_data.left_pressed || keys_data.keypad_data.right_pressed) {
                 
                 bn::sound_items::cursor.play();
+                mosaic_timer_you = 20;
 
                 int last_menu_item_x = selected_menu_item_x;
                 int last_menu_item_y = selected_menu_item_y;
@@ -331,6 +350,8 @@ namespace character_select
                 create_character(&you, c);
                 you->set_preview_mode(true);
                 you->sprite_ptr()->set_position(-spacing_x, -45);
+                you->sprite_ptr()->set_mosaic_enabled(true);
+
                 generate_character_names();
 
                 if (c == all_characters::empty) {
@@ -355,6 +376,8 @@ namespace character_select
                 multiplayer::other_player_keypad_data.keypad_data.left_pressed || multiplayer::other_player_keypad_data.keypad_data.right_pressed) {
                 
                 // bn::sound_items::cursor.play();
+                mosaic_timer_you = 20;
+
 
                 int last_menu_item_x = other_selected_menu_item_x;
                 int last_menu_item_y = other_selected_menu_item_y;
@@ -378,6 +401,7 @@ namespace character_select
                 create_character(&other_player, c);
                 other_player->set_preview_mode(true);
                 other_player->sprite_ptr()->set_position(spacing_x, -45);
+                other_player->sprite_ptr()->set_mosaic_enabled(true);
                 generate_character_names();
 
                 if (c == all_characters::empty) {
@@ -415,6 +439,9 @@ namespace character_select
 
                 you->set_preview_mode(false);
                 other_player->set_preview_mode(false);
+
+                // you->sprite_ptr()->set_mosaic_enabled(true);
+                other_player->sprite_ptr()->set_mosaic_enabled(true);
 
                 // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::platforming;

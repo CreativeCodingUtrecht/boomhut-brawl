@@ -6,6 +6,7 @@
 #include "bn_sprite_items_avatar_cate.h";
 #include "bn_sound_items.h"
 
+#include "bn_sprites_mosaic_actions.h"
 
 struct cate: public character {
     bn::string<20> name() {
@@ -21,7 +22,7 @@ struct cate: public character {
     };
 
     bn::fixed run_speed() {
-        return 4;
+        return 1;
     };
 
     bn::fixed jump_velocity() {
@@ -52,14 +53,23 @@ struct cate: public character {
         return health;
     }
 
-    void take_damage(bn::fixed amount) {
-        health -= amount;
-    }
-
     bn::optional<weapon_info> get_weapon_info() { }
 
     bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
+
+    int mosaic_timer = 30;
+
+    void take_damage(bn::fixed amount) {
+        mosaic_timer = 30;
+        _sprite_ptr->set_mosaic_enabled(true);
+        health -= amount;
+    }
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
 
     bool is_jumping;
     bool is_running;
@@ -107,11 +117,11 @@ struct cate: public character {
         };
     }
 
-   bn::optional<character_animations> anims = animations();
-
+    bn::optional<character_animations> anims = animations();
 
     cate() {
-
+        _sprite_ptr->set_mosaic_enabled(true);
+        
     }
 
     void unload() {
@@ -131,6 +141,13 @@ struct cate: public character {
         if (_preview_mode) {
             anims->idle.update();
             return;
+        }
+
+        if (mosaic_timer > 0) {
+            mosaic_timer--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
+        } else {
+            _sprite_ptr->set_mosaic_enabled(false);
         }
 
 
@@ -190,7 +207,7 @@ struct cate: public character {
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed());
+            velocity.set_x(velocity.x() - run_speed());
             _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
@@ -198,12 +215,8 @@ struct cate: public character {
             }
         }
 
-        // punching
-        if (keypad.b_pressed) {
-        }
-
         if (keypad.right_held) {
-            velocity.set_x(run_speed());
+            velocity.set_x(velocity.x() + run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -212,7 +225,7 @@ struct cate: public character {
         }
         
         if (!keypad.left_held && !keypad.right_held) {
-            velocity.set_x(0);
+            // velocity.set_x(0);
             if (is_running) {
                 is_running = false;
             }
@@ -221,6 +234,9 @@ struct cate: public character {
 
         // Apply velocity to position
         position += velocity;
+        BN_LOG(velocity.x());
+        bn::fixed drg = .85;
+        velocity.set_x(velocity.x() * drg);
 
         // Map bounds
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
