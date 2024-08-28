@@ -51,9 +51,17 @@ struct christine: public character {
         return health;
     }
     
+
+
+    int mosaic_timer = 30;
+
     void take_damage(bn::fixed amount) {
+        mosaic_timer = 30;
+        _sprite_ptr->set_mosaic_enabled(true);
         health -= amount;
     }
+
+
 
     bn::optional<weapon_info> get_weapon_info() {
         
@@ -128,6 +136,14 @@ struct christine: public character {
         if (_preview_mode) {
             anims->idle.update();
             return;
+        }
+
+
+       if (mosaic_timer > 0) {
+            mosaic_timer--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
+        } else {
+            _sprite_ptr->set_mosaic_enabled(false);
         }
 
         // Watch for gravity

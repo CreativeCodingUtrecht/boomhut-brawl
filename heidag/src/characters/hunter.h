@@ -53,12 +53,23 @@ struct hunter: public character {
         return health;
     }
 
-    void take_damage(bn::fixed amount) {
-        health -= amount;
-    }
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
+
+
+    int mosaic_timer = 30;
+
+    void take_damage(bn::fixed amount) {
+        mosaic_timer = 30;
+        _sprite_ptr->set_mosaic_enabled(true);
+        health -= amount;
+    }
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
     
     
 
@@ -166,6 +177,14 @@ struct hunter: public character {
             anims->idle.update();
             return;
         }
+
+        if (mosaic_timer > 0) {
+            mosaic_timer--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
+        } else {
+            _sprite_ptr->set_mosaic_enabled(false);
+        }
+
         
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 

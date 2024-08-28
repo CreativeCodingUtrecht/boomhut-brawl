@@ -47,7 +47,11 @@ struct fabian: public character {
         return health;
     }
 
+    int mosaic_timer = 30;
+
     void take_damage(bn::fixed amount) {
+        mosaic_timer = 30;
+        _sprite_ptr->set_mosaic_enabled(true);
         health -= amount;
     }
 
@@ -61,6 +65,8 @@ struct fabian: public character {
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
+
+
 
     bn::sprite_item _sprite_item = bn::sprite_items::fabian;
     bn::optional<bn::sprite_ptr>_sprite_ptr = _sprite_item.create_sprite(position);
@@ -136,6 +142,13 @@ struct fabian: public character {
         if (_preview_mode) {
             anims->idle.update();
             return;
+        }
+
+        if (mosaic_timer > 0) {
+            mosaic_timer--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
+        } else {
+            _sprite_ptr->set_mosaic_enabled(false);
         }
         
         BN_LOG("update fabian");

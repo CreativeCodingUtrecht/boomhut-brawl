@@ -57,7 +57,11 @@ struct sjef: public character {
         return health;
     }
 
+    
+    int mosaic_timer = 30;
     void take_damage(bn::fixed amount) {
+        mosaic_timer = 30;
+        _sprite_ptr->set_mosaic_enabled(true);
         health -= amount;
     }
 
@@ -135,6 +139,14 @@ struct sjef: public character {
             anims->idle.update();
             return;
         }
+
+        if (mosaic_timer > 0) {
+            mosaic_timer--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
+        } else {
+            _sprite_ptr->set_mosaic_enabled(false);
+        }
+        
         
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
