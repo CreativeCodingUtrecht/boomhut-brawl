@@ -117,11 +117,13 @@ struct healthbars
 
 
 
-namespace platforming_level
+namespace battle
 {
     
     next_scene run()
     {
+
+
         int clouds_x = 0.0;
 
 
@@ -147,6 +149,7 @@ namespace platforming_level
 
 
 
+        BN_LOG("entering battle!!");
 
         // World
         const bn::fixed gravity = 0.3;
@@ -223,8 +226,10 @@ namespace platforming_level
             // Update animals
             bee.update();
             rat.update();
+
+            // log_memory_usage();
             
-            printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
             // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 
@@ -274,7 +279,7 @@ namespace platforming_level
             bars.set_health_left(you->get_health() / you->max_health());
             bars.set_health_right(other_player->get_health() / other_player->max_health());
 
-            if (bn::keypad::select_pressed()) {
+            if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
                 bars.pictogram.reset();
                 bars.pictogram2.reset();
                 return next_scene::character_select;

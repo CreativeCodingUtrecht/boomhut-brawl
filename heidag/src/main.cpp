@@ -58,9 +58,9 @@ int main()
     while (true)
     {
         if (next == next_scene::character_select) 
-            character_select::run();
+            next = character_select::run();
         if (next == next_scene::battle)
-            next = platforming_level::run();
+            next = battle::run();
         else if (next == next_scene::main_menu)
             next = main_menu::run();
     }

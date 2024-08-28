@@ -3,21 +3,21 @@
 #include "bn_core.h"
 #include "bn_keypad.h"
 #include "bn_sprite_palette_actions.h"
-
-#include "globals.h"
-#include "scene.h"
-
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
-// #include "bn_sprite_items_c.h"
-// #include "bn_sprite_items_c2.h"
-// #include "bn_sprite_items_u.h"
-
+#include "bn_bg_palettes.h"
+#include "bn_bg_palette_ptr.h"
 #include "bn_regular_bg_items_menu_bg.h"
-#include "bn_sound_items.h"
-#include "multiplayer.h"
 #include "bn_link.h"
 #include "bn_link_state.h"
+#include "bn_sound_items.h"
+#include "bn_music_items.h"
+
+
+// Includes
+#include "multiplayer.h"
+#include "globals.h"
+#include "scene.h"
 
 
 // Font 
@@ -30,6 +30,10 @@
 #include "bn_sprite_items_pictogram_selector_you.h"
 #include "bn_sprite_items_pictogram_selector_other_player.h"
 #include "bn_sprite_items_rein_pictogram.h"
+#include "bn_sprite_items_countdown_3.h"
+#include "bn_sprite_items_countdown_2.h"
+#include "bn_sprite_items_countdown_1.h"
+#include "bn_sprite_items_countdown_fight.h"
 
 // Characters
 #include "./characters/-character.h"
@@ -96,6 +100,8 @@ namespace character_select
 
     void create_character(character **ptr,  all_characters c) 
     {
+        delete *ptr;
+
         if (c == all_characters::cate) {
             *ptr = new cate();
         }
@@ -143,6 +149,7 @@ namespace character_select
 
     void generate_character_names()
     {
+        return;
         printer->info_text_sprites.clear();
         printer->text_generator->set_left_alignment();
         printer->text_generator->generate(-114, 2, you->name(), printer->info_text_sprites);
@@ -160,8 +167,14 @@ namespace character_select
         int other_selected_menu_item_x = 0;
         int other_selected_menu_item_y = 0;
 
+        if (!bn::music::playing()) {
+            bn::music_items::backwithavengeance.play();
+            bn::music::set_volume(0.5);
+        }
+        
+
         // Background
-        bn::regular_bg_ptr bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
+        bn::optional<bn::regular_bg_ptr> bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
 
         // Selectors
         bn::optional<bn::sprite_ptr> selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
@@ -198,11 +211,36 @@ namespace character_select
         printer->info_text_sprites.clear();
         generate_character_names();
 
+        // Ready state
+        bool you_ready = false;
+        bool other_player_ready = false;
+
+        // Big countdown
+        bool counting_down = false;
+        int countdown = 180;
+
+        bn::optional<bn::sprite_ptr> countdown_3;
+        bn::optional<bn::sprite_ptr> countdown_2;
+        bn::optional<bn::sprite_ptr> countdown_1;
+        bn::optional<bn::sprite_ptr> countdown_fight;
+
+        bn::color icy = bn::color(10, 10, 31);
+
+        bn::bg_palette_ptr pal = bg->palette();
+        pal.set_fade_color(icy);
+
+        // countdown_3.set_mosaic_enabled(true);
 
         while (true) 
         {
             t++;
 
+            // log_memory_usage();
+            if (multiplayer::connected) {
+                bn::music::stop();
+            }
+
+            // Mosaic timer
             if (mosaic_timer_you > 0) {
                 mosaic_timer_you -= 1;
             } else {
@@ -217,6 +255,84 @@ namespace character_select
             bn::sprites_mosaic::set_stretch(map(bn::max(mosaic_timer_you, mosaic_timer_other), 20, 0, 1, 0));
             
 
+            // Counting down
+            if (counting_down) {
+                pal.set_fade_intensity(.65);
+
+                countdown--;
+
+                if (countdown <= 180 && countdown > 150) {
+                    if (!countdown_3) {
+                        countdown_3 = bn::sprite_items::countdown_3.create_sprite(0,0);
+                        countdown_3->set_scale(0.01);
+                    }
+                    countdown_3->set_scale(lerp(countdown_3->horizontal_scale(), 2, .5));
+                }
+                if (countdown <= 150 && countdown > 120) {
+                    countdown_3->set_scale(lerp(countdown_3->horizontal_scale(), 0.01, .5));
+                }
+                if (countdown <= 120 && countdown > 90) {
+                    if (!countdown_2) {
+                        countdown_2 = bn::sprite_items::countdown_2.create_sprite(0,0);
+                        countdown_2->set_scale(0.01);
+
+                    }
+                    countdown_2->set_scale(lerp(countdown_2->horizontal_scale(), 2, .5));
+
+                }
+                if (countdown <= 90 && countdown > 60) {
+                    countdown_2->set_scale(lerp(countdown_2->horizontal_scale(), 0.01, .5));
+                    
+                }
+                if (countdown <= 60 && countdown > 30) {
+                    if (!countdown_1) {
+                        countdown_1 = bn::sprite_items::countdown_1.create_sprite(0,0);
+                        countdown_1->set_scale(0.01);
+
+                    }
+                    countdown_1->set_scale(lerp(countdown_1->horizontal_scale(), 2, .5));
+                }
+                if (countdown <= 30 && countdown > 0) {
+                    countdown_1->set_scale(lerp(countdown_1->horizontal_scale(), 0.01, .5));
+                    
+                }
+                if (countdown <= 0 && countdown > -30) {
+                    if (!countdown_fight) {
+                        countdown_fight = bn::sprite_items::countdown_fight.create_sprite(0,0);
+                        countdown_fight->set_scale(0.01);
+                    }
+                    countdown_fight->set_scale(lerp(countdown_fight->horizontal_scale(), 2, .5));
+                }
+                if (countdown <= -30 && countdown > -60) {
+                    countdown_fight->set_scale(lerp(countdown_fight->horizontal_scale(), 0.01, .5));
+                }
+                if (countdown == -60) {
+                    printer->info_text_sprites.clear();
+                    selector_you.reset();
+                    selector_other_player.reset();
+
+                    you->set_preview_mode(false);
+                    other_player->set_preview_mode(false);
+
+                    // you->sprite_ptr()->set_mosaic_enabled(true);
+                    other_player->sprite_ptr()->set_mosaic_enabled(true);
+
+                    countdown_3.reset();
+                    countdown_2.reset();
+                    countdown_1.reset();
+                    bg.reset();
+
+                    BN_LOG("start battle!!");
+
+                    // bn::link::send(multiplayer::signal_start_game);
+                    return next_scene::battle;
+
+                    BN_LOG("start battle!!");
+
+                }
+            }
+
+
             // multiplayer
             multiplayer::keypad_data keys_data = multiplayer::read_keys();
             multiplayer::send_if_changed(keys_data);
@@ -230,13 +346,18 @@ namespace character_select
             // camera->set_position(you->sprite_ptr()->position();
 
 
-            if (multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
-                BN_LOG("start received");
-                you->set_preview_mode(false);
-                other_player->set_preview_mode(false);
-                selector_you.reset();
-                selector_other_player.reset();
-                return next_scene::battle;
+
+            if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
+                other_player_ready = true;
+            }
+
+            if (keys_data.keypad_data.a_pressed) {
+                you->sound_tagline().play();
+                you_ready = true;
+            }
+
+            if (you_ready && other_player_ready) {
+                counting_down = true;
             }
 
 
@@ -281,12 +402,10 @@ namespace character_select
             }
 
 
-            if (keys_data.keypad_data.a_pressed) {
-                you->sound_tagline().play();
-            }
-
             if (keys_data.keypad_data.b_pressed) {
                 bn::sound_items::fight_countdown.play();
+                countdown = 180;
+                counting_down = true;
             }
 
             // menu navigation other player
@@ -351,15 +470,14 @@ namespace character_select
             }
 
 
-            if (keys_data.keypad_data.start_pressed) {
+            if (keys_data.keypad_data.start_pressed || multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
                 printer->info_text_sprites.clear();
                 selector_you.reset();
                 selector_other_player.reset();
 
                 you->set_preview_mode(false);
                 other_player->set_preview_mode(false);
-
-                // you->sprite_ptr()->set_mosaic_enabled(true);
+                you->sprite_ptr()->set_mosaic_enabled(true);
                 other_player->sprite_ptr()->set_mosaic_enabled(true);
 
                 // bn::link::send(multiplayer::signal_start_game);

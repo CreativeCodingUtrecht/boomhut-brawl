@@ -171,8 +171,8 @@ int get_map_tile_index_at_position(bn::fixed_point pos, bn::regular_bg_map_item 
 void log_memory_usage()
 {
     using namespace bn::memory;
-    BN_LOG(bn::format<40>("iwram: {}kb - {}kb", used_static_iwram() / 1024, used_stack_iwram() / 1024));
-    BN_LOG(bn::format<40>("ewram: {}kb - {}kb", used_alloc_ewram() / 1024, used_static_ewram() / 1024));
+    BN_LOG(bn::format<40>("iwram: stack {}kb - static {}kb", used_stack_iwram() / 1024, used_static_iwram() / 1024));
+    BN_LOG(bn::format<40>("ewram: alloc {}kb - static {}kb", used_alloc_ewram() / 1024, used_static_ewram() / 1024));
     BN_LOG(bn::format<40>("rom: {}mb", used_rom() / 1024 / 1024));
 }
 

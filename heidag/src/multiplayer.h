@@ -41,6 +41,7 @@ namespace multiplayer
 
 
     // Multiplayer
+    bool connected;
     int players_counter = 1;
     int current_player_id = 0; 
 
@@ -79,6 +80,8 @@ namespace multiplayer
 
     void receive_keypad_data() {
         if(bn::optional<bn::link_state> link_state = bn::link::receive()) {
+            connected = true;
+            
             const bn::link_player& first_other_player = link_state->other_players().front();
             multiplayer::other_player_keypad_data.data = first_other_player.data();
 

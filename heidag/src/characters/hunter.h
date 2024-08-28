@@ -269,7 +269,7 @@ struct hunter: public character {
 
         // Apply velocity to position
         position += velocity;
-        BN_LOG(velocity.x());
+        // BN_LOG(velocity.x());
         bn::fixed drg = .75;
         velocity.set_x(velocity.x() * drg);
 
