@@ -62,10 +62,10 @@ namespace character_select
         int y_offset = 0;
     };
 
-    const int menu_items_x = 5;
-    const int menu_items_y = 3;
+    const int menu_items_y = 5;
+    const int menu_items_x = 3;
 
-    character_pictogram character_pictograms[menu_items_x][menu_items_y] = 
+    character_pictogram character_pictograms[menu_items_y][menu_items_x] = 
     {
         {
             character_pictogram(all_characters::cate, -33, -62),
@@ -149,6 +149,7 @@ namespace character_select
         printer->text_generator->generate(53, 2, other_player->name(), printer->info_text_sprites);
     }
 
+
     next_scene run() 
     {
         int t = 0;
@@ -175,6 +176,7 @@ namespace character_select
         int y_offset = -45;
         int spacing_x = 85;
 
+        // You
         if (you) you->unload();
         auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
         create_character(&you, selected.character_to_choose);
@@ -182,7 +184,7 @@ namespace character_select
         you->sprite_ptr()->set_position(-spacing_x, -45);
         you->sprite_ptr()->set_mosaic_enabled(true);
 
-
+        // Other
         if (other_player) other_player->unload();
         auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
         create_character(&other_player, other_selected.character_to_choose);
@@ -258,8 +260,8 @@ namespace character_select
                     selected_menu_item_y++;
                 
 
-                selected_menu_item_x = mod(selected_menu_item_x, menu_items_x);
-                selected_menu_item_y = mod(selected_menu_item_y, menu_items_y);
+                selected_menu_item_x = mod(selected_menu_item_x, menu_items_y);
+                selected_menu_item_y = mod(selected_menu_item_y, menu_items_x);
 
                 auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
                 auto c = selected.character_to_choose;
@@ -308,8 +310,8 @@ namespace character_select
                     other_selected_menu_item_y++;
                 
 
-                other_selected_menu_item_x = mod(other_selected_menu_item_x, menu_items_x);
-                other_selected_menu_item_y = mod(other_selected_menu_item_y, menu_items_y);
+                other_selected_menu_item_x = mod(other_selected_menu_item_x, menu_items_y);
+                other_selected_menu_item_y = mod(other_selected_menu_item_y, menu_items_x);
 
                 auto selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
                 auto c = selected.character_to_choose;
@@ -332,8 +334,8 @@ namespace character_select
             }
 
 
-            for (int x = 0; x < menu_items_x; x++) {
-                for (int y = 0; y < menu_items_x; y++) {
+            for (int x = 0; x < menu_items_y; x++) {
+                for (int y = 0; y < menu_items_y; y++) {
                     character_pictogram *item = &character_pictograms[x][y];
 
                     if (x == selected_menu_item_x && y == selected_menu_item_y) {
