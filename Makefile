@@ -30,12 +30,12 @@
 #---------------------------------------------------------------------------------------------------------------------
 TARGET      	:=  $(notdir $(CURDIR))
 BUILD       	:=  build
-LIBBUTANO   	:=  ../butano/butano
+LIBBUTANO   	:=  ./butano/butano
 PYTHON      	:=  python
-SOURCES     	:=  src ../butano/common/src
-INCLUDES    	:=  include ../include ../butano/common/include
+SOURCES     	:=  src ./butano/common/src
+INCLUDES    	:=  include ./include ./butano/common/include
 DATA        	:=
-GRAPHICS    	:=  graphics ../butano/common/graphics
+GRAPHICS    	:=  graphics ./butano/common/graphics
 AUDIO       	:=  audio
 DMGAUDIO    	:=  dmg_audio
 ROMTITLE    	:=  BOOMHUT BATTLE

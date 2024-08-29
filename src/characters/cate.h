@@ -93,9 +93,6 @@ struct cate: public character {
         return _sprite_ptr;
     };
 
-    cate() {}
-
-
     // Animations
     virtual character_animations animations() override {
         return {
@@ -123,7 +120,6 @@ struct cate: public character {
 
     cate() {
         _sprite_ptr->set_mosaic_enabled(true);
-        
     }
 
     void unload() {

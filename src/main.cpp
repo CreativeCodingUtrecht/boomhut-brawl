@@ -18,7 +18,7 @@
 
 
 // Includes
-#include "../../include/utils.h"
+#include "../include/utils.h"
 #include "globals.h"
 #include "./characters/-character.h"
 #include "pickups.h"

@@ -2,7 +2,7 @@
 
 #include "bn_camera_ptr.h"
 #include "bn_random.h"
-#include "../../include/utils.h"
+#include "../include/utils.h"
 
 #include "bn_regular_bg_items_tilemap.h"
 
