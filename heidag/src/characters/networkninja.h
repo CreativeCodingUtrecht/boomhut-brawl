@@ -61,6 +61,12 @@ struct networkninja: public character {
         health -= amount;
     }
 
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+    
+
     bn::optional<weapon_info> get_weapon_info() {
         return weapon_info {
             name: "keyboard",

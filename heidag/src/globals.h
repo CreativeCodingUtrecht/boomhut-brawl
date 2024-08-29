@@ -15,7 +15,7 @@ bn::optional<bn::random> global_random;
 
 // The world
 bn::optional<bn::regular_bg_map_item> map_item;
-int passthrough_tiles[] = { 0, 13, 14, 16, 37, 41, 36, 23, 24, 25, 26 };
+int passthrough_tiles[] = { 0, 13, 14, 16, 37, 41, 36, 23, 24, 25, 26, 58, 59, 60, 61 };
 int wall_tiles[] = { 6, 9, 10 };
 const bn::fixed gravity = 0.3;
 

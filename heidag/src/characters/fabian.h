@@ -55,6 +55,11 @@ struct fabian: public character {
         health -= amount;
     }
 
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
     bn::fixed run_speed() {
         return 2.5;
     };
@@ -97,7 +102,9 @@ struct fabian: public character {
     bn::optional<character_animations> anims = animations();
 
 
+    fabian() {}
 
+    ~fabian() {}
 
 
     bn::sprite_item spr_item() {
@@ -119,12 +126,6 @@ struct fabian: public character {
     static bn::sprite_item sprite_item()  {
         return bn::sprite_items::fabian;
     };
-
-
-
-    fabian() {
-
-    }
 
     void unload() {
         anims.reset();

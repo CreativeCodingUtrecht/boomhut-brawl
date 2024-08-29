@@ -236,9 +236,6 @@ namespace character_select
             t++;
 
             // log_memory_usage();
-            if (multiplayer::connected) {
-                bn::music::stop();
-            }
 
             // Mosaic timer
             if (mosaic_timer_you > 0) {
@@ -320,6 +317,7 @@ namespace character_select
                     countdown_3.reset();
                     countdown_2.reset();
                     countdown_1.reset();
+                    countdown_fight.reset();
                     bg.reset();
 
                     BN_LOG("start battle!!");
@@ -401,7 +399,7 @@ namespace character_select
                 }
             }
 
-
+            // TODO to be deleted later
             if (keys_data.keypad_data.b_pressed) {
                 bn::sound_items::fight_countdown.play();
                 countdown = 180;

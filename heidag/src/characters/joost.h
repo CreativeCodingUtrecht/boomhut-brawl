@@ -62,6 +62,11 @@ struct joost: public character {
     }
 
 
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
+
     bn::optional<weapon_info> get_weapon_info() {}
 
 

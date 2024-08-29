@@ -44,6 +44,11 @@ struct fleur: public character {
         return health;
     }
 
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
     
     int mosaic_timer = 30;
 

@@ -66,35 +66,38 @@ struct weapon_info {
 
 // Abstract character
 struct character {
-    virtual bn::string<20> name();
-    virtual bn::sprite_item avatar();
-    virtual bn::fixed max_health();
-    virtual bn::fixed run_speed();
-    virtual bn::fixed jump_velocity();
+    virtual bn::string<20> name() {};
+    virtual bn::sprite_item avatar() {};
+    virtual bn::fixed max_health() {};
+    virtual bn::fixed run_speed() {};
+    virtual bn::fixed jump_velocity() {};
 
-    virtual bn::fixed get_health();
-    virtual void take_damage(bn::fixed);
+    virtual bn::fixed get_health() {};
+    virtual void take_damage(bn::fixed) {};
     virtual void apply_force(bn::fixed_point) {}; // TODO implement everywhere, remove impl. here
 
 
     // sounds
-    virtual bn::sound_item sound_naam();
-    virtual bn::sound_item sound_tagline();
-    virtual bn::sound_item sound_jump();
-    virtual bn::sound_item sound_hit();
+    virtual bn::sound_item sound_naam() {};
+    virtual bn::sound_item sound_tagline() {};
+    virtual bn::sound_item sound_jump() {};
+    virtual bn::sound_item sound_hit() {};
 
     // sprites and animations
-    virtual character_animations animations();
-    virtual bn::sprite_item spr_item();
-    virtual bn::optional<bn::sprite_ptr> sprite_ptr();
-    virtual void unload();
+    virtual character_animations animations() {};
+    virtual bn::sprite_item spr_item() {};
+    virtual bn::optional<bn::sprite_ptr> sprite_ptr() {};
+    virtual void unload() {};
 
     // weapons
-    virtual bn::optional<weapon_info> get_weapon_info();
+    virtual bn::optional<weapon_info> get_weapon_info() {};
 
     // behaviour
-    virtual void set_preview_mode(bool); 
-    virtual void update(multiplayer::keypad_data::keypad_data_struct keypad);
+    virtual void set_preview_mode(bool) {}; 
+    virtual void update(multiplayer::keypad_data::keypad_data_struct keypad) {};
+
+    character() {}
+    ~character() {}
 };
 
 

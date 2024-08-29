@@ -60,6 +60,12 @@ struct rein: public character {
         health -= amount;
     }
 
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+    
+
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
 
