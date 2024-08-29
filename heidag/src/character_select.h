@@ -229,7 +229,6 @@ namespace character_select
         bn::bg_palette_ptr pal = bg->palette();
         pal.set_fade_color(icy);
 
-        // countdown_3.set_mosaic_enabled(true);
 
         while (true) 
         {
@@ -272,7 +271,6 @@ namespace character_select
                     if (!countdown_2) {
                         countdown_2 = bn::sprite_items::countdown_2.create_sprite(0,0);
                         countdown_2->set_scale(0.01);
-
                     }
                     countdown_2->set_scale(lerp(countdown_2->horizontal_scale(), 2, .5));
 
@@ -285,7 +283,6 @@ namespace character_select
                     if (!countdown_1) {
                         countdown_1 = bn::sprite_items::countdown_1.create_sprite(0,0);
                         countdown_1->set_scale(0.01);
-
                     }
                     countdown_1->set_scale(lerp(countdown_1->horizontal_scale(), 2, .5));
                 }
@@ -311,7 +308,7 @@ namespace character_select
                     you->set_preview_mode(false);
                     other_player->set_preview_mode(false);
 
-                    // you->sprite_ptr()->set_mosaic_enabled(true);
+                    you->sprite_ptr()->set_mosaic_enabled(true);
                     other_player->sprite_ptr()->set_mosaic_enabled(true);
 
                     countdown_3.reset();
@@ -321,12 +318,7 @@ namespace character_select
                     bg.reset();
 
                     BN_LOG("start battle!!");
-
-                    // bn::link::send(multiplayer::signal_start_game);
                     return next_scene::battle;
-
-                    BN_LOG("start battle!!");
-
                 }
             }
 
@@ -341,10 +333,7 @@ namespace character_select
 
             you->sprite_ptr()->set_camera(*camera);
             other_player->sprite_ptr()->set_camera(*camera);
-            // camera->set_position(you->sprite_ptr()->position();
-
-
-
+            
             if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
                 other_player_ready = true;
             }
@@ -478,7 +467,6 @@ namespace character_select
                 you->sprite_ptr()->set_mosaic_enabled(true);
                 other_player->sprite_ptr()->set_mosaic_enabled(true);
 
-                // bn::link::send(multiplayer::signal_start_game);
                 return next_scene::battle;
             }
 

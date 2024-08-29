@@ -93,6 +93,8 @@ struct cate: public character {
         return _sprite_ptr;
     };
 
+    cate() {}
+
 
     // Animations
     virtual character_animations animations() override {
