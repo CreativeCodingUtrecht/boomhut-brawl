@@ -1,4 +1,8 @@
-# CCU Heidag 2024
+# Boomhut Brawl
+
+![](./preview.gif)
+
+CCU Heidag 2024
 
 ## Instructions for building 
 
