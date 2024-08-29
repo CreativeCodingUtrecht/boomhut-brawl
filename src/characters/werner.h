@@ -7,7 +7,8 @@
 
 
 struct werner: public character {
-    virtual bn::string<20> name() {
+    // General ----------------------------------
+    bn::string<20> name() {
         return "Werner";
     }
 
@@ -15,6 +16,10 @@ struct werner: public character {
         return bn::sprite_items::avatar_werner;
     }
 
+    bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
+
+
+    // Stats ------------------------------------
     bn::fixed max_health() {
         return 100;
     };
@@ -27,6 +32,7 @@ struct werner: public character {
         return -7;
     };
 
+    // Sounds -----------------------------------
     bn::sound_item sound_naam() {
         return bn::sound_items::werner_naam;
     }
@@ -43,11 +49,9 @@ struct werner: public character {
         return bn::sound_items::werner_hit;
     }
 
-    bn::optional<weapon_info> get_weapon_info() {}
 
-
+    // Health -----------------------------------
     bn::fixed health = max_health();
-
     bn::fixed get_health() {
         return health;
     }
@@ -77,38 +81,33 @@ struct werner: public character {
     bool is_falling;
 
 
-    static bn::sprite_item sprite_item()  {
+    bn::sprite_item sprite_item()  {
         return bn::sprite_items::rein_lario;
     };
 
-    // bn::sprite_item pictogram;
+
     bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
     bn::optional<bn::sprite_ptr> sprite_ptr() {
         return _sprite_ptr;
     };
 
-    virtual bn::sprite_item spr_item() override {
-        return bn::sprite_items::fabian;
-    }
-
-    // Animations
-
-    virtual character_animations animations() override {
+    // Animations -------------------------------
+    character_animations animations() {
         return {
             character_animations {
-                idle: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
                 ),
-                run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .run = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55  
                 ),
-                jump_up: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_up = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     56, 57, 58, 59, 60
                 ),
-                jump_stay: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_stay = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     61, 61
                 ),
-                jump_down: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_down = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
                 )
             }

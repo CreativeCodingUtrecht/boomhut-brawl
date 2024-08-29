@@ -26,22 +26,22 @@
 // BGs
 #include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
-#include "bn_regular_bg_items_foreground.h"
 #include "bn_regular_bg_items_trein_bg.h"
-
 
 // Sprites
 #include "bn_sprite_items_pictogram_frame.h"
 #include "bn_sprite_items_healthbar_fill.h"
 #include "bn_sprite_items_healthbar_frame.h"
-#include "bn_sprite_items_rein_pictogram.h"
-#include "bn_sprite_items_hunter_pictogram.h"
-
-
 
 // Includes
 #include "../include/utils.h"
 #include "globals.h"
+#include "pickups.h"
+#include "splash.h"
+#include "main_menu.h"
+#include "zoop.h"
+
+// Characters
 #include "./characters/-character.h"
 #include "./characters/cate.h"
 #include "./characters/christine.h"
@@ -57,10 +57,7 @@
 #include "./characters/sjef.h"
 #include "./characters/werner.h"
 #include "./characters/sietse.h"
-#include "pickups.h"
-#include "splash.h"
-#include "main_menu.h"
-#include "zoop.h"
+
 
 #include "scene.h"
 
@@ -124,12 +121,12 @@ namespace battle
     {
 
 
-        int clouds_x = 0.0;
+        // int clouds_x = 0.0;
 
 
         // pickups
-        const bn::fixed x_offset = 120;
-        const bn::fixed y_offset = 126;
+        // const bn::fixed x_offset = 120;
+        // const bn::fixed y_offset = 126;
 
         // pickups::lipje lipjes[7] = 
         // {
@@ -151,35 +148,18 @@ namespace battle
 
         BN_LOG("entering battle!!");
 
-        // World
-        const bn::fixed gravity = 0.3;
-
-
         // sky and mountains background
         bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
         background.set_z_order(4);
         background.set_camera(*camera);
 
 
-        // // BG and map
+        // BG and map
         bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
         bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
         bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
-        const bn::regular_bg_map_item& map_item = tilemap_item.map_item();
         tilemap.set_camera(*camera);
-        // tilemap.set_wrapping_enabled(false);
-        // tilemap.set_z_order(-1000);
 
-
-   
-        // bn::rect_window internal_window = bn::rect_window();
-        // internal_window.set_boundaries(-48, -96, 48, 96);
-        // internal_window.set_visible(true);
-        // internal_window.set_camera(camera);
-        // tilemap.set_visible_in_window(true, internal_window);
-
-
-  
 
         // Trein
         regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
@@ -198,8 +178,9 @@ namespace battle
 
 
         // Foreground 
-        // bn::regular_bg_ptr foreground = bn::regular_bg_items::foreground.create_bg(bn::display::width() / 2, bn::display::height() / 2);
+        
 
+        // Default players 
         if (!you) {
             you = new fabian();
         }
@@ -272,7 +253,6 @@ namespace battle
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
-
 
 
             // Health bars

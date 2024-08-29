@@ -39,7 +39,8 @@ namespace pickups
 
     struct pickup 
     {
-        virtual void update(bn::vector<character, 2> players);
+        virtual void update();
+        virtual ~pickup();
     };
 
 
@@ -98,29 +99,29 @@ namespace pickups
                 bool close_to_a_player = false;
 
                 // Update for both players
-                // for (character* &p : players) {
-                //     bn::fixed dist = distance(spr.position(), p->sprite_ptr().position());
+                for (character* p : players()) {
+                    bn::fixed dist = distance(spr.position(), p->sprite_ptr()->position());
 
-                //     // Magnetic
-                //     if (dist < magnetic_range) {
-                //         close_to_a_player = true;
-                //         bn::fixed_point new_pos = lerp(spr.position(), p->sprite_ptr().position(), 0.2);
-                //         spr.set_position(new_pos);
-                //         twinkle_spr.set_position(new_pos);
-                //         spr.set_scale(dist / magnetic_range);
-                //     }
+                    // Magnetic
+                    if (dist < magnetic_range) {
+                        close_to_a_player = true;
+                        bn::fixed_point new_pos = lerp(spr.position(), p->sprite_ptr()->position(), 0.2);
+                        spr.set_position(new_pos);
+                        twinkle_spr.set_position(new_pos);
+                        spr.set_scale(dist / magnetic_range);
+                    }
 
-                //     // Absorb
-                //     if (dist < 16 && spr.visible()) {
-                //         spr.set_visible(false);
-                //         twinkle_spr.set_visible(false);
-                //         is_respawning = true;
-                //         pickup_sounds[pickup_i].play(1, 1.0, 0.0);
-                //         pickup_i++;
-                //         // pickup_i = pickup_i % 4;
-                //         reset_pickup_i_t = 0;
-                //     }
-                // }
+                    // Absorb
+                    if (dist < 16 && spr.visible()) {
+                        spr.set_visible(false);
+                        twinkle_spr.set_visible(false);
+                        is_respawning = true;
+                        pickup_sounds[pickup_i].play(1, 1.0, 0.0);
+                        pickup_i++;
+                        // pickup_i = pickup_i % 4;
+                        reset_pickup_i_t = 0;
+                    }
+                }
 
                 // Grow back
                 if (!close_to_a_player) {

@@ -9,25 +9,13 @@
 
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
-// #include "bn_sprite_items_c.h"
-// #include "bn_sprite_items_c2.h"
-// #include "bn_sprite_items_u.h"
-
 #include "bn_regular_bg_items_menu_bg.h"
 #include "bn_sound_items.h"
 
 
 // Characters
 #include "./characters/-character.h"
-#include "./characters/rein.h"
-#include "./characters/mar.h"
-#include "./characters/cate.h"
 
-
-// character all_characters[] = {
-//     rein(), 
-//     mar()
-// };
 
 namespace main_menu 
 {
@@ -53,7 +41,10 @@ namespace main_menu
                 next_scene::battle,
                 bn::sprite_items::menu_platforming,
                 0,
-                0
+                0,
+                0,
+                0,
+                bn::optional<bn::sprite_ptr>()
             },
         }
     };

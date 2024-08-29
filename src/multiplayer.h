@@ -1,5 +1,8 @@
-#pragma once;
+#pragma once
 
+
+// This game's multiplayer functions by sending keypresses over the link cable 
+// whenever they occur
 
 namespace multiplayer 
 {
@@ -52,20 +55,20 @@ namespace multiplayer
 
     keypad_data read_keys() {
         return keypad_data  {
-            keypad_data: multiplayer::keypad_data::keypad_data_struct {
-                start_pressed: bn::keypad::start_pressed(),
-                l_pressed: bn::keypad::l_pressed(),
-                r_pressed: bn::keypad::r_pressed(),
-                up_pressed: bn::keypad::up_pressed(),
-                down_pressed: bn::keypad::down_pressed(),
-                left_pressed: bn::keypad::left_pressed(),
-                right_pressed: bn::keypad::right_pressed(),
-                a_pressed: bn::keypad::a_pressed(),
-                b_pressed: bn::keypad::b_held(),
-                b_held: bn::keypad::b_held(),
-                left_held: bn::keypad::left_held(),
-                right_held: bn::keypad::right_held(),
-                select_pressed: bn::keypad::select_pressed(),
+            .keypad_data = multiplayer::keypad_data::keypad_data_struct {
+                .start_pressed = bn::keypad::start_pressed(),
+                .l_pressed = bn::keypad::l_pressed(),
+                .r_pressed = bn::keypad::r_pressed(),
+                .up_pressed = bn::keypad::up_pressed(),
+                .down_pressed = bn::keypad::down_pressed(),
+                .left_pressed = bn::keypad::left_pressed(),
+                .right_pressed = bn::keypad::right_pressed(),
+                .a_pressed = bn::keypad::a_pressed(),
+                .b_pressed = bn::keypad::b_held(),
+                .b_held = bn::keypad::b_held(),
+                .left_held = bn::keypad::left_held(),
+                .right_held = bn::keypad::right_held(),
+                .select_pressed = bn::keypad::select_pressed(),
 
             }
         };

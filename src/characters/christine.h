@@ -8,7 +8,8 @@
 
 
 struct christine: public character {
-    virtual bn::string<20> name() override {
+    // General ----------------------------------
+    bn::string<20> name(){
         return "Christine";
     }
 
@@ -16,6 +17,10 @@ struct christine: public character {
         return bn::sprite_items::avatar_christine;
     }
 
+    bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
+    
+
+    // Stats ------------------------------------
     bn::fixed max_health() {
         return 100;
     };
@@ -29,6 +34,7 @@ struct christine: public character {
     };
 
 
+    // Sounds -----------------------------------
     bn::sound_item sound_naam() {
         return bn::sound_items::christine_naam;
     }
@@ -45,6 +51,8 @@ struct christine: public character {
         return bn::sound_items::christine_hit;
     }
 
+
+    // Health -----------------------------------
     bn::fixed health = max_health();
 
     bn::fixed get_health() {
@@ -62,14 +70,8 @@ struct christine: public character {
     }
 
 
-    void apply_force(bn::fixed_point point) {
-        velocity += point;
-    }
 
-    bn::optional<weapon_info> get_weapon_info() {
-        
-    }
-
+    // Movement ---------------------------------
     bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
 
@@ -79,17 +81,18 @@ struct christine: public character {
     bool is_landing;
     bool is_falling;
 
-    static bn::sprite_item sprite_item()  {
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
+
+    // Sprite -----------------------------------
+    bn::sprite_item sprite_item()  {
         return bn::sprite_items::rein_lario;
     };
 
-    virtual bn::sprite_item spr_item() override {
-        return bn::sprite_items::fabian;
-    }
 
-    // bn::sprite_item pictogram;
-
-    // Animations
     bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
     bn::optional<bn::sprite_ptr> sprite_ptr() {
         return _sprite_ptr;
@@ -101,22 +104,23 @@ struct christine: public character {
     }
 
 
-    virtual character_animations animations() override {
+    // Animations -------------------------------
+    character_animations animations() {
         return {
             character_animations {
-                idle: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::fabian.tiles_item(), 
+                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::fabian.tiles_item(), 
                     46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
                 ),
-                run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .run = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
                 ),
-                jump_up: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_up = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     56, 57, 58, 59, 60
                 ),
-                jump_stay: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_stay = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     61, 61
                 ),
-                jump_down: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_down = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
                 )
             }

@@ -54,7 +54,7 @@
 
 
 // Sounds
-#include "bn_sound_items.h";
+#include "bn_sound_items.h"
 
 
 namespace character_select 
@@ -160,7 +160,6 @@ namespace character_select
     next_scene run() 
     {
         int t = 0;
-        bool connected = false;
 
         int selected_menu_item_x = 0;
         int selected_menu_item_y = 0;
@@ -191,18 +190,16 @@ namespace character_select
 
         // You
         if (you) you->unload();
-        auto selected = character_pictograms[selected_menu_item_x][selected_menu_item_y];
-        create_character(&you, selected.character_to_choose);
+        create_character(&you, character_pictograms[selected_menu_item_x][selected_menu_item_y].character_to_choose);
         you->set_preview_mode(true);
-        you->sprite_ptr()->set_position(-spacing_x, -45);
+        you->sprite_ptr()->set_position(-spacing_x, y_offset);
         you->sprite_ptr()->set_mosaic_enabled(true);
 
         // Other
         if (other_player) other_player->unload();
-        auto other_selected = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y];
-        create_character(&other_player, other_selected.character_to_choose);
+        create_character(&other_player, character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y].character_to_choose);
         other_player->set_preview_mode(true);
-        other_player->sprite_ptr()->set_position(spacing_x, -45);
+        other_player->sprite_ptr()->set_position(spacing_x, y_offset);
         you->sprite_ptr()->set_mosaic_enabled(true);
 
         camera->set_position(0,0);

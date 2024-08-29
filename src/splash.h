@@ -29,17 +29,14 @@ namespace splash
     next_scene run() 
     {
         // CCU logo
-        const int duration_per_letter = 45;
         sprite_ptr c1 = sprite_items::c.create_sprite(-64,-128);
         sprite_ptr c2 = sprite_items::c2.create_sprite(0,-128);
         sprite_ptr u = sprite_items::u.create_sprite(64,-128);
 
         // music_items::splashscreen.play();
 
-        
 
         int t = 0;
-
         
         int entrance_stagger = 10;
         int exit_base = 90;

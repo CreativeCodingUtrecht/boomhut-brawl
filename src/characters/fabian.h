@@ -8,6 +8,7 @@
 
 
 struct fabian: public character {
+    // General ----------------------------------
     bn::string<20> name() {
         return "El Chef";
     };
@@ -15,12 +16,24 @@ struct fabian: public character {
     bn::sprite_item avatar() {
         return bn::sprite_items::avatar_fabian;
     }
+
+    bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
+
     
+    // Stats ------------------------------------
     bn::fixed max_health() {
         return 100;
     };
 
+    bn::fixed run_speed() {
+        return 2.5;
+    };
 
+    bn::fixed jump_velocity() {
+        return -7;
+    };
+
+    // Sounds -----------------------------------
     bn::sound_item sound_naam() {
         return bn::sound_items::fabian_naam;
     }
@@ -38,11 +51,8 @@ struct fabian: public character {
     }
 
 
-    bn::optional<weapon_info> get_weapon_info() {}
-
+    // Health -----------------------------------
     bn::fixed health = max_health();
- 
- 
     bn::fixed get_health() {
         return health;
     }
@@ -56,43 +66,54 @@ struct fabian: public character {
     }
 
 
+    // Movement ---------------------------------
+    bn::fixed_point position = spawn_point;
+    bn::fixed_point velocity;
+
     void apply_force(bn::fixed_point point) {
         velocity += point;
     }
 
-    bn::fixed run_speed() {
-        return 2.5;
-    };
 
-    bn::fixed jump_velocity() {
-        return -7;
-    };
-
-    bn::fixed_point position = spawn_point;
-    bn::fixed_point velocity;
+    bool is_jumping;
+    bool is_running;
+    bool flipped;
+    bool is_landing;
+    bool is_falling;
 
 
 
+    // Sprite -----------------------------------
     bn::sprite_item _sprite_item = bn::sprite_items::fabian;
     bn::optional<bn::sprite_ptr>_sprite_ptr = _sprite_item.create_sprite(position);
 
-    character_animations animations() override {
+    bn::optional<bn::sprite_ptr> sprite_ptr() {
+        return _sprite_ptr;
+    };
+
+    bn::sprite_item sprite_item()  {
+        return bn::sprite_items::fabian;
+    };
+
+
+    // Animations -------------------------------
+    character_animations animations() {
         BN_LOG("from  fabian");
         return {
             character_animations {
-                idle: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::fabian.tiles_item(), 
+                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::fabian.tiles_item(), 
                     46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
                 ),
-                run: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .run = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
                 ),
-                jump_up: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_up = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     18, 19, 20, 21, 22, 23, 24, 25, 26
                 ),
-                jump_stay: bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_stay = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     27, 27
                 ),
-                jump_down: bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
+                .jump_down = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
                     28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45
                 )
             }
@@ -107,25 +128,6 @@ struct fabian: public character {
     ~fabian() {}
 
 
-    bn::sprite_item spr_item() {
-        return _sprite_item;
-    };
-
-    bn::optional<bn::sprite_ptr> sprite_ptr() {
-        return _sprite_ptr;
-    };
-
-
-    bool is_jumping;
-    bool is_running;
-    bool flipped;
-    bool is_landing;
-    bool is_falling;
-
-
-    static bn::sprite_item sprite_item()  {
-        return bn::sprite_items::fabian;
-    };
 
     void unload() {
         anims.reset();

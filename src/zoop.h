@@ -14,8 +14,8 @@
 #include "bn_log.h"
 #include "bn_vector.h"
 
-#include "bn_sprite_items_bee.h";
-#include "bn_sprite_items_rat.h";
+#include "bn_sprite_items_bee.h"
+#include "bn_sprite_items_rat.h"
 
 #include "globals.h"
 
