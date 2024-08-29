@@ -5,7 +5,7 @@
             "type": "cppdbg",
             "request": "launch",
             "targetArchitecture": "arm",
-            "program": "${workspaceFolder}/heidag/heidag.elf",
+            "program": "${workspaceFolder}/boomhut-brawl/boomhut-brawl.elf",
             "args": ["-enable-pretty-printing"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -17,7 +17,7 @@
                 "miDebuggerPath": "${env:DEVKITARM}/bin/arm-none-eabi-gdb.exe",
                 "setupCommands": [
                     {
-                        "text": "shell start /b \"\" \"${env:ProgramFiles}/mGBA/mGBA.exe\" -g \"${workspaceFolder}/heidag/heidag.elf\""
+                        "text": "shell start /b \"\" \"${env:ProgramFiles}/mGBA/mGBA.exe\" -g \"${workspaceFolder}/boomhut-brawl/boomhut-brawl.elf\""
                     }
                 ]
             },
@@ -25,7 +25,7 @@
                 "miDebuggerPath": "${env:DEVKITARM}/bin/arm-none-eabi-gdb",
                 "setupCommands": [
                     {
-                        "text": "shell \"mgba-qt\" -g \"${workspaceFolder}/heidag/heidag.elf\" &"
+                        "text": "shell \"mgba-qt\" -g \"${workspaceFolder}/boomhut-brawl/boomhut-brawl.elf\" &"
                     }
                 ]
             },
@@ -33,7 +33,7 @@
                 "miDebuggerPath": "${env:DEVKITARM}/bin/arm-none-eabi-gdb",
                 "setupCommands": [
                     {
-                        "text": "shell open -a mGBA --args -g \"${workspaceFolder}/heidag/heidag.elf\""
+                        "text": "shell open -a mGBA --args -g \"${workspaceFolder}/boomhut-brawl/boomhut-brawl.elf\""
                     }
                 ]
             }
