@@ -65,11 +65,11 @@ struct rein: public character {
     }
 
 
+    // Movement ---------------------------------
     void apply_force(bn::fixed_point point) {
         velocity += point;
     }
     
-
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
 
@@ -80,6 +80,8 @@ struct rein: public character {
     bool is_landing;
     bool is_falling;
 
+
+    // Sprite -----------------------------------
     bn::sprite_item sprite_item()  {
         return bn::sprite_items::rein_lario;
     };

@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_fabian.h"
 #include "bn_sprite_items_avatar_christine.h"
+#include "bn_sprite_items_rein_lario.h"
 #include "bn_sound_items.h"
 
 

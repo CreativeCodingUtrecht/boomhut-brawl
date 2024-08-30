@@ -149,7 +149,7 @@ namespace character_select
 
     void generate_character_names()
     {
-        return;
+        // return;
         printer->info_text_sprites.clear();
         printer->text_generator->set_left_alignment();
         printer->text_generator->generate(-114, 2, you->name(), printer->info_text_sprites);
@@ -266,6 +266,7 @@ namespace character_select
                 }
                 if (countdown <= 120 && countdown > 90) {
                     if (!countdown_2) {
+                        countdown_3.reset();
                         countdown_2 = bn::sprite_items::countdown_2.create_sprite(0,0);
                         countdown_2->set_scale(0.01);
                     }
@@ -278,6 +279,7 @@ namespace character_select
                 }
                 if (countdown <= 60 && countdown > 30) {
                     if (!countdown_1) {
+                        countdown_2.reset();
                         countdown_1 = bn::sprite_items::countdown_1.create_sprite(0,0);
                         countdown_1->set_scale(0.01);
                     }
@@ -289,6 +291,7 @@ namespace character_select
                 }
                 if (countdown <= 0 && countdown > -30) {
                     if (!countdown_fight) {
+                        countdown_1.reset();
                         countdown_fight = bn::sprite_items::countdown_fight.create_sprite(0,0);
                         countdown_fight->set_scale(0.01);
                     }
@@ -308,9 +311,6 @@ namespace character_select
                     you->sprite_ptr()->set_mosaic_enabled(true);
                     other_player->sprite_ptr()->set_mosaic_enabled(true);
 
-                    countdown_3.reset();
-                    countdown_2.reset();
-                    countdown_1.reset();
                     countdown_fight.reset();
                     bg.reset();
 
@@ -455,6 +455,7 @@ namespace character_select
 
 
             if (keys_data.keypad_data.start_pressed || multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
+                bg.reset();
                 printer->info_text_sprites.clear();
                 selector_you.reset();
                 selector_other_player.reset();

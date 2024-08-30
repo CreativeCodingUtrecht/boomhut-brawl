@@ -16,13 +16,9 @@
 #include "bn_sound_item.h"
 #include "bn_sound_items.h"
 
-#include "bn_sprite_items_rein_lario.h"
-
-
 #include "../globals.h"
 #include "../include/utils.h"
 #include "../multiplayer.h"
-
 
 
 enum class all_characters {
@@ -74,7 +70,7 @@ struct character {
 
     virtual bn::fixed get_health() = 0;
     virtual void take_damage(bn::fixed) = 0;
-    virtual void apply_force(bn::fixed_point) = 0; // TODO implement everywhere, remove impl. here
+    virtual void apply_force(bn::fixed_point) = 0;
 
 
     // sounds

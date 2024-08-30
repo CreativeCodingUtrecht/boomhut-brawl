@@ -210,7 +210,7 @@ namespace battle
 
             // log_memory_usage();
             
-            // printer->print_map_tiles_at_position(map_item, you->sprite_ptr()->position());
+            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
             // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
 

@@ -74,7 +74,6 @@ struct fabian: public character {
         velocity += point;
     }
 
-
     bool is_jumping;
     bool is_running;
     bool flipped;

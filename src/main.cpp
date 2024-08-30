@@ -19,8 +19,8 @@
 
 // Includes
 #include "../include/utils.h"
-#include "globals.h"
 #include "./characters/-character.h"
+#include "globals.h"
 #include "pickups.h"
 
 
@@ -37,6 +37,7 @@ int main()
     bn::core::init();
 
     // All characters
+
 
     // Background
     bn::color background_color = rgb255(140, 165, 247);
