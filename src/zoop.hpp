@@ -46,7 +46,7 @@ namespace zoop
     struct bee
     {
         sprite_ptr sprite = sprite_items::bee.create_sprite(0,20);    
-        sprite_animate_action<2> anim = create_sprite_animate_action_forever(sprite, 1, sprite_items::bee.tiles_item(), 0, 1);
+        sprite_animate_action<2> anim = bn::create_sprite_animate_action_forever(sprite, 1, sprite_items::bee.tiles_item(), 0, 1);
 
         bee() 
         {
@@ -61,4 +61,4 @@ namespace zoop
         }
     };
 
-};
+}
