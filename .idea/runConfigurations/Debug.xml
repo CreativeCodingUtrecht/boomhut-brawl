@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Debug" type="com.jetbrains.cidr.embedded.customgdbserver.type" factoryName="com.jetbrains.cidr.embedded.customgdbserver.factory" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="boomhut-brawl" TARGET_NAME="Makefile" CONFIG_NAME="Makefile" version="1" RUN_PATH="$PROJECT_DIR$/boomhut-brawl.elf">
+    <custom-gdb-server version="1" gdb-connect="localhost:2345 " executable="/opt/devkitpro/devkitARM/bin/arm-none-eabi-gdb" warmup-ms="0" download-type="NONE" reset-cmd="monitor reset" reset-type="AFTER_DOWNLOAD" connection-mode="REMOTE" gdbserver-enable="true" console-enabled="false" console-port="0">
+      <debugger kind="GDB">/opt/devkitpro/devkitARM/bin/arm-none-eabi-gdb</debugger>
+      <extra-debugger-params debugger-working-dir="" debugger-env-pass-parent="true" custom-script="" />
+    </custom-gdb-server>
+    <method v="2">
+      <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_open mGBA" />
+    </method>
+  </configuration>
+</component>
