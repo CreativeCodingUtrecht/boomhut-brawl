@@ -17,7 +17,7 @@
 #include "bn_sprite_items_bee.h"
 #include "bn_sprite_items_rat.h"
 
-#include "globals.h"
+#include "globals.hpp"
 
 
 using namespace bn;

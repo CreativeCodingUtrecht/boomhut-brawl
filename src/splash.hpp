@@ -16,8 +16,8 @@
 #include "bn_sound_items.h"
 
 
-#include "globals.h"
-#include "scene.h"
+#include "globals.hpp"
+#include "scene.hpp"
 
 
 

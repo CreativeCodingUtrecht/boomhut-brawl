@@ -1,6 +1,6 @@
 #pragma once
 
-#include "-character.h"
+#include "-character.hpp"
 
 #include "bn_sprite_items_maryam.h"
 #include "bn_sprite_items_avatar_mar.h"

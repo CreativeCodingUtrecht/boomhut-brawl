@@ -1,25 +1,25 @@
 #pragma once
 
-#include "-character.h"
+#include "-character.hpp"
 
-
-#include "bn_sprite_items_fleur.h"
-#include "bn_sprite_items_avatar_fleur.h"
+#include "bn_sprite_items_cate.h"
+#include "bn_sprite_items_avatar_cate.h"
 #include "bn_sound_items.h"
 
+#include "bn_sprites_mosaic_actions.h"
 
-struct fleur: public character {
+struct cate: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "Fleur";
+        return "Space Bard";
     }
 
     bn::sprite_item avatar() {
-        return bn::sprite_items::avatar_fleur;
+        return bn::sprite_items::avatar_cate;
     }
 
     bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
-
+    
 
     // Stats ------------------------------------
     bn::fixed max_health() {
@@ -27,7 +27,7 @@ struct fleur: public character {
     };
 
     bn::fixed run_speed() {
-        return 4;
+        return 1;
     };
 
     bn::fixed jump_velocity() {
@@ -37,21 +37,20 @@ struct fleur: public character {
 
     // Sounds -----------------------------------
     bn::sound_item sound_naam() {
-        return bn::sound_items::fleur_naam;
+        return bn::sound_items::cat_naam;
     }
 
     bn::sound_item sound_tagline() {
-        return bn::sound_items::fleur_tagline;
+        return bn::sound_items::cat_tagline;
     }
 
     bn::sound_item sound_jump() {
-        return bn::sound_items::fleur_jump;
+        return bn::sound_items::cat_jump;
     }
 
     bn::sound_item sound_hit() {
-        return bn::sound_items::fleur_hit;
+        return bn::sound_items::cat_hit;
     }
-
 
 
     // Health -----------------------------------
@@ -60,8 +59,6 @@ struct fleur: public character {
         return health;
     }
 
-    int mosaic_timer = 30;
-
     void take_damage(bn::fixed amount) {
         mosaic_timer = 30;
         _sprite_ptr->set_mosaic_enabled(true);
@@ -69,9 +66,16 @@ struct fleur: public character {
     }
 
 
-    // Movement ---------------------------------
-    bn::fixed_point position = spawn_point;
+    bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
+
+    int mosaic_timer = 30;
+
+
+    void apply_force(bn::fixed_point point) {
+        velocity += point;
+    }
+
 
     bool is_jumping;
     bool is_running;
@@ -79,41 +83,36 @@ struct fleur: public character {
     bool is_landing;
     bool is_falling;
 
-    void apply_force(bn::fixed_point point) {
-        velocity += point;
-    }
-
-
 
     // Sprite -----------------------------------
-    bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
+    bn::sprite_item sprite_item()  {
+        return bn::sprite_items::cate;
+    };
 
+    bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
     bn::optional<bn::sprite_ptr> sprite_ptr() {
         return _sprite_ptr;
     };
 
-    bn::sprite_item sprite_item()  {
-        return bn::sprite_items::fleur;
-    }
 
     // Animations -------------------------------
-    character_animations animations() {
+    virtual character_animations animations() override {
         return {
             character_animations {
-                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::fleur.tiles_item(), 
-                    35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255
+                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::cate.tiles_item(), 
+                    59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458
                 ),
                 .run = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
+                    38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
                 ),
                 .jump_up = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+                    56, 57, 58, 59, 60
                 ),
                 .jump_stay = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                10, 10
+                    61, 61
                 ),
                 .jump_down = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+                    62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
                 )
             }
         };
@@ -121,16 +120,18 @@ struct fleur: public character {
 
     bn::optional<character_animations> anims = animations();
 
-
-    fleur() {}
-
+    cate() {
+        _sprite_ptr->set_mosaic_enabled(true);
+    }
 
     void unload() {
         anims.reset();
         _sprite_ptr.reset();
     }
 
+
     bool _preview_mode;
+
     void set_preview_mode(bool on_or_off) {
         _preview_mode = on_or_off;
     }
@@ -142,14 +143,14 @@ struct fleur: public character {
             return;
         }
 
-
         if (mosaic_timer > 0) {
             mosaic_timer--;
             bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
         } else {
             _sprite_ptr->set_mosaic_enabled(false);
         }
-        
+
+
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
 
@@ -206,7 +207,7 @@ struct fleur: public character {
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed());
+            velocity.set_x(velocity.x() - run_speed());
             _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
@@ -215,7 +216,7 @@ struct fleur: public character {
         }
 
         if (keypad.right_held) {
-            velocity.set_x(run_speed());
+            velocity.set_x(velocity.x() + run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
@@ -224,7 +225,7 @@ struct fleur: public character {
         }
         
         if (!keypad.left_held && !keypad.right_held) {
-            velocity.set_x(0);
+            // velocity.set_x(0);
             if (is_running) {
                 is_running = false;
             }
@@ -233,6 +234,9 @@ struct fleur: public character {
 
         // Apply velocity to position
         position += velocity;
+        BN_LOG(velocity.x());
+        bn::fixed drg = .85;
+        velocity.set_x(velocity.x() * drg);
 
         // Map bounds
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));
@@ -261,5 +265,4 @@ struct fleur: public character {
         }
     } 
 };
-
 

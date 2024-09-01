@@ -1,21 +1,19 @@
 #pragma once
 
-#include "-character.h"
+#include "-character.hpp"
 
-
-#include "bn_sprite_items_saskia.h"
-#include "bn_sprite_items_avatar_saskia.h"
+#include "bn_sprite_items_avatar_werner.h"
 #include "bn_sound_items.h"
 
 
-struct saskia: public character {
+struct werner: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "Saskia";
+        return "Werner";
     }
 
     bn::sprite_item avatar() {
-        return bn::sprite_items::avatar_saskia;
+        return bn::sprite_items::avatar_werner;
     }
 
     bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
@@ -36,20 +34,21 @@ struct saskia: public character {
 
     // Sounds -----------------------------------
     bn::sound_item sound_naam() {
-        return bn::sound_items::saskia_naam;
+        return bn::sound_items::werner_naam;
     }
 
     bn::sound_item sound_tagline() {
-        return bn::sound_items::saskia_tagline;
+        return bn::sound_items::werner_tagline;
     }
 
     bn::sound_item sound_jump() {
-        return bn::sound_items::saskia_jump;
+        return bn::sound_items::werner_jump;
     }
 
     bn::sound_item sound_hit() {
-        return bn::sound_items::saskia_hit;
+        return bn::sound_items::werner_hit;
     }
+
 
     // Health -----------------------------------
     bn::fixed health = max_health();
@@ -71,7 +70,8 @@ struct saskia: public character {
     }
 
 
-    bn::fixed_point position = spawn_point;
+
+    bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
 
     bool is_jumping;
@@ -80,9 +80,11 @@ struct saskia: public character {
     bool is_landing;
     bool is_falling;
 
+
     bn::sprite_item sprite_item()  {
-        return bn::sprite_items::saskia;
+        return bn::sprite_items::rein_lario;
     };
+
 
     bn::optional<bn::sprite_ptr>_sprite_ptr = sprite_item().create_sprite(spawn_point);
     bn::optional<bn::sprite_ptr> sprite_ptr() {
@@ -93,34 +95,28 @@ struct saskia: public character {
     character_animations animations() {
         return {
             character_animations {
-                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::saskia.tiles_item(), 
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74
+                .idle = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, bn::sprite_items::rein_lario.tiles_item(), 
+                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
                 ),
                 .run = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74
-                    // 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55
+                    38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55  
                 ),
                 .jump_up = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74
-                    // 56, 57, 58, 59, 60
+                    56, 57, 58, 59, 60
                 ),
                 .jump_stay = bn::create_sprite_animate_action_forever(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    0, 1
-                    //
-                    // 61, 61
+                    61, 61
                 ),
                 .jump_down = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, sprite_item().tiles_item(), 
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74
-                    // 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
+                    62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83
                 )
             }
         };
     }
 
-    bn::optional<character_animations> anims = animations();
-    
+       bn::optional<character_animations> anims = animations();
 
-    saskia() {}
+    werner() {}
 
 
     void unload() {
@@ -128,7 +124,7 @@ struct saskia: public character {
         _sprite_ptr.reset();
     }
 
-    
+
     bool _preview_mode;
     void set_preview_mode(bool on_or_off) {
         _preview_mode = on_or_off;
@@ -147,7 +143,6 @@ struct saskia: public character {
         } else {
             _sprite_ptr->set_mosaic_enabled(false);
         }
-
 
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 

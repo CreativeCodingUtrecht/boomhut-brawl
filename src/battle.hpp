@@ -35,31 +35,31 @@
 
 // Includes
 #include "../include/utils.h"
-#include "globals.h"
-#include "pickups.h"
-#include "splash.h"
-#include "main_menu.h"
-#include "zoop.h"
+#include "globals.hpp"
+#include "pickups.hpp"
+#include "splash.hpp"
+#include "main_menu.hpp"
+#include "zoop.hpp"
 
 // Characters
-#include "./characters/-character.h"
-#include "./characters/cate.h"
-#include "./characters/christine.h"
-#include "./characters/fabian.h"
-#include "./characters/fleur.h"
-#include "./characters/hunter.h"
-#include "./characters/joost.h"
-#include "./characters/laury.h"
-#include "./characters/mar.h"
-#include "./characters/networkninja.h"
-#include "./characters/rein.h"
-#include "./characters/saskia.h"
-#include "./characters/sjef.h"
-#include "./characters/werner.h"
-#include "./characters/sietse.h"
+#include "./characters/-character.hpp"
+#include "./characters/cate.hpp"
+#include "./characters/christine.hpp"
+#include "./characters/fabian.hpp"
+#include "./characters/fleur.hpp"
+#include "./characters/hunter.hpp"
+#include "./characters/joost.hpp"
+#include "./characters/laury.hpp"
+#include "./characters/mar.hpp"
+#include "./characters/networkninja.hpp"
+#include "./characters/rein.hpp"
+#include "./characters/saskia.hpp"
+#include "./characters/sjef.hpp"
+#include "./characters/werner.hpp"
+#include "./characters/sietse.hpp"
 
 
-#include "scene.h"
+#include "scene.hpp"
 
 
 using namespace bn;

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "bn_music_items.h"
+#include "bn_log.h"
+#include "bn_format.h"
 
 // This game's multiplayer functions by sending keypresses over the link cable 
 // whenever they occur

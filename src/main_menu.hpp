@@ -4,8 +4,8 @@
 #include "bn_keypad.h"
 #include "bn_sprite_palette_actions.h"
 
-#include "globals.h"
-#include "scene.h"
+#include "globals.hpp"
+#include "scene.hpp"
 
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
@@ -14,7 +14,7 @@
 
 
 // Characters
-#include "./characters/-character.h"
+#include "./characters/-character.hpp"
 
 
 namespace main_menu 

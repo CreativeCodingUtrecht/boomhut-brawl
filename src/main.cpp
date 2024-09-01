@@ -4,15 +4,15 @@
 
 // Includes
 #include "../include/utils.h"
-#include "globals.h"
+#include "globals.hpp"
 
 
 // scenes
-#include "scene.h"
-#include "battle.h"
-#include "splash.h"
-#include "main_menu.h"
-#include "character_select.h"
+#include "scene.hpp"
+#include "battle.hpp"
+#include "splash.hpp"
+#include "main_menu.hpp"
+#include "character_select.hpp"
 
 
 int main()

@@ -17,8 +17,8 @@
 
 
 // includes
-#include "./characters/-character.h"
-#include "globals.h"
+#include "./characters/-character.hpp"
+#include "globals.hpp"
 
 #include "bn_sound_items.h"
 
@@ -39,8 +39,8 @@ namespace pickups
 
     struct pickup 
     {
-        virtual void update();
-        virtual ~pickup();
+        virtual void update() = 0;
+        virtual ~pickup() = 0;
     };
 
 

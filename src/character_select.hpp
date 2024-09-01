@@ -12,12 +12,12 @@
 #include "bn_link_state.h"
 #include "bn_sound_items.h"
 #include "bn_music_items.h"
-
+#include "bn_music.h"
 
 // Includes
-#include "multiplayer.h"
-#include "globals.h"
-#include "scene.h"
+#include "multiplayer.hpp"
+#include "globals.hpp"
+#include "scene.hpp"
 
 
 // Font 
@@ -36,21 +36,21 @@
 #include "bn_sprite_items_countdown_fight.h"
 
 // Characters
-#include "./characters/-character.h"
-#include "./characters/cate.h"
-#include "./characters/christine.h"
-#include "./characters/fabian.h"
-#include "./characters/fleur.h"
-#include "./characters/hunter.h"
-#include "./characters/joost.h"
-#include "./characters/laury.h"
-#include "./characters/mar.h"
-#include "./characters/networkninja.h"
-#include "./characters/rein.h"
-#include "./characters/saskia.h"
-#include "./characters/sjef.h"
-#include "./characters/werner.h"
-#include "./characters/sietse.h"
+#include "./characters/-character.hpp"
+#include "./characters/cate.hpp"
+#include "./characters/christine.hpp"
+#include "./characters/fabian.hpp"
+#include "./characters/fleur.hpp"
+#include "./characters/hunter.hpp"
+#include "./characters/joost.hpp"
+#include "./characters/laury.hpp"
+#include "./characters/mar.hpp"
+#include "./characters/networkninja.hpp"
+#include "./characters/rein.hpp"
+#include "./characters/saskia.hpp"
+#include "./characters/sjef.hpp"
+#include "./characters/werner.hpp"
+#include "./characters/sietse.hpp"
 
 
 // Sounds

@@ -16,9 +16,9 @@
 #include "bn_sound_item.h"
 #include "bn_sound_items.h"
 
-#include "../globals.h"
+#include "../globals.hpp"
 #include "../include/utils.h"
-#include "../multiplayer.h"
+#include "../multiplayer.hpp"
 
 
 enum class all_characters {
