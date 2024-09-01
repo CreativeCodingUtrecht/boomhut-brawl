@@ -1,27 +1,10 @@
 #include "bn_core.h"
-#include "bn_math.h"
-#include "bn_keypad.h"
 #include "bn_bg_palettes.h"
-#include "bn_sprite_text_generator.h"
-#include "bn_sprite_animate_actions.h"
-#include "bn_regular_bg_map_cell_info.h"
-#include "bn_sprite_text_generator.h"
-#include "bn_point.h"
-#include "bn_log.h"
-#include "bn_format.h"
-#include "bn_math.h"
-#include "bn_display.h"
-#include "bn_link.h"
-#include "bn_link_state.h"
-#include "bn_music.h"
-#include "bn_audio.h"
-
+#include "bn_keypad.h"
 
 // Includes
 #include "../include/utils.h"
-#include "./characters/-character.h"
 #include "globals.h"
-#include "pickups.h"
 
 
 // scenes

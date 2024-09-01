@@ -307,7 +307,6 @@ namespace character_select
 
                     you->set_preview_mode(false);
                     other_player->set_preview_mode(false);
-
                     you->sprite_ptr()->set_mosaic_enabled(true);
                     other_player->sprite_ptr()->set_mosaic_enabled(true);
 
