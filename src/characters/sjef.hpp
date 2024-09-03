@@ -26,7 +26,7 @@ struct sjef: public character {
     };
 
     bn::fixed run_speed() {
-        return 4;
+        return .75;
     };
 
     bn::fixed jump_velocity() {
@@ -128,6 +128,11 @@ struct sjef: public character {
         _preview_mode = on_or_off;
     }
 
+    bool _is_indoors = false;
+    bool is_indoors() {
+        return _is_indoors;
+    }
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
@@ -141,6 +146,8 @@ struct sjef: public character {
         } else {
             _sprite_ptr->set_mosaic_enabled(false);
         }
+
+        _is_indoors = false;
         
         
         // Watch for gravity
@@ -165,8 +172,15 @@ struct sjef: public character {
             }
         }
 
+        // check if indoors
+        for (int tile_index: indoor_tiles) {
+            if (player_tile_index == tile_index) {
+                _is_indoors = true;
+            }
+        }
+
         // platform beneath player 
-        if (on_ground) {
+        if (on_ground && !on_wall) {
             if ((is_jumping) && velocity.y() > 0) {
                 is_jumping = false;
                 is_landing = true;
@@ -199,7 +213,7 @@ struct sjef: public character {
         // running
         if (keypad.left_held) {
             is_landing = false;
-            velocity.set_x(-run_speed());
+            velocity.set_x(velocity.x() - run_speed());
             _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
                 is_running = true;
@@ -208,16 +222,15 @@ struct sjef: public character {
         }
 
         if (keypad.right_held) {
-            velocity.set_x(run_speed());
+            velocity.set_x(velocity.x() + run_speed());
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
             }
             _sprite_ptr->set_horizontal_flip(false);
         }
-        
+
         if (!keypad.left_held && !keypad.right_held) {
-            velocity.set_x(0);
             if (is_running) {
                 is_running = false;
             }
@@ -226,6 +239,8 @@ struct sjef: public character {
 
         // Apply velocity to position
         position += velocity;
+        bn::fixed drg = .85;
+        velocity.set_x(velocity.x() * drg);
 
         // Map bounds
         position.set_x(constrain(position.x(), bounds_min_x, bounds_max_x));

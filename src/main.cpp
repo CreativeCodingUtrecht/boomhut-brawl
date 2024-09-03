@@ -19,9 +19,6 @@ int main()
 {
     bn::core::init();
 
-    // All characters
-
-
     // Background
     bn::color background_color = rgb255(140, 165, 247);
     bn::bg_palettes::set_transparent_color(background_color);

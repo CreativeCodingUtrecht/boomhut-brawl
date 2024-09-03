@@ -21,17 +21,22 @@
 #include "bn_link_state.h"
 #include "bn_music.h"
 #include "bn_audio.h"
+#include "bn_blending_fade_alpha.h"
+#include "bn_blending.h"
 
 
 // BGs
 #include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
+#include "bn_regular_bg_items_background_indoors.h"
 #include "bn_regular_bg_items_trein_bg.h"
+#include "bn_regular_bg_items_facade.h"
 
 // Sprites
 #include "bn_sprite_items_pictogram_frame.h"
 #include "bn_sprite_items_healthbar_fill.h"
 #include "bn_sprite_items_healthbar_frame.h"
+#include "bn_sprite_items_wheel.h"
 
 // Includes
 #include "../include/utils.h"
@@ -137,8 +142,18 @@ namespace battle
         //     pickups::lipje(32+x_offset,y_offset),
         //     pickups::lipje(64+x_offset,y_offset),
         //     pickups::lipje(96+x_offset,y_offset)
-        // };  
+        // };
 
+//        const bn::fixed x_offset = ;
+//        const bn::fixed y_offset = 256 + ;
+        bn::sprite_ptr props[] = {
+            bn::sprite_items::wheel.create_sprite(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16)
+        };
+
+        for (auto &prop : props) {
+            prop.set_camera(*camera);
+            prop.set_z_order(-100);
+        }
 
         // Animals
         zoop::bee bee;
@@ -149,38 +164,40 @@ namespace battle
         BN_LOG("entering battle!!");
 
         // sky and mountains background
-        bn::regular_bg_ptr background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-        background.set_z_order(4);
-        background.set_camera(*camera);
+        background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        background->set_z_order(4);
+        background->set_camera(*camera);
 
 
         // BG and map
-        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
-        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-        bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
-        tilemap.set_camera(*camera);
+//        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
+//        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+//        bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
+//        tilemap.set_camera(*camera);
 
 
         // Trein
-        regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
-        trein_bg.set_camera(*camera);
-        trein_bg.set_z_order(5);
+//        regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
+//        trein_bg.set_camera(*camera);
+//        trein_bg.set_z_order(5);
 
 
         // Window for the train
-        bn::window outside_window = bn::window::outside();
-        outside_window.set_show_bg(trein_bg, false);
-        bn::rect_window internal_window = bn::rect_window::internal();
-        internal_window.set_boundaries(-0, -200, 392, 1024);
-        internal_window.set_camera(camera);
+//        bn::window outside_window = bn::window::outside();
+//        outside_window.set_show_bg(trein_bg, false);
+//        bn::rect_window internal_window = bn::rect_window::internal();
+//        internal_window.set_boundaries(-0, -200, 392, 1024);
+//        internal_window.set_camera(camera);
 
         BN_LOG("test");
 
 
-        // Foreground 
+        // Facade
+//        bn::regular_bg_ptr facade = bn::regular_bg_items::facade.create_bg(0,0);
+//        facade.set_camera(*camera);
         
 
-        // Default players 
+        // Default characters
         if (!you) {
             you = new fabian();
         }
@@ -188,7 +205,6 @@ namespace battle
         if (!other_player) {
             other_player = new fabian();
         }
-
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
@@ -199,20 +215,24 @@ namespace battle
         other_player->sprite_ptr()->set_camera(*camera);
         camera->set_position(you->sprite_ptr()->position());
 
+        // Printer
         printer->text_generator->set_center_alignment();
 
 
         while(true)
         {
+
+
             // Update animals
             bee.update();
             rat.update();
 
             // log_memory_usage();
             
-            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
+//            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-            // printer->print_map_tile_and_position(map_item, you->sprite_ptr()->position());
+             printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+             BN_LOG(props[0].position().x());
 
             // Update level
             // Lipje pickup items
@@ -222,7 +242,7 @@ namespace battle
 
             // Moving clouds
             // clouds_x -=  0.1;
-            trein_bg.set_x(trein_bg.x() - 2);
+//            trein_bg.set_x(trein_bg.x() - 2);
 
             // clouds.set_x(clouds_x + player.position.x() / bn::fixed(40.0));
 
@@ -237,11 +257,22 @@ namespace battle
             // Always update own player
             you->update(keypad_data_to_send.keypad_data);
 
-            // log_memory_usage();
+            // Indoors and outdoors
+            if (you->is_indoors()) {
+                background->set_item(bn::regular_bg_items::background_indoors);
+            } else {
+                background->set_item(bn::regular_bg_items::background);
+            }
+
+            if (other_player->is_indoors() && !you->is_indoors()) {
+                bn::blending::set_transparency_alpha(0.3);
+                other_player->sprite_ptr()->set_blending_enabled(true);
+            } else {
+                other_player->sprite_ptr()->set_blending_enabled(false);
+            }
 
             // Send if changed
             multiplayer::send_if_changed(keypad_data_to_send);
-
 
             // Update other player, receive keypad from other players
             multiplayer::receive_keypad_data();
@@ -254,12 +285,12 @@ namespace battle
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
 
-
             // Health bars
             bars.set_health_left(you->get_health() / you->max_health());
             bars.set_health_right(other_player->get_health() / other_player->max_health());
 
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
+                background.reset();
                 bars.pictogram.reset();
                 bars.pictogram2.reset();
                 return next_scene::character_select;

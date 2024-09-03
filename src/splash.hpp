@@ -35,7 +35,6 @@ namespace splash
 
         // music_items::splashscreen.play();
 
-
         int t = 0;
         
         int entrance_stagger = 10;

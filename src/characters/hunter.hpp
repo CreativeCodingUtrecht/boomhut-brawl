@@ -31,7 +31,7 @@ struct hunter: public character {
     };
 
     bn::fixed run_speed() {
-        return 1;
+        return .75;
     };
 
     bn::fixed jump_velocity() {
@@ -150,7 +150,10 @@ struct hunter: public character {
         _preview_mode = on_or_off;
     }
 
-
+    bool _is_indoors = false;
+    bool is_indoors() {
+        return _is_indoors;
+    }
 
 
     // weapon
@@ -166,7 +169,6 @@ struct hunter: public character {
 
     bn::vector<arrow, 4> arrows;   
 
-    
  
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
@@ -182,7 +184,9 @@ struct hunter: public character {
             _sprite_ptr->set_mosaic_enabled(false);
         }
 
-        
+        _is_indoors = false;
+
+
         // Watch for gravity
         int player_tile_index = get_map_tile_index_at_position(position, *map_item); 
 
@@ -205,8 +209,16 @@ struct hunter: public character {
             }
         }
 
+        // check if indoors
+        for (int tile_index: indoor_tiles) {
+            if (player_tile_index == tile_index) {
+                _is_indoors = true;
+            }
+        }
+
+
         // platform beneath player 
-        if (on_ground) {
+        if (on_ground && !on_wall) {
             if ((is_jumping) && velocity.y() > 0) {
                 is_jumping = false;
                 is_landing = true;
@@ -257,7 +269,6 @@ struct hunter: public character {
         }
         
         if (!keypad.left_held && !keypad.right_held) {
-            // velocity.set_x(0);
             if (is_running) {
                 is_running = false;
             }
@@ -267,7 +278,7 @@ struct hunter: public character {
         // Apply velocity to position
         position += velocity;
         // BN_LOG(velocity.x());
-        bn::fixed drg = .75;
+        bn::fixed drg = .85;
         velocity.set_x(velocity.x() * drg);
 
         // Map bounds

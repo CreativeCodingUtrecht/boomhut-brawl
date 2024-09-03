@@ -149,7 +149,6 @@ namespace character_select
 
     void generate_character_names()
     {
-        // return;
         printer->info_text_sprites.clear();
         printer->text_generator->set_left_alignment();
         printer->text_generator->generate(-114, 2, you->name(), printer->info_text_sprites);
@@ -170,7 +169,6 @@ namespace character_select
             bn::music_items::backwithavengeance.play();
             bn::music::set_volume(0.5);
         }
-        
 
         // Background
         bn::optional<bn::regular_bg_ptr> bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
@@ -430,11 +428,6 @@ namespace character_select
                     generate_character_names();
                 }
             }
-
-            if (multiplayer::other_player_keypad_data.keypad_data.a_pressed) {
-                selected_other = character_pictograms[other_selected_menu_item_x][other_selected_menu_item_y].character_to_choose;
-            }
-
 
             for (int x = 0; x < menu_items_y; x++) {
                 for (int y = 0; y < menu_items_y; y++) {

@@ -72,6 +72,10 @@ struct character {
     virtual void take_damage(bn::fixed) = 0;
     virtual void apply_force(bn::fixed_point) = 0;
 
+    // state
+    virtual bool is_indoors() {
+        return false;
+    };
 
     // sounds
     virtual bn::sound_item sound_naam() = 0;
@@ -109,8 +113,3 @@ bn::vector<character*, 2> players() {
     vec.push_back(other_player);
     return vec;
 }
-
-
-bn::optional<all_characters> selected_you;
-bn::optional<all_characters> selected_other;
-
