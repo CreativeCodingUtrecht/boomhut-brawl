@@ -11,7 +11,7 @@
 struct fleur: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "Fleur";
+        return "Kleurifleuri";
     }
 
     bn::sprite_item avatar() {
