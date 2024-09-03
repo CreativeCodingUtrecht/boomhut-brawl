@@ -13,6 +13,7 @@
 #include "splash.hpp"
 #include "main_menu.hpp"
 #include "character_select.hpp"
+#include "win_lose.hpp"
 
 
 int main()
@@ -42,6 +43,8 @@ int main()
             next = character_select::run();
         if (next == next_scene::battle)
             next = battle::run();
+        if (next == next_scene::you_win)
+            next = win_lose::run();
         else if (next == next_scene::main_menu)
             next = main_menu::run();
     }

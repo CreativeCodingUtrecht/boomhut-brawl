@@ -49,6 +49,9 @@ struct joost: public character {
     bn::sound_item sound_hit() {
         return bn::sound_items::joost_hit;
     }
+    bn::sound_item sound_win() {
+        return bn::sound_items::joost_wins;
+    }
     
     // Health -----------------------------------
     bn::fixed health = max_health();

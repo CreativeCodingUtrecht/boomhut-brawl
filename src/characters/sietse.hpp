@@ -36,6 +36,10 @@ struct sietse: public character {
         return bn::sound_items::sietse_hit;
     }
 
+    bn::sound_item sound_win() {
+        return bn::sound_items::sietse_wins;
+    }
+
     // Stats ------------------------------------
     bn::fixed max_health() {
         return 100;

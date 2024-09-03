@@ -51,6 +51,10 @@ struct saskia: public character {
         return bn::sound_items::saskia_hit;
     }
 
+    bn::sound_item sound_win() {
+        return bn::sound_items::saskia_wins;
+    }
+
     // Health -----------------------------------
     bn::fixed health = max_health();
     bn::fixed get_health() {

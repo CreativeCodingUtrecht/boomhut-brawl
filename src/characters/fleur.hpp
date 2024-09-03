@@ -52,6 +52,10 @@ struct fleur: public character {
         return bn::sound_items::fleur_hit;
     }
 
+    bn::sound_item sound_win() {
+        return bn::sound_items::fleur_wins;
+    }
+
 
 
     // Health -----------------------------------

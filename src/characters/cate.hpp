@@ -52,6 +52,10 @@ struct cate: public character {
         return bn::sound_items::cat_hit;
     }
 
+    bn::sound_item sound_win() {
+        return bn::sound_items::cat_wins;
+    }
+
 
     // Health -----------------------------------
     bn::fixed health = max_health();

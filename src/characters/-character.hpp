@@ -82,6 +82,7 @@ struct character {
     virtual bn::sound_item sound_tagline() = 0;
     virtual bn::sound_item sound_jump() = 0;
     virtual bn::sound_item sound_hit() = 0;
+    virtual bn::sound_item sound_win() = 0;
 
     // sprites and animations
     virtual character_animations animations() = 0;
@@ -106,6 +107,9 @@ struct character {
 // Global
 character* you;
 character* other_player;
+
+bn::optional<character*> winner;
+bn::optional<character*> loser;
 
 bn::vector<character*, 2> players() {
     bn::vector<character*, 2> vec;

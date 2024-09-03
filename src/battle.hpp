@@ -231,8 +231,8 @@ namespace battle
             
 //            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-             printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
-             BN_LOG(props[0].position().x());
+//             printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+//             BN_LOG(props[0].position().x());
 
             // Update level
             // Lipje pickup items
@@ -289,11 +289,28 @@ namespace battle
             bars.set_health_left(you->get_health() / you->max_health());
             bars.set_health_right(other_player->get_health() / other_player->max_health());
 
+            // Back to character select
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
                 background.reset();
                 bars.pictogram.reset();
                 bars.pictogram2.reset();
                 return next_scene::character_select;
+            }
+
+            // Win / lose
+            if (you->get_health() <= 0 || other_player->get_health() <= 0) {
+//                background.reset();
+                bars.pictogram.reset();
+                bars.pictogram2.reset();
+
+                if (you->get_health() <= 0) {
+                    winner = other_player;
+                } else {
+                    winner = you;
+                }
+
+
+                return next_scene::you_win;
             }
 
             bn::core::update();

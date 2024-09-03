@@ -338,6 +338,7 @@ namespace character_select
             }
 
             if (you_ready && other_player_ready) {
+                bn::sound_items::fight_countdown.play();
                 counting_down = true;
             }
 
