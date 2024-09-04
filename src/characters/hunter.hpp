@@ -5,6 +5,7 @@
 #include "bn_sprite_items_hunter.h"
 #include "bn_sprite_items_avatar_hunter.h"
 #include "bn_sprite_items_hunter_arrow.h"
+#include "bn_sprite_items_hunter_arrow_avatar.h"
 #include "bn_sound_items.h"
 
 
@@ -20,8 +21,8 @@ struct hunter: public character {
 
     bn::optional<weapon_info> get_weapon_info() {
         return weapon_info {
-            .name = "Arrow",
-            .avatar = bn::sprite_items::hunter_arrow
+            .name = "arrow",
+            .avatar = bn::sprite_items::hunter_arrow_avatar
         };
     }
 

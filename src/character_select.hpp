@@ -29,7 +29,6 @@
 // Sprites
 #include "bn_sprite_items_pictogram_selector_you.h"
 #include "bn_sprite_items_pictogram_selector_other_player.h"
-#include "bn_sprite_items_rein_pictogram.h"
 #include "bn_sprite_items_countdown_3.h"
 #include "bn_sprite_items_countdown_2.h"
 #include "bn_sprite_items_countdown_1.h"
@@ -145,7 +144,9 @@ namespace character_select
             *ptr = new werner();
         }
     }
-    
+
+    bn::optional<bn::sprite_ptr> weapon_you;
+    bn::optional<bn::sprite_ptr> weapon_other_player;
 
     void generate_character_names()
     {
@@ -153,6 +154,24 @@ namespace character_select
         printer->text_generator->set_left_alignment();
         printer->text_generator->generate(-114, 2, you->name(), printer->info_text_sprites);
         printer->text_generator->generate(53, 2, other_player->name(), printer->info_text_sprites);
+
+        bn::optional<weapon_info> your_weapon = you->get_weapon_info();
+        bn::optional<weapon_info> other_player_weapon = other_player->get_weapon_info();
+
+        if (your_weapon) {
+//            printer->text_generator->generate(-114, 18, "weapon: ", printer->info_text_sprites);
+//            printer->text_generator->generate(-114, 32, your_weapon->name, printer->info_text_sprites);
+//            weapon_you = your_weapon->avatar.create_sprite(-114 + 16, 48);
+            weapon_you = your_weapon->avatar.create_sprite(-100, 30);
+        } else {
+            weapon_you.reset();
+        }
+        if (other_player_weapon) {
+//            printer->text_generator->generate(53, 18, "weapon: ", printer->info_text_sprites);
+//            printer->text_generator->generate(53, 32, other_player_weapon->name, printer->info_text_sprites);
+        } else {
+            weapon_other_player.reset();
+        }
     }
 
 
@@ -167,7 +186,7 @@ namespace character_select
 
         if (!bn::music::playing()) {
             bn::music_items::backwithavengeance.play();
-            bn::music::set_volume(0.5);
+            bn::music::set_volume(0.25);
         }
 
         // Background
@@ -298,10 +317,14 @@ namespace character_select
                 if (countdown <= -30 && countdown > -60) {
                     countdown_fight->set_scale(lerp(countdown_fight->horizontal_scale(), 0.01, .5));
                 }
+                // countdown done
                 if (countdown == -60) {
                     printer->info_text_sprites.clear();
                     selector_you.reset();
                     selector_other_player.reset();
+
+                    weapon_you.reset();
+                    weapon_other_player.reset();
 
                     you->set_preview_mode(false);
                     other_player->set_preview_mode(false);
@@ -447,11 +470,15 @@ namespace character_select
             }
 
 
+            // Start pressed, immediate start
             if (keys_data.keypad_data.start_pressed || multiplayer::other_player_keypad_data.keypad_data.start_pressed) {
                 bg.reset();
                 printer->info_text_sprites.clear();
                 selector_you.reset();
                 selector_other_player.reset();
+
+                weapon_you.reset();
+                weapon_other_player.reset();
 
                 you->set_preview_mode(false);
                 other_player->set_preview_mode(false);

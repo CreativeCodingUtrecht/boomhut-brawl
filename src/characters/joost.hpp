@@ -11,7 +11,7 @@
 struct joost: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "Joost";
+        return "De Rus";
     }
 
     bn::sprite_item avatar() {

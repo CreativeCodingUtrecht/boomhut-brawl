@@ -143,6 +143,8 @@ struct cate: public character {
     }
 
 
+
+
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();

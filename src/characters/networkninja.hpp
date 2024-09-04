@@ -4,6 +4,7 @@
 
 #include "bn_sprite_items_timo.h"
 #include "bn_sprite_items_avatar_networkninja.h"
+#include "bn_sprite_items_networkninja_keyboard_avatar.h"
 #include "bn_sprite_items_rat.h"
 #include "bn_sound_items.h"
 
@@ -21,7 +22,7 @@ struct networkninja: public character {
     bn::optional<weapon_info> get_weapon_info() {
         return weapon_info {
             .name = "keyboard",
-            .avatar = bn::sprite_items::rat 
+            .avatar = bn::sprite_items::networkninja_keyboard_avatar
         };
     }
     
@@ -147,6 +148,15 @@ struct networkninja: public character {
     }
 
 
+    // weapon
+    struct keyboard {
+        bn::sprite_ptr spr;
+        int direction;
+    };
+
+    bn::vector<keyboard, 4> arrows;
+
+
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();
@@ -161,8 +171,6 @@ struct networkninja: public character {
         }
 
         _is_indoors = false;
-        
-        BN_LOG("update networkninja");
 
         
         // Watch for gravity
