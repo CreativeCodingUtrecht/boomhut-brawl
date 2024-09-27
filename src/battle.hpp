@@ -199,7 +199,7 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new cate();
+            you = new christine();
         }
 
         if (!other_player) {
