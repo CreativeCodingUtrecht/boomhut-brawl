@@ -74,20 +74,6 @@ struct hunter: public character {
     }
 
     // Ability ----------------------------------
-    bn::fixed ability = 0;
-    bn::fixed get_ability() {
-        return ability;
-    }
-
-    void increase_ability() {
-        if (ability < max_ability()) {
-            ability += 1;
-        }
-    }
-
-    void reset_ability() {
-        ability = 0;
-    }
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
@@ -98,9 +84,6 @@ struct hunter: public character {
     void apply_force(bn::fixed_point point) {
         velocity += point;
     }
-
-    
-    
 
     bool is_jumping;
     bool is_running;

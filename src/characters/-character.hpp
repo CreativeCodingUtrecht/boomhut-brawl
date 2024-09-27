@@ -60,25 +60,26 @@ struct weapon_info {
 
 // Abstract character
 struct character {
+    bn::fixed ability = 0;
+    bn::fixed max_ability = 100;
+
     virtual bn::string<20> name() = 0;
     virtual bn::sprite_item avatar() = 0;
     virtual bn::fixed max_health() = 0;
-    virtual bn::fixed max_ability() {
-        return 100;
-    };;
+
     virtual bn::fixed run_speed() = 0;
     virtual bn::fixed jump_velocity() = 0;
 
     virtual bn::fixed get_health() = 0;
     virtual bn::fixed get_ability() {
-        return 0;
+        return ability;
     };    
     virtual void increase_ability() {
-        // do nothing by default
+        ability = bn::min(ability + 1, max_ability);
     };    
 
     virtual void reset_ability() {
-        // do nothing by default
+        ability = 0;
     };    
 
     virtual void take_damage(bn::fixed) = 0;

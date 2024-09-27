@@ -331,8 +331,8 @@ namespace battle
                 other_player->increase_ability();
             }
 
-            abilitybars.set_ability_left(you->get_ability() / you->max_ability());
-            abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability());        
+            abilitybars.set_ability_left(you->get_ability() / you->max_ability);
+            abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
 
             // Back to character select
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
