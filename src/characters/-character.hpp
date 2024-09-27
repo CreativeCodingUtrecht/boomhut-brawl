@@ -60,25 +60,34 @@ struct weapon_info {
 
 // Abstract character
 struct character {
+    int frame = 0;
+
+    bn::fixed ability = 0;
+    bn::fixed max_ability = 100;
+    int ability_frame_delay = 8; 
+        
     virtual bn::string<20> name() = 0;
     virtual bn::sprite_item avatar() = 0;
     virtual bn::fixed max_health() = 0;
-    virtual bn::fixed max_ability() {
-        return 100;
-    };;
+
     virtual bn::fixed run_speed() = 0;
     virtual bn::fixed jump_velocity() = 0;
 
     virtual bn::fixed get_health() = 0;
     virtual bn::fixed get_ability() {
-        return 0;
+        return ability;
     };    
     virtual void increase_ability() {
-        // do nothing by default
+        if (frame % ability_frame_delay == 0) {           
+            ability = bn::min(ability + 1, max_ability);
+        }
     };    
+    virtual void set_ability_frame_delay(int delay) {
+        ability_frame_delay = delay;
+    };
 
     virtual void reset_ability() {
-        // do nothing by default
+        ability = 0;
     };    
 
     virtual void take_damage(bn::fixed) = 0;
@@ -107,6 +116,11 @@ struct character {
 
     // behaviour
     virtual void set_preview_mode(bool) = 0; 
+    virtual void update(int frame, multiplayer::keypad_data::keypad_data_struct keypad) 
+    {
+        this->frame = frame;
+        update(keypad);
+    };
     virtual void update(multiplayer::keypad_data::keypad_data_struct keypad) = 0;
 
     virtual ~character() {};
