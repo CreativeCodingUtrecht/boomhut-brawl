@@ -287,7 +287,7 @@ namespace battle
             multiplayer::keypad_data keypad_data_to_send = multiplayer::read_keys();
 
             // Always update own player
-            you->update(keypad_data_to_send.keypad_data);
+            you->update(frame, keypad_data_to_send.keypad_data);
 
             // Indoors and outdoors
             if (you->is_indoors()) {
@@ -310,8 +310,7 @@ namespace battle
             multiplayer::receive_keypad_data();
 
             // always update for animations
-            other_player->update(multiplayer::other_player_keypad_data.keypad_data);
-
+            other_player->update(frame, multiplayer::other_player_keypad_data.keypad_data);
 
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
@@ -324,10 +323,8 @@ namespace battle
             // Ability bars, still to determine game balance
             // - increase ability every x frames
             // - reset ability 
-            if (frame % 8 == 0) {           
-                you->increase_ability();
-                other_player->increase_ability();
-            }
+            you->increase_ability();
+            other_player->increase_ability();
 
             abilitybars.set_ability_left(you->get_ability() / you->max_ability);
             abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        

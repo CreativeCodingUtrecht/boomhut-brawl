@@ -137,7 +137,9 @@ struct hunter: public character {
 
     bn::optional<character_animations> anims = animations();
 
-    hunter() {}
+    hunter() {
+        set_ability_frame_delay(16);
+    }
 
     void unload() {
         anims.reset();
@@ -170,7 +172,7 @@ struct hunter: public character {
 
     bn::vector<arrow, 4> arrows;   
 
- 
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
