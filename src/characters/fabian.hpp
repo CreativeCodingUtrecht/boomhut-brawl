@@ -6,18 +6,25 @@
 #include "bn_sprite_items_avatar_fabian.h"
 #include "bn_sound_items.h"
 
+#include "bn_sprite_items_jefe_spatel_avatar.h"
+
 
 struct fabian: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "El Chef";
+        return "El Jefe";
     };
 
     bn::sprite_item avatar() {
         return bn::sprite_items::avatar_fabian;
     }
 
-    bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
+      bn::optional<weapon_info> get_weapon_info() {
+        return weapon_info {
+            .name = "jefe_spatel_avatar",
+            .avatar = bn::sprite_items::jefe_spatel_avatar
+        };
+    }
 
     
     // Stats ------------------------------------
@@ -147,6 +154,14 @@ struct fabian: public character {
         return _is_indoors;
     }
 
+
+    // Fight animation 
+    bool is_attacking;
+    bn::sprite_animate_action<35> attack_anim = bn::create_sprite_animate_action_once(*_sprite_ptr, 1, bn::sprite_items::fabian.tiles_item(),
+        233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267
+    );
+
+
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();
@@ -213,6 +228,12 @@ struct fabian: public character {
 
         // BN_LOG(on_wall);
 
+        // Attack!
+        if (keypad.b_pressed) {
+            attack_anim.reset();
+            is_attacking = true;
+        }
+
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
             sound_jump().play();
@@ -225,6 +246,7 @@ struct fabian: public character {
         // running
         if (keypad.left_held) {
             is_landing = false;
+            is_attacking = false;
             velocity.set_x(velocity.x() - run_speed());
             _sprite_ptr->set_horizontal_flip(true);
             if (on_ground) {
@@ -234,6 +256,7 @@ struct fabian: public character {
         }
 
         if (keypad.right_held) {
+            is_attacking = false;
             velocity.set_x(velocity.x() + run_speed());
             if (on_ground) {
                 is_running = true;
@@ -261,7 +284,14 @@ struct fabian: public character {
         _sprite_ptr->set_position(position);
 
         // Update the right animation
-        if (is_falling && !is_jumping && !is_landing) {
+        if (is_attacking) {
+            if (attack_anim.done()) {
+                is_attacking = false;   
+            } else {
+                attack_anim.update();
+            }
+        }
+        else if (is_falling && !is_jumping && !is_landing) {
             anims->jump_stay.update();
         }
         else if (is_running && !is_jumping) {

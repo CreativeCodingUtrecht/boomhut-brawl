@@ -149,12 +149,13 @@ struct cate: public character {
 
 
     // Stars!
-    bn::vector<bn::sprite_ptr, 4> stars;
+    bn::vector<bn::sprite_ptr, 2> stars;
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();
             return;
+
         }
 
         // STARS
@@ -162,11 +163,17 @@ struct cate: public character {
             bn::sprite_ptr star = bn::sprite_items::cat_star.create_sprite(position);
             star.set_camera(camera);
             star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
+            star.set_scale(0.1);
             stars.push_back(star);
+            bn::sound_items::ice_info.play();
         }
 
         for (int i = 0; i < stars.size(); i++) {
             auto s = stars.at(i);
+
+            if (s.horizontal_scale() < 1.0) {
+                s.set_scale(s.horizontal_scale() + 0.1);
+            }
 
             if (s.horizontal_flip()) {
                 s.set_x(s.x() - 5);
@@ -178,8 +185,9 @@ struct cate: public character {
             // s.set
 
 
+
             for (character* c : players()) {
-                if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 32) {
+                if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 16) {
                     c->apply_force(bn::fixed_point(5, 0));
                     c->take_damage(25);
                     stars.erase(stars.begin() + i);

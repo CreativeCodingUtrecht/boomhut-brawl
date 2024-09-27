@@ -227,16 +227,14 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new cate();
+            you = new fabian();
         }
 
         if (!other_player) {
-            other_player = new cate();
+            other_player = new fabian();
         }
 
-        character* third_cat = new cate();
 
-        third_cat->apply_force(bn::fixed_point(10,0));
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
