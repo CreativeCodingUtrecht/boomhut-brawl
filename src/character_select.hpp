@@ -97,7 +97,7 @@ namespace character_select
         }
     };
 
-    void create_character(character **ptr,  all_characters c) 
+    void create_character(character **ptr,  all_characters c)
     {
         delete *ptr;
 
@@ -493,9 +493,6 @@ namespace character_select
 
         return next_scene::battle;
     }
-
-
-    
 }
 
 

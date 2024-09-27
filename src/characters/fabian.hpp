@@ -234,6 +234,15 @@ struct fabian: public character {
             is_attacking = true;
         }
 
+        if (is_attacking && attack_anim.current_index() == 5) {
+            for (character* p : players()) {
+                if (this != p && distance(position, p->sprite_ptr()->position()) < 32) {
+                    p->apply_force(bn::fixed_point(_sprite_ptr->horizontal_flip() ? -10 : 10, 0));
+                    p->take_damage(10);
+                }
+            }
+        } 
+
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {
             sound_jump().play();
