@@ -61,6 +61,7 @@ int mod(int a, int b)
 
 
 
+
 bn::fixed distance(bn::fixed_point a, bn::fixed_point b) 
 {
     return abs(a.x() - b.x()) + abs(a.y() - b.y());
@@ -111,8 +112,8 @@ void camera_follow_smooth(bn::camera_ptr cam, bn::fixed_point position)
     }
 
     if (camera_moving_to_point) {
-        cam.set_x(lerp(position.x(), cam.x(), 0.95));
-        cam.set_y(lerp(position.y(), cam.y(), 0.95));
+        cam.set_x(lerp(position.x(), cam.x(), 0.9));
+        cam.set_y(lerp(position.y(), cam.y(), 0.9));
 
         if (bn::abs(cam.x() - position.x()) < 1  &&  bn::abs(cam.y() - position.y()) < 1) {
             camera_moving_to_point = false;

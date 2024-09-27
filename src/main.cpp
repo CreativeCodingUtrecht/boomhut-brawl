@@ -16,6 +16,8 @@
 #include "win_lose.hpp"
 
 
+
+
 int main()
 {
     bn::core::init();
@@ -35,7 +37,7 @@ int main()
     // splash::run();
 
     // Main menu
-    next_scene next = character_select::run();
+    next_scene next = battle::run();
 
     while (true)
     {

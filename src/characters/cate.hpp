@@ -8,6 +8,10 @@
 
 #include "bn_sprites_mosaic_actions.h"
 
+#include "bn_sprite_items_cat_star.h"
+
+
+
 struct cate: public character {
     // General ----------------------------------
     bn::string<20> name() {
@@ -33,6 +37,7 @@ struct cate: public character {
     bn::fixed jump_velocity() {
         return -7;
     };
+
 
 
     // Sounds -----------------------------------
@@ -143,12 +148,47 @@ struct cate: public character {
     }
 
 
-
+    // Stars!
+    bn::vector<bn::sprite_ptr, 4> stars;
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();
             return;
+        }
+
+        // STARS
+        if (keypad.b_pressed && !stars.full()) {
+            bn::sprite_ptr star = bn::sprite_items::cat_star.create_sprite(position);
+            star.set_camera(camera);
+            star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
+            stars.push_back(star);
+        }
+
+        for (int i = 0; i < stars.size(); i++) {
+            auto s = stars.at(i);
+
+            if (s.horizontal_flip()) {
+                s.set_x(s.x() - 5);
+            } else {
+                s.set_x(s.x() + 5);
+            }
+            
+            s.set_rotation_angle(clamp(s.rotation_angle() + 10, 0, 360));
+            // s.set
+
+
+            for (character* c : players()) {
+                if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 32) {
+                    c->apply_force(bn::fixed_point(5, 0));
+                    c->take_damage(25);
+                    stars.erase(stars.begin() + i);
+                }
+            }
+            
+            if (s.x() > bounds_max_x || s.x() < bounds_min_x) {
+                stars.erase(stars.begin() + i);
+            }
         }
 
         if (mosaic_timer > 0) {

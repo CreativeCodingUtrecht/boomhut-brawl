@@ -199,12 +199,16 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new fabian();
+            you = new cate();
         }
 
         if (!other_player) {
-            other_player = new fabian();
+            other_player = new cate();
         }
+
+        character* third_cat = new cate();
+
+        third_cat->apply_force(bn::fixed_point(10,0));
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
@@ -226,6 +230,7 @@ namespace battle
             // Update animals
             bee.update();
             rat.update();
+
 
             // log_memory_usage();
             
