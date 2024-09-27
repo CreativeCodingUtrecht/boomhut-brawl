@@ -73,14 +73,27 @@ struct hunter: public character {
         health -= amount;
     }
 
+    // Ability ----------------------------------
+    bn::fixed ability = 0;
+    bn::fixed get_ability() {
+        return ability;
+    }
+
+    void increase_ability() {
+        if (ability < max_ability()) {
+            ability += 1;
+        }
+    }
+
+    void reset_ability() {
+        ability = 0;
+    }
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
 
 
     int mosaic_timer = 30;
-
-  
 
     void apply_force(bn::fixed_point point) {
         velocity += point;
@@ -261,6 +274,14 @@ struct hunter: public character {
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
+            }
+        }
+
+        //ability
+        if (keypad.l_pressed) {
+            if (ability >= 100) {
+                ability = 0;
+                // Do ability
             }
         }
 
