@@ -6,18 +6,25 @@
 #include "bn_sprite_items_avatar_fabian.h"
 #include "bn_sound_items.h"
 
+#include "bn_sprite_items_jefe_spatel_avatar.h"
+
 
 struct fabian: public character {
     // General ----------------------------------
     bn::string<20> name() {
-        return "El Chef";
+        return "El Jefe";
     };
 
     bn::sprite_item avatar() {
         return bn::sprite_items::avatar_fabian;
     }
 
-    bn::optional<weapon_info> get_weapon_info() { return bn::optional<weapon_info>(); }
+      bn::optional<weapon_info> get_weapon_info() {
+        return weapon_info {
+            .name = "jefe_spatel_avatar",
+            .avatar = bn::sprite_items::jefe_spatel_avatar
+        };
+    }
 
     
     // Stats ------------------------------------
