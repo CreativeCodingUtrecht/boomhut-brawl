@@ -73,6 +73,7 @@ struct hunter: public character {
         health -= amount;
     }
 
+    // Ability ----------------------------------
 
     bn::fixed_point position = spawn_point;
     bn::fixed_point velocity;
@@ -80,14 +81,9 @@ struct hunter: public character {
 
     int mosaic_timer = 30;
 
-  
-
     void apply_force(bn::fixed_point point) {
         velocity += point;
     }
-
-    
-    
 
     bool is_jumping;
     bool is_running;
@@ -141,7 +137,9 @@ struct hunter: public character {
 
     bn::optional<character_animations> anims = animations();
 
-    hunter() {}
+    hunter() {
+        set_ability_frame_delay(16);
+    }
 
     void unload() {
         anims.reset();
@@ -174,7 +172,7 @@ struct hunter: public character {
 
     bn::vector<arrow, 4> arrows;   
 
- 
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
@@ -261,6 +259,14 @@ struct hunter: public character {
             if (on_ground) {
                 is_running = true;
                 is_landing = false;
+            }
+        }
+
+        //ability
+        if (keypad.l_pressed) {
+            if (ability >= 100) {
+                ability = 0;
+                // Do ability
             }
         }
 

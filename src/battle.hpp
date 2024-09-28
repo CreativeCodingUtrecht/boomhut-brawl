@@ -24,7 +24,6 @@
 #include "bn_blending_fade_alpha.h"
 #include "bn_blending.h"
 
-
 // BGs
 #include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
@@ -37,6 +36,7 @@
 #include "bn_sprite_items_healthbar_fill.h"
 #include "bn_sprite_items_healthbar_frame.h"
 #include "bn_sprite_items_wheel.h"
+#include "bn_sprite_items_abilitybar_fill.h"
 
 // Includes
 #include "../include/utils.h"
@@ -69,6 +69,36 @@
 
 using namespace bn;
 
+struct abilitybars
+{
+    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 30);
+    bn::sprite_ptr abilitybar_fill = bn::sprite_items::abilitybar_fill.create_sprite(position_1.x() + 48, position_1.y()+3);
+    bn::sprite_ptr abilitybar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + 48, position_1.y());
+
+    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 30);
+    const bn::fixed_point abilitybar_fill_position_2 = bn::fixed_point(position_2.x() - 48, position_2.y()+3);
+    bn::sprite_ptr abilitybar_fill2 = bn::sprite_items::abilitybar_fill.create_sprite(abilitybar_fill_position_2);
+    bn::sprite_ptr abilitybar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
+
+    abilitybars()
+    {
+        abilitybar_frame2.set_horizontal_flip(true);
+        abilitybar_fill2.set_horizontal_flip(true);
+
+    }
+
+    void set_ability_left(bn::fixed ability)
+    {
+        abilitybar_fill.set_horizontal_scale(bn::max(ability, bn::fixed(0.01)));
+        abilitybar_fill.set_x(position_1.x() + map(ability, 0, 1, 16, 48));
+    }
+
+    void set_ability_right(bn::fixed ability)
+    {
+        abilitybar_fill2.set_horizontal_scale(bn::max(ability, bn::fixed(0.01)));
+        abilitybar_fill2.set_position(abilitybar_fill_position_2.x() + 32 - ability * 32, abilitybar_fill_position_2.y());
+    }    
+};
 
 struct healthbars
 {
@@ -159,8 +189,6 @@ namespace battle
         zoop::bee bee;
         zoop::rat rat;
 
-
-
         BN_LOG("entering battle!!");
 
         // sky and mountains background
@@ -199,20 +227,18 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new cate();
+            you = new fabian();
         }
 
         if (!other_player) {
-            other_player = new cate();
+            other_player = new fabian();
         }
 
-        character* third_cat = new cate();
 
-        third_cat->apply_force(bn::fixed_point(10,0));
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
-
+        abilitybars abilitybars;
 
         // Camera
         you->sprite_ptr()->set_camera(*camera);
@@ -222,10 +248,11 @@ namespace battle
         // Printer
         printer->text_generator->set_center_alignment();
 
+        int frame = 0;
 
         while(true)
         {
-
+            frame++;
 
             // Update animals
             bee.update();
@@ -260,7 +287,7 @@ namespace battle
             multiplayer::keypad_data keypad_data_to_send = multiplayer::read_keys();
 
             // Always update own player
-            you->update(keypad_data_to_send.keypad_data);
+            you->update(frame, keypad_data_to_send.keypad_data);
 
             // Indoors and outdoors
             if (you->is_indoors()) {
@@ -283,8 +310,7 @@ namespace battle
             multiplayer::receive_keypad_data();
 
             // always update for animations
-            other_player->update(multiplayer::other_player_keypad_data.keypad_data);
-
+            other_player->update(frame, multiplayer::other_player_keypad_data.keypad_data);
 
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
@@ -293,6 +319,15 @@ namespace battle
             // Health bars
             bars.set_health_left(you->get_health() / you->max_health());
             bars.set_health_right(other_player->get_health() / other_player->max_health());
+
+            // Ability bars, still to determine game balance
+            // - increase ability every x frames
+            // - reset ability 
+            you->increase_ability();
+            other_player->increase_ability();
+
+            abilitybars.set_ability_left(you->get_ability() / you->max_ability);
+            abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
 
             // Back to character select
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
