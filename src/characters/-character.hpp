@@ -47,7 +47,7 @@ struct character_animations {
     bn::sprite_animate_action<150> run;
 
     bn::sprite_animate_action<100> jump_up;
-    bn::sprite_animate_action<2> jump_stay;
+    bn::sprite_animate_action<100> jump_stay;
     bn::sprite_animate_action<100> jump_down;
 };
 

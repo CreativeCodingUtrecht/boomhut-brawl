@@ -233,9 +233,7 @@ namespace character_select
         bool counting_down = false;
         int countdown = 180;
 
-        bn::optional<bn::sprite_ptr> countdown_3;
-        bn::optional<bn::sprite_ptr> countdown_2;
-        bn::optional<bn::sprite_ptr> countdown_1;
+        bn::optional<bn::sprite_ptr> countdown_1, countdown_2, countdown_3;
         bn::optional<bn::sprite_ptr> countdown_fight;
 
         bn::color icy = bn::color(10, 10, 31);
