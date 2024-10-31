@@ -74,7 +74,6 @@ struct cate: public character {
         health -= amount;
     }
 
-
     bn::fixed_point position = spawn_point;;
     bn::fixed_point velocity;
 
@@ -258,6 +257,16 @@ struct cate: public character {
         }
 
         // BN_LOG(on_wall);
+
+
+        this->release_stun();
+        bn::blending::set_transparency_alpha(0.6);
+        if (isStunned) {
+            _sprite_ptr->set_blending_enabled(true);
+            return;
+        } else {
+            _sprite_ptr->set_blending_enabled(false);
+        }
 
         // jumping and gravity
         if (keypad.a_pressed && !is_jumping && on_ground && !on_wall) {

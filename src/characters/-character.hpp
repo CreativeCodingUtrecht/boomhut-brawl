@@ -62,10 +62,31 @@ struct weapon_info {
 struct character {
     int frame = 0;
 
-    bn::fixed ability = 0;
+    // Ability stats
+    bn::fixed ability = 100;
     bn::fixed max_ability = 100;
-    int ability_frame_delay = 8; 
-        
+    int ability_power = 50; // Standard frame delay for ability increase
+    int ability_frame_delay = 0.16f * ability_power; // Standard frame delay for ability increase
+    int ability_frame_duration = 180 * (ability_power / 100); // Max 3s duration for ability bason on 60fps 
+    
+    // Inflicted ability states
+    bool isStunned = false;
+    int stun_frame_start;
+    int stun_frame_duration; 
+
+    virtual void stun(int frame_duration) {
+        isStunned = true;
+        // ability = 0;
+        stun_frame_start = frame;
+        stun_frame_duration = frame_duration;
+    }
+
+    virtual void release_stun() {
+        if (stun_frame_start + stun_frame_duration <= frame) {
+            isStunned = false;
+        }
+    };
+
     virtual bn::string<20> name() = 0;
     virtual bn::sprite_item avatar() = 0;
     virtual bn::fixed max_health() = 0;
@@ -77,11 +98,19 @@ struct character {
     virtual bn::fixed get_ability() {
         return ability;
     };    
+
     virtual void increase_ability() {
         if (frame % ability_frame_delay == 0) {           
             ability = bn::min(ability + 1, max_ability);
         }
-    };    
+    };
+
+    virtual void set_ability_power(int power) {
+        ability_power = power;
+        ability_frame_delay = 0.078f * power; // 0.16f * power; // Standard frame delay for ability increase
+        ability_frame_duration = 180 * (power / 100); // Max 3s duration for ability bason on 60fps 
+    };
+
     virtual void set_ability_frame_delay(int delay) {
         ability_frame_delay = delay;
     };

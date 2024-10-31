@@ -138,7 +138,7 @@ struct hunter: public character {
     bn::optional<character_animations> anims = animations();
 
     hunter() {
-        set_ability_frame_delay(16);
+        set_ability_power(100);
     }
 
     void unload() {
@@ -262,11 +262,18 @@ struct hunter: public character {
             }
         }
 
-        //ability
+        //ability --- stun other players
         if (keypad.l_pressed) {
             if (ability >= 100) {
                 ability = 0;
-                // Do ability
+
+                // Apply stun ability on other players
+                for (character* p : players()) {
+                    if (p != this) {
+                        // p->sound_hit().play(); play ability sound
+                        p->stun(this->ability_frame_duration);
+                    }
+                }                
             }
         }
 
