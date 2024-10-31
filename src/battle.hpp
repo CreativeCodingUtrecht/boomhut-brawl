@@ -227,7 +227,7 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new fabian();
+            you = new werner();
         }
 
         if (!other_player) {
