@@ -37,6 +37,7 @@
 #include "bn_sprite_items_healthbar_frame.h"
 #include "bn_sprite_items_wheel.h"
 #include "bn_sprite_items_abilitybar_fill.h"
+#include "bn_sprite_items_e_garden_power.h"
 
 // Includes
 #include "../include/utils.h"
@@ -196,6 +197,11 @@ namespace battle
         background->set_z_order(4);
         background->set_camera(*camera);
 
+        // Electric garden
+        bn::sprite_ptr e_garden = bn::sprite_items::e_garden_power.create_sprite(400,490);
+        e_garden.set_camera(*camera);
+
+        bn::sprite_animate_action<2> e_garden_anim = bn::create_sprite_animate_action_forever(e_garden, 2, bn::sprite_items::e_garden_power.tiles_item(), 0, 1);
 
         // BG and map
 //        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
@@ -258,12 +264,14 @@ namespace battle
             bee.update();
             rat.update();
 
+            // Electric garden
+            e_garden_anim.update();
 
             // log_memory_usage();
             
 //            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-//             printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
 //             BN_LOG(props[0].position().x());
 
             // Update level
