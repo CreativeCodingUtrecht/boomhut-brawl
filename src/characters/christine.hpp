@@ -9,6 +9,7 @@
 
 
 #include "bn_sprite_items_captain_excel.h"
+#include "bn_sprite_items_captain_sumifs.h"
 
 struct christine: public character {
     // General ----------------------------------
@@ -150,11 +151,60 @@ struct christine: public character {
         return _is_indoors;
     }
 
+    
+    // Stars!
+    bn::vector<bn::sprite_ptr, 20> formulas;
+    int formula_delay = 0;
+
 
     void update(multiplayer::keypad_data::keypad_data_struct keypad) {
         if (_preview_mode) {
             anims->idle.update();
             return;
+        }
+        
+         // STARS
+        if (keypad.b_held && !formulas.full()) {
+            formula_delay++;
+            if (formula_delay == 8) {
+                bn::sprite_ptr star = bn::sprite_items::captain_sumifs.create_sprite(position);
+                star.set_camera(camera);
+                star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
+                // star.set_scale(0.1);
+                formulas.push_back(star);
+                bn::sound_items::ice_info.play();
+                formula_delay = 0;
+            }
+
+        }
+
+        for (int i = 0; i < formulas.size(); i++) {
+            auto s = formulas.at(i);
+
+            // if (s.horizontal_scale() < 1.0) {
+            //     s.set_scale(s.horizontal_scale() + 0.1);
+            // }
+
+            if (s.horizontal_flip()) {
+                s.set_x(s.x() - 5);
+            } else {
+                s.set_x(s.x() + 5);
+            }
+            
+            // s.set_rotation_angle(clamp(s.rotation_angle() + 10, 0, 360));
+            // s.set
+
+            for (character* c : players()) {
+                if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 16) {
+                    c->apply_force(bn::fixed_point(5, 0));
+                    c->take_damage(5);
+                    formulas.erase(formulas.begin() + i);
+                }
+            }
+            
+            if (s.x() > bounds_max_x || s.x() < bounds_min_x) {
+                formulas.erase(formulas.begin() + i);
+            }
         }
 
 
