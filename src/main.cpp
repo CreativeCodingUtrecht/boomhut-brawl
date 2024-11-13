@@ -34,7 +34,7 @@ int main()
     global_random = bn::random();
 
     // Splash
-    // splash::run();
+//    splash::run();
 
     // Main menu
     next_scene next = battle::run();

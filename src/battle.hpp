@@ -198,10 +198,10 @@ namespace battle
         background->set_camera(*camera);
 
         // Electric garden
-        bn::sprite_ptr e_garden = bn::sprite_items::e_garden_power.create_sprite(400,490);
-        e_garden.set_camera(*camera);
-
-        bn::sprite_animate_action<2> e_garden_anim = bn::create_sprite_animate_action_forever(e_garden, 2, bn::sprite_items::e_garden_power.tiles_item(), 0, 1);
+//        bn::sprite_ptr e_garden = bn::sprite_items::e_garden_power.create_sprite(400,490);
+//        e_garden.set_camera(*camera);
+//
+//        bn::sprite_animate_action<2> e_garden_anim = bn::create_sprite_animate_action_forever(e_garden, 2, bn::sprite_items::e_garden_power.tiles_item(), 0, 1);
 
         // BG and map
 //        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
@@ -265,7 +265,7 @@ namespace battle
             rat.update();
 
             // Electric garden
-            e_garden_anim.update();
+//            e_garden_anim.update();
 
             // log_memory_usage();
             
