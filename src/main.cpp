@@ -14,6 +14,7 @@
 #include "main_menu.hpp"
 #include "character_select.hpp"
 #include "win_lose.hpp"
+#include "christmas.hpp"
 
 
 
@@ -34,10 +35,10 @@ int main()
     global_random = bn::random();
 
     // Splash
-    // splash::run();
+//    splash::run();
 
     // Main menu
-    next_scene next = main_menu::run();
+    next_scene next = christmas::run();
 
     while (true)
     {

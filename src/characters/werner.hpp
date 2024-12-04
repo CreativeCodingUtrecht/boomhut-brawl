@@ -4,7 +4,6 @@
 
 #include "bn_sprite_items_avatar_werner.h"
 #include "bn_sound_items.h"
-
 #include "bn_sprite_items_hiking_harry.h"
 
 

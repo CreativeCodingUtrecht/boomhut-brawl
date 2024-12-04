@@ -17,6 +17,8 @@
 #include "./characters/-character.hpp"
 
 
+// TODO this main menu needs to change a lot
+
 namespace main_menu 
 {
     struct menu_item

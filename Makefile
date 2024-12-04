@@ -41,7 +41,7 @@ DMGAUDIO    	:=  dmg_audio
 ROMTITLE    	:=  BOOMHUT BATTLE
 ROMCODE     	:=  SBTP
 USERFLAGS   	:=  #-O0 -Og  #-flto
-USERCXXFLAGS	:=  -std=c++20 -fmodules-ts
+USERCXXFLAGS	:=  -std=c++2b -fmodules-ts
 USERASFLAGS 	:=  
 USERLDFLAGS 	:=  
 USERLIBDIRS 	:=  
