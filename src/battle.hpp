@@ -155,10 +155,7 @@ namespace battle
     
     next_scene run()
     {
-
-
         // int clouds_x = 0.0;
-
 
         // pickups
         // const bn::fixed x_offset = 120;
@@ -189,6 +186,8 @@ namespace battle
         // Animals
         zoop::bee bee;
         zoop::rat rat;
+
+        snow s;
 
         BN_LOG("entering battle!!");
 
@@ -264,6 +263,8 @@ namespace battle
             bee.update();
             rat.update();
 
+            s.draw_and_update();
+
             // Electric garden
 //            e_garden_anim.update();
 
@@ -271,7 +272,7 @@ namespace battle
             
 //            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-//            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
 //             BN_LOG(props[0].position().x());
 
             // Update level

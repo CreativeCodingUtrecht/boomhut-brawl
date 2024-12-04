@@ -38,7 +38,7 @@ int main()
 //    splash::run();
 
     // Main menu
-    next_scene next = christmas::run();
+    next_scene next = battle::run();
 
     while (true)
     {
