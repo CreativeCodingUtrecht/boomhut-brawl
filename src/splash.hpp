@@ -73,7 +73,7 @@ namespace splash
             // finished, go to main menu 
             if (t == 3 * 60) {
                 music::stop();
-                return next_scene::main_menu;
+                return next_scene::character_select;
             }
 
             core::update(); 

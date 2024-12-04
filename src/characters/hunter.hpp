@@ -170,7 +170,7 @@ struct hunter: public character {
         int direction;
     };
 
-    bn::vector<arrow, 4> arrows;   
+    bn::vector<arrow, 10> arrows;
 
 
 

@@ -27,7 +27,7 @@ struct werner: public character {
     };
 
     bn::fixed run_speed() {
-        return .75;
+        return .65;
     };
 
     bn::fixed jump_velocity() {

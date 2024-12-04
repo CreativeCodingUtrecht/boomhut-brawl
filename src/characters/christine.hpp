@@ -14,7 +14,7 @@
 struct christine: public character {
     // General ----------------------------------
     bn::string<20> name(){
-        return "Captain excel";
+        return "Capt. Excel";
     }
 
     bn::sprite_item avatar() {
@@ -28,6 +28,7 @@ struct christine: public character {
     bn::fixed max_health() {
         return 100;
     };
+
 
     bn::fixed run_speed() {
         return .45;
@@ -152,7 +153,7 @@ struct christine: public character {
     }
 
     
-    // Stars!
+    // Formulas!
     bn::vector<bn::sprite_ptr, 20> formulas;
     int formula_delay = 0;
 
@@ -163,15 +164,15 @@ struct christine: public character {
             return;
         }
         
-         // STARS
+         // Excel formulas!
         if (keypad.b_held && !formulas.full()) {
             formula_delay++;
             if (formula_delay == 8) {
-                bn::sprite_ptr star = bn::sprite_items::captain_sumifs.create_sprite(position);
-                star.set_camera(camera);
-                star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
+                bn::sprite_ptr formula = bn::sprite_items::captain_sumifs.create_sprite(position);
+                formula.set_camera(camera);
+                formula.set_horizontal_flip(_sprite_ptr->horizontal_flip());
                 // star.set_scale(0.1);
-                formulas.push_back(star);
+                formulas.push_back(formula);
                 bn::sound_items::ice_info.play();
                 formula_delay = 0;
             }
@@ -196,7 +197,7 @@ struct christine: public character {
 
             for (character* c : players()) {
                 if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 16) {
-                    c->apply_force(bn::fixed_point(5, 0));
+                    c->apply_force(bn::fixed_point(s.horizontal_flip() ? -5 : 5, 0));
                     c->take_damage(5);
                     formulas.erase(formulas.begin() + i);
                 }

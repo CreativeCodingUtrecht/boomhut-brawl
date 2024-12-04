@@ -34,10 +34,10 @@ int main()
     global_random = bn::random();
 
     // Splash
-//    splash::run();
+    // splash::run();
 
     // Main menu
-    next_scene next = battle::run();
+    next_scene next = main_menu::run();
 
     while (true)
     {
@@ -49,5 +49,7 @@ int main()
             next = win_lose::run();
         else if (next == next_scene::main_menu)
             next = main_menu::run();
+        else if (next == next_scene::splash)
+            next = splash::run();
     }
 }
