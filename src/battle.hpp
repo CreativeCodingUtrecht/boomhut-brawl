@@ -36,6 +36,7 @@
 #include "bn_sprite_items_healthbar_fill.h"
 #include "bn_sprite_items_healthbar_frame.h"
 #include "bn_sprite_items_wheel.h"
+#include "bn_sprite_items_wheel_snow.h"
 #include "bn_sprite_items_abilitybar_fill.h"
 #include "bn_sprite_items_e_garden_power.h"
 
@@ -174,8 +175,10 @@ namespace battle
 
 //        const bn::fixed x_offset = ;
 //        const bn::fixed y_offset = 256 + ;
+
+        // Props
         bn::sprite_ptr props[] = {
-            bn::sprite_items::wheel.create_sprite(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16)
+            bn::sprite_items::wheel_snow.create_sprite(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16)
         };
 
         for (auto &prop : props) {
@@ -224,11 +227,9 @@ namespace battle
 
         BN_LOG("test");
 
-
         // Facade
 //        bn::regular_bg_ptr facade = bn::regular_bg_items::facade.create_bg(0,0);
 //        facade.set_camera(*camera);
-        
 
         // Default characters
         if (!you) {
@@ -238,8 +239,6 @@ namespace battle
         if (!other_player) {
             other_player = new fabian();
         }
-
-
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
@@ -272,7 +271,7 @@ namespace battle
             
 //            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+//            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
 //             BN_LOG(props[0].position().x());
 
             // Update level

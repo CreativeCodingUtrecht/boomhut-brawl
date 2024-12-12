@@ -36,7 +36,7 @@ namespace win_lose
         pal.set_fade_color(icy);
 
 
-        while(true) 
+        while(true)
         {
             frame++;
             
