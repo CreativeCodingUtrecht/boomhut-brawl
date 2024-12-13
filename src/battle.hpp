@@ -233,7 +233,7 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new christine();
+            you = new networkninja();
         }
 
         if (!other_player) {
