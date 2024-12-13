@@ -39,6 +39,8 @@
 #include "bn_sprite_items_wheel_snow.h"
 #include "bn_sprite_items_abilitybar_fill.h"
 #include "bn_sprite_items_e_garden_power.h"
+#include "bn_sprite_items_trein_kop.h"
+#include "bn_sprite_items_trein_middel.h"
 
 // Includes
 #include "../include/utils.h"
@@ -149,6 +151,35 @@ struct healthbars
 };
 
 
+struct train
+{   
+    bn::fixed_point position = bn::fixed_point(100,210);
+    bn::sprite_ptr head = bn::sprite_items::trein_kop.create_sprite(position.x() - 52.0, position.y());
+    bn::sprite_ptr middle = bn::sprite_items::trein_middel.create_sprite(position.x(), position.y());
+    bn::sprite_ptr tail = bn::sprite_items::trein_kop.create_sprite(position.x() + 51, position.y());
+
+    train() {
+        head.set_camera(camera);
+        middle.set_camera(camera);
+        tail.set_camera(camera);
+
+        tail.set_horizontal_flip(true);
+    }
+
+    void update() {
+        position.set_x(position.x() - 4);
+
+        if (position.x() < -1200) {
+            position.set_x(global_random->get_fixed(1000, 2000));
+        }
+
+        head.set_position(position.x() - 52.0, position.y());
+        middle.set_position(position.x(), position.y());
+        tail.set_position(position.x() + 51.0, position.y());
+    }   
+};
+
+
 
 
 namespace battle
@@ -213,9 +244,7 @@ namespace battle
 
 
         // Trein
-//        regular_bg_ptr trein_bg = regular_bg_items::trein_bg.create_bg(0,-188);
-//        trein_bg.set_camera(*camera);
-//        trein_bg.set_z_order(5);
+        train the_train;
 
 
         // Window for the train
@@ -263,6 +292,9 @@ namespace battle
             rat.update();
 
             s.draw_and_update();
+
+            // Update train
+            the_train.update();
 
             // Electric garden
 //            e_garden_anim.update();
