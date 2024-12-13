@@ -250,8 +250,9 @@ namespace battle
         // Window for the train
 //        bn::window outside_window = bn::window::outside();
 //        outside_window.set_show_bg(trein_bg, false);
+//     //    outside_window.set
 //        bn::rect_window internal_window = bn::rect_window::internal();
-//        internal_window.set_boundaries(-0, -200, 392, 1024);
+//    internal_window.set_boundaries(-0, -200, 392, 1024);
 //        internal_window.set_camera(camera);
 
         BN_LOG("test");
@@ -271,7 +272,7 @@ namespace battle
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
-        abilitybars abilitybars;
+        // abilitybars abilitybars;
 
         // Camera
         you->sprite_ptr()->set_camera(*camera);
@@ -366,8 +367,8 @@ namespace battle
             you->increase_ability();
             other_player->increase_ability();
 
-            abilitybars.set_ability_left(you->get_ability() / you->max_ability);
-            abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
+            // abilitybars.set_ability_left(you->get_ability() / you->max_ability);
+            // abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
 
             // Back to character select
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
