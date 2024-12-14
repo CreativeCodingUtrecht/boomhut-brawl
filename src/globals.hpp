@@ -24,7 +24,7 @@ int indoor_floor_tile = 4;
 int indoor_tile = 3;
 int passthrough_tiles[] = { 0, indoor_tile };
 int wall_tiles[] = { wall_tile };
-int indoor_tiles[] = {indoor_floor_tile, indoor_tile };
+int indoor_tiles[] = { indoor_floor_tile, indoor_tile };
 
 const bn::fixed gravity = 0.3;
 

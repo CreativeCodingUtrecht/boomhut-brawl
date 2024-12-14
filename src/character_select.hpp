@@ -186,7 +186,7 @@ namespace character_select
 
         if (!bn::music::playing()) {
             bn::music_items::backwithavengeance.play();
-            bn::music::set_volume(0.25);
+            bn::music::set_volume(0.5);
         }
 
         // Background

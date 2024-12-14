@@ -39,6 +39,8 @@ namespace win_lose
         while(true)
         {
             frame++;
+
+            global_snow->draw_and_update();
             
             camera_follow_smooth(*camera, (*winner)->sprite_ptr()->position());
             multiplayer::keypad_data keypad_data_to_send = multiplayer::read_keys();

@@ -20,6 +20,7 @@
 #include "bn_sprite_items_snowflake_smol.h"
 
 #include "globals.hpp"
+#include "snow.hpp"
 
 
 using namespace bn;
@@ -63,54 +64,3 @@ namespace zoop
 
 }
 
-
-// Snow particles
-struct snowflake
-{
-    bn::fixed_point pos = bn::fixed_point(0,camera->y() - bn::display::height()/2);
-    bn::fixed x_pos = global_random->get_fixed(camera->x() - bn::display::width() / 2, camera->x() + bn::display::width() / 2);
-    bn::fixed initial_angle = global_random->get_fixed(0, 360);
-    bn::fixed size = global_random->get_fixed(0.5, 1);
-    bn::sprite_ptr spr;
-
-    snowflake(bn::sprite_item s): spr(s.create_sprite(pos)) {
-        spr.set_camera(camera);
-    }
-
-    void update_and_draw(bn::fixed time) {
-        spr.set_x(x_pos + 40.0 * sin(initial_angle + time));
-
-        bn::fixed y_speed = 2 / size;
-        spr.set_y(spr.y() + y_speed);
-
-        if (spr.y() > camera->y() + bn::display::height() / 2) {
-            spr.set_y(camera->y() - bn::display::height()/2);
-            x_pos = global_random->get_fixed(camera->x() - bn::display::width() / 2, camera->x() + bn::display::width() / 2);
-        }
-    }
-};
-
-struct snow {
-    bn::vector<snowflake, 40> snowflakes;
-    bn::fixed t = 0;
-
-    snow() {
-        // Generate snowflakes
-        for (int i = 0; i < 40; ++i) {
-            bool smol = global_random->get_bool();
-            snowflake s = snowflake(smol ? bn::sprite_items::snowflake : bn::sprite_items::snowflake_smol);
-            snowflakes.push_back(s);
-        }
-    }
-
-    void draw_and_update() {
-        t += 0.001;
-        for (snowflake &s : snowflakes) {
-            s.update_and_draw(t);
-        }
-    }
-};
-
-
-// Global snow 
-bn::optional<snow> global_snow;
