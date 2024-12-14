@@ -337,7 +337,7 @@ namespace battle
             // Always update own player
             you->update(frame, keypad_data_to_send.keypad_data);
 
-            // Indoors and outdoors
+            // Indoors and outdoors -------
             if (you->is_indoors()) {
                 background->set_item(bn::regular_bg_items::background_indoors);
             } else {
