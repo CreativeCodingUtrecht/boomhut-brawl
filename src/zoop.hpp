@@ -110,3 +110,7 @@ struct snow {
         }
     }
 };
+
+
+// Global snow 
+bn::optional<snow> global_snow;

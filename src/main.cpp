@@ -28,11 +28,13 @@ int main()
     bn::bg_palettes::set_transparent_color(background_color);
     map_item = bn::regular_bg_items::tilemap.map_item();
 
-    
     // The global camera and printer
     camera = bn::camera_ptr::create(0, 0);
     printer = info_printer();
     global_random = bn::random();
+
+    // Snow
+    global_snow = snow();
 
     // Splash
 //    splash::run();

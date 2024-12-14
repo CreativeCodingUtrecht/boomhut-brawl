@@ -18,7 +18,7 @@
 
 #include "globals.hpp"
 #include "scene.hpp"
-
+#include "zoop.hpp"
 
 
 namespace splash 
@@ -45,6 +45,7 @@ namespace splash
         {   
             t++;
 
+            global_snow->draw_and_update();
 
             // c1
             if (t < exit_base) {

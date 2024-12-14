@@ -160,7 +160,7 @@ struct healthbars
 
 struct train
 {   
-    bn::fixed_point position = bn::fixed_point(100,210);
+    bn::fixed_point position = bn::fixed_point(100,69);
     bn::sprite_ptr head = bn::sprite_items::trein_kop.create_sprite(position.x() - 52.0, position.y());
     bn::sprite_ptr middle = bn::sprite_items::trein_middel.create_sprite(position.x(), position.y());
     bn::sprite_ptr tail = bn::sprite_items::trein_kop.create_sprite(position.x() + 51, position.y());
@@ -176,6 +176,14 @@ struct train
     void update() {
         position.set_x(position.x() - 4);
 
+        bn::fixed distance_from_cam = distance(camera->position(),  position);
+        if (distance_from_cam < 50) {
+            screen_shake = (50 - distance_from_cam); 
+        } else {
+            screen_shake = 0;
+        }
+
+        // Back to start 
         if (position.x() < -1200) {
             position.set_x(global_random->get_fixed(1000, 2000));
         }
@@ -228,7 +236,6 @@ namespace battle
         zoop::bee bee;
         zoop::rat rat;
 
-        snow s;
 
         BN_LOG("entering battle!!");
 
@@ -255,12 +262,13 @@ namespace battle
 
 
         // Window for the train
-//        bn::window outside_window = bn::window::outside();
-//        outside_window.set_show_bg(trein_bg, false);
-//     //    outside_window.set
-//        bn::rect_window internal_window = bn::rect_window::internal();
-//    internal_window.set_boundaries(-0, -200, 392, 1024);
-//        internal_window.set_camera(camera);
+    //     auto trein_bg = bn::regular_bg_items::trein_bg.create_bg(100,210);
+    //    bn::window outside_window = bn::window::outside();
+    //    outside_window.set_show_bg(trein_bg, false);
+    // //    outside_window.set
+    //    bn::rect_window internal_window = bn::rect_window::internal();
+    //    internal_window.set_boundaries(-0, -200, 392, 1024);
+    //    internal_window.set_camera(camera);
 
         BN_LOG("test");
 
@@ -270,7 +278,7 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new networkninja();
+            you = new hunter();
         }
 
         if (!other_player) {
@@ -299,7 +307,7 @@ namespace battle
             bee.update();
             rat.update();
 
-            s.draw_and_update();
+            global_snow->draw_and_update();
 
             // Update train
             the_train.update();
@@ -322,7 +330,7 @@ namespace battle
 
             // Moving clouds
             // clouds_x -=  0.1;
-//            trein_bg.set_x(trein_bg.x() - 2);
+        //    trein_bg.set_x(trein_bg.x() - 2);
 
             // clouds.set_x(clouds_x + player.position.x() / bn::fixed(40.0));
 
@@ -363,6 +371,10 @@ namespace battle
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
+            if (screen_shake > 0) {
+                camera->set_x(camera->x() + global_random->get_fixed(-screen_shake, screen_shake));
+                camera->set_y(camera->y() + global_random->get_fixed(-screen_shake, screen_shake));
+            }
 
             // Health bars
             bars.set_health_left(you->get_health() / you->max_health());

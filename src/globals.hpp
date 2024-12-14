@@ -8,6 +8,7 @@
 #include "bn_regular_bg_ptr.h"
 
 // Globals
+bn::fixed screen_shake = 0;
 bn::optional<bn::camera_ptr> camera;
 bn::optional<info_printer> printer;
 bn::optional<bn::random> global_random;

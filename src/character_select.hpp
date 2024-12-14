@@ -248,6 +248,10 @@ namespace character_select
 
             // log_memory_usage();
 
+
+            // Snow
+            global_snow->draw_and_update();
+
             // Mosaic timer
             if (mosaic_timer_you > 0) {
                 mosaic_timer_you -= 1;
