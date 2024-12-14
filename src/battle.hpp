@@ -35,9 +35,10 @@
 #include "bn_sprite_items_pictogram_frame.h"
 #include "bn_sprite_items_healthbar_fill.h"
 #include "bn_sprite_items_healthbar_frame.h"
+#include "bn_sprite_items_abilitybar_frame.h"
+#include "bn_sprite_items_abilitybar_fill.h"
 #include "bn_sprite_items_wheel.h"
 #include "bn_sprite_items_wheel_snow.h"
-#include "bn_sprite_items_abilitybar_fill.h"
 #include "bn_sprite_items_e_garden_power.h"
 #include "bn_sprite_items_trein_kop.h"
 #include "bn_sprite_items_trein_middel.h"
@@ -81,12 +82,12 @@ struct abilitybars
 
     const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + y);
     bn::sprite_ptr abilitybar_fill = bn::sprite_items::abilitybar_fill.create_sprite(position_1.x() + x, position_1.y()+3);
-    bn::sprite_ptr abilitybar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + x, position_1.y());
+    bn::sprite_ptr abilitybar_frame = bn::sprite_items::abilitybar_frame.create_sprite(position_1.x() + x, position_1.y());
 
     const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + y);
     const bn::fixed_point abilitybar_fill_position_2 = bn::fixed_point(position_2.x() - x, position_2.y()+3);
     bn::sprite_ptr abilitybar_fill2 = bn::sprite_items::abilitybar_fill.create_sprite(abilitybar_fill_position_2);
-    bn::sprite_ptr abilitybar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - x, position_2.y());
+    bn::sprite_ptr abilitybar_frame2 = bn::sprite_items::abilitybar_frame.create_sprite(position_2.x() - x, position_2.y());
 
     abilitybars()
     {
