@@ -41,6 +41,7 @@
 #include "bn_sprite_items_e_garden_power.h"
 #include "bn_sprite_items_trein_kop.h"
 #include "bn_sprite_items_trein_middel.h"
+#include "bn_sprite_items_adult_city.h"
 
 // Includes
 #include "../include/utils.h"
@@ -175,7 +176,7 @@ struct train
 
     void update() {
         position.set_x(position.x() - 4);
-        
+
         // Back to start 
         if (position.x() < -1200) {
             position.set_x(global_random->get_fixed(1000, 2000));
@@ -215,14 +216,19 @@ namespace battle
 //        const bn::fixed x_offset = ;
 //        const bn::fixed y_offset = 256 + ;
 
-        // Props
+        // Props        
         bn::sprite_ptr props[] = {
+            // bn::sprite_items::adult_city.create_sprite(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48),
             bn::sprite_items::wheel_snow.create_sprite(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16)
         };
+
+        // adult_city.set_camera(*camera);
+        // adult_city.set_z_order(-100);
 
         for (auto &prop : props) {
             prop.set_camera(*camera);
             prop.set_z_order(-100);
+            prop.set_visible(false);
         }
 
         // Animals
