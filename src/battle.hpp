@@ -175,14 +175,7 @@ struct train
 
     void update() {
         position.set_x(position.x() - 4);
-
-        bn::fixed distance_from_cam = distance(camera->position(),  position);
-        if (distance_from_cam < 50) {
-            screen_shake = (50 - distance_from_cam); 
-        } else {
-            screen_shake = 0;
-        }
-
+        
         // Back to start 
         if (position.x() < -1200) {
             position.set_x(global_random->get_fixed(1000, 2000));
@@ -371,10 +364,6 @@ namespace battle
             // Smooth cam
             camera_follow_smooth(*camera, you->sprite_ptr()->position());
             camera->set_x(constrain(camera->x(), 0, bounds_max_x)); // Constrain camera bounds
-            if (screen_shake > 0) {
-                camera->set_x(camera->x() + global_random->get_fixed(-screen_shake, screen_shake));
-                camera->set_y(camera->y() + global_random->get_fixed(-screen_shake, screen_shake));
-            }
 
             // Health bars
             bars.set_health_left(you->get_health() / you->max_health());
