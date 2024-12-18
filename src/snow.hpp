@@ -6,6 +6,9 @@
 #include "characters/-character.hpp"
 
 
+
+
+
 // Snow particles
 struct snowflake
 {
@@ -19,6 +22,10 @@ struct snowflake
         spr.set_camera(camera);
     }
 
+
+    const int indoor_no_snow_tiles[3] = { indoor_floor_tile, indoor_tile, indoor_no_snow_tile };
+
+
     void update_and_draw(bn::fixed time) {
         spr.set_x(x_pos + 40.0 * sin(initial_angle + time));
 
@@ -30,7 +37,7 @@ struct snowflake
         bool snowflake_is_indoors = false;
 
         // check if indoors
-        for (int tile_index: indoor_tiles) {
+        for (int tile_index: indoor_no_snow_tiles) {
             if (snowflake_tile_index == tile_index) {
                 snowflake_is_indoors = true;
             }
