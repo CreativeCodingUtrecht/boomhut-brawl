@@ -32,16 +32,9 @@
 #include "bn_regular_bg_items_facade.h"
 
 // Sprites
-#include "bn_sprite_items_pictogram_frame.h"
-#include "bn_sprite_items_healthbar_fill.h"
-#include "bn_sprite_items_healthbar_frame.h"
-#include "bn_sprite_items_abilitybar_frame.h"
-#include "bn_sprite_items_abilitybar_fill.h"
 #include "bn_sprite_items_wheel.h"
 #include "bn_sprite_items_wheel_snow.h"
 #include "bn_sprite_items_e_garden_power.h"
-#include "bn_sprite_items_trein_kop.h"
-#include "bn_sprite_items_trein_middel.h"
 #include "bn_sprite_items_adult_city.h"
 
 // Includes
@@ -51,6 +44,8 @@
 #include "splash.hpp"
 #include "main_menu.hpp"
 #include "zoop.hpp"
+#include "healthbars.hpp"
+#include "train.hpp"
 
 // Characters
 #include "./characters/-character.hpp"
@@ -74,120 +69,6 @@
 
 
 using namespace bn;
-
-struct abilitybars
-{
-    const int x = 48;
-    const int y = 30;
-
-    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + y);
-    bn::sprite_ptr abilitybar_fill = bn::sprite_items::abilitybar_fill.create_sprite(position_1.x() + x, position_1.y()+3);
-    bn::sprite_ptr abilitybar_frame = bn::sprite_items::abilitybar_frame.create_sprite(position_1.x() + x, position_1.y());
-
-    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + y);
-    const bn::fixed_point abilitybar_fill_position_2 = bn::fixed_point(position_2.x() - x, position_2.y()+3);
-    bn::sprite_ptr abilitybar_fill2 = bn::sprite_items::abilitybar_fill.create_sprite(abilitybar_fill_position_2);
-    bn::sprite_ptr abilitybar_frame2 = bn::sprite_items::abilitybar_frame.create_sprite(position_2.x() - x, position_2.y());
-
-    abilitybars()
-    {
-        abilitybar_frame2.set_horizontal_flip(true);
-        abilitybar_fill2.set_horizontal_flip(true);
-
-        // abilitybar_frame.set_vertical_scale(0.5);
-        // abilitybar_fill.set_vertical_scale(0.6);
-        // abilitybar_frame2.set_vertical_scale(0.5);
-        // abilitybar_fill2.set_vertical_scale(0.6);
-    }
-
-    void set_ability_left(bn::fixed ability)
-    {
-        abilitybar_fill.set_horizontal_scale(bn::max(ability, bn::fixed(0.01)));
-        abilitybar_fill.set_x(position_1.x() + map(ability, 0, 1, 16, 48));
-    }
-
-    void set_ability_right(bn::fixed ability)
-    {
-        abilitybar_fill2.set_horizontal_scale(bn::max(ability, bn::fixed(0.01)));
-        abilitybar_fill2.set_position(abilitybar_fill_position_2.x() + 32 - ability * 32, abilitybar_fill_position_2.y());
-    }    
-};
-
-struct healthbars
-{
-    bn::optional<bn::sprite_ptr> pictogram;
-    bn::optional<bn::sprite_ptr> pictogram2;
-    
-
-    const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20);
-    bn::sprite_ptr boss_frame = bn::sprite_items::pictogram_frame.create_sprite(position_1);
-    bn::sprite_ptr healthbar_fill = bn::sprite_items::healthbar_fill.create_sprite(position_1.x() + 48, position_1.y()+3);
-    bn::sprite_ptr healthbar_frame = bn::sprite_items::healthbar_frame.create_sprite(position_1.x() + 48, position_1.y());
-
-    const bn::fixed_point position_2 = bn::fixed_point(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20);
-    const bn::fixed_point healthbar_fill_position_2 = bn::fixed_point(position_2.x() - 48, position_2.y()+3);
-    bn::sprite_ptr boss_frame2 = bn::sprite_items::pictogram_frame.create_sprite(position_2);
-    bn::sprite_ptr healthbar_fill2 = bn::sprite_items::healthbar_fill.create_sprite(healthbar_fill_position_2);
-    bn::sprite_ptr healthbar_frame2 = bn::sprite_items::healthbar_frame.create_sprite(position_2.x() - 48, position_2.y());
-
-    healthbars(bn::sprite_item boss_spr_item, bn::sprite_item boss_spr_item2):
-        pictogram(boss_spr_item.create_sprite(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20)),
-        pictogram2(boss_spr_item2.create_sprite(bn::display::width() / 2 - 20, -bn::display::height() / 2 + 20))
-    {
-        pictogram->set_z_order(2);
-        pictogram2->set_z_order(2);
-
-        boss_frame2.set_horizontal_flip(true);
-        healthbar_frame2.set_horizontal_flip(true);
-        healthbar_fill2.set_horizontal_flip(true);
-    }
-
-
-    // 0 - 1
-    void set_health_left(bn::fixed health)
-    {
-        healthbar_fill.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
-        healthbar_fill.set_x(position_1.x() + map(health, 0, 1, 16, 48));
-    }
-
-    // 0 - 1
-    void set_health_right(bn::fixed health)
-    {
-        healthbar_fill2.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
-        healthbar_fill2.set_position(healthbar_fill_position_2.x() + 32 - health * 32, healthbar_fill_position_2.y());
-        // healthbar_fill.set_x(position_2.x() + map(health, 0, 1, 16, 48));
-    }
-};
-
-
-struct train
-{   
-    bn::fixed_point position = bn::fixed_point(100,69);
-    bn::sprite_ptr head = bn::sprite_items::trein_kop.create_sprite(position.x() - 52.0, position.y());
-    bn::sprite_ptr middle = bn::sprite_items::trein_middel.create_sprite(position.x(), position.y());
-    bn::sprite_ptr tail = bn::sprite_items::trein_kop.create_sprite(position.x() + 51, position.y());
-
-    train() {
-        head.set_camera(camera);
-        middle.set_camera(camera);
-        tail.set_camera(camera);
-
-        tail.set_horizontal_flip(true);
-    }
-
-    void update() {
-        position.set_x(position.x() - 4);
-
-        // Back to start 
-        if (position.x() < -1200) {
-            position.set_x(global_random->get_fixed(1000, 2000));
-        }
-
-        head.set_position(position.x() - 52.0, position.y());
-        middle.set_position(position.x(), position.y());
-        tail.set_position(position.x() + 51.0, position.y());
-    }   
-};
 
 
 
