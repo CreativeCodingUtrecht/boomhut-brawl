@@ -24,7 +24,7 @@ int main()
     bn::core::init();
 
     // Background
-    bn::color background_color = rgb255(140, 165, 247);
+    bn::color background_color = rgb255(240, 241, 237);
     bn::bg_palettes::set_transparent_color(background_color);
     map_item = bn::regular_bg_items::tilemap.map_item();
 
