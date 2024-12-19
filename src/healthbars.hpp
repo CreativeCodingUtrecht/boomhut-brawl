@@ -48,6 +48,9 @@ struct healthbars
 {
     bn::optional<bn::sprite_ptr> pictogram;
     bn::optional<bn::sprite_ptr> pictogram2;
+
+    int mosaic_timer_left, mosaic_timer_right;
+    bn::fixed last_health_left, last_health_right;
     
 
     const bn::fixed_point position_1 = bn::fixed_point(-bn::display::width() / 2 + 20, -bn::display::height() / 2 + 20);
@@ -77,14 +80,40 @@ struct healthbars
     // 0 - 1
     void set_health_left(bn::fixed health)
     {
+        if (health != last_health_left) {
+            mosaic_timer_left = 30;
+            pictogram->set_mosaic_enabled(true);
+        }
+
+        if (mosaic_timer_left > 0) {
+            mosaic_timer_left--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer_left, 30, 0, 1, 0));
+        } else {
+            pictogram->set_mosaic_enabled(false);
+        }
+
         healthbar_fill.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
         healthbar_fill.set_x(position_1.x() + map(health, 0, 1, 16, 48));
+        last_health_left = health;
     }
 
     // 0 - 1
     void set_health_right(bn::fixed health)
     {
+        if (health != last_health_right) {
+            mosaic_timer_right = 30;
+            pictogram2->set_mosaic_enabled(true);
+        }
+
+        if (mosaic_timer_right > 0) {
+            mosaic_timer_right--;
+            bn::sprites_mosaic::set_stretch(map(mosaic_timer_right, 30, 0, 1, 0));
+        } else {
+            pictogram2->set_mosaic_enabled(false);
+        }
+        
         healthbar_fill2.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
         healthbar_fill2.set_position(healthbar_fill_position_2.x() + 32 - health * 32, healthbar_fill_position_2.y());
+        last_health_right = health;
     }
 };
