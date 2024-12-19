@@ -100,14 +100,17 @@ namespace battle
         // }
 
         // Adult city
-        sprite_autounload adult_city(bn::sprite_items::adult_city, bn::fixed_point(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48));
+        sprite_autounload adult_city(bn::sprite_items::adult_city, bn::fixed_point(0 - 256 + bn::display::width() / 2 + 48, 318 - 256 + bn::display::height() / 2 + 48));
 
         // Snow wheel
         sprite_autounload wheel_snow(bn::sprite_items::wheel_snow, bn::fixed_point(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16));
 
+
         // Animals
         zoop::bee bee;
         zoop::rat rat;
+
+        // Birds?
 
 
         BN_LOG("entering battle!!");
