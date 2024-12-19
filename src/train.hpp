@@ -60,7 +60,8 @@ struct train
 
         // Back to start 
         if (position.x() < -1200) {
-            position.set_x(global_random->get_fixed(1000, 2000));
+            // position.set_x(global_random->get_fixed(1000, 2000));
+            position.set_x(2000);
             wagons[0].set_x(position.x() - x_between_wagons);
             wagons[1].set_x(position.x());
             wagons[2].set_x(position.x() + x_between_wagons);
