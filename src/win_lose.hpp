@@ -40,6 +40,10 @@ namespace win_lose
         {
             frame++;
 
+            if (frame == 120) {
+                (*winner)->sound_tagline().play();
+            }
+
             global_snow->draw_and_update();
             
             camera_follow_smooth(*camera, (*winner)->sprite_ptr()->position());

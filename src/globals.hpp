@@ -17,6 +17,8 @@ bn::optional<bn::random> global_random;
 bn::optional<bn::regular_bg_map_item> map_item;
 bn::optional<bn::regular_bg_ptr> indoor_background;
 bn::optional<bn::regular_bg_ptr> background;
+bn::optional<bn::regular_bg_ptr> background_area_left; // only shown when in this area
+bn::optional<bn::regular_bg_ptr> background_area_right; // only shown when in this area
 
 int ground_tile = 1;
 int wall_tile = 2;

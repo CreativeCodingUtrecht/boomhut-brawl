@@ -38,7 +38,7 @@ struct wagon
 
 struct train
 {   
-    bool played_sound = false;
+    bool played_sound = true;
     int x_between_wagons = 95;
     bn::fixed_point position = bn::fixed_point(1200,75);
     

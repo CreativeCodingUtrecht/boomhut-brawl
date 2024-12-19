@@ -6,7 +6,7 @@
 #include "bn_log.h"
 #include "bn_sprites_mosaic.h"
 #include "bn_sprite_actions.h"
-
+#include "bn_bg_palette_ptr.h"
 
 #include "bn_sprite_items_lipje.h"
 #include "bn_sprite_items_c.h"
@@ -14,12 +14,13 @@
 #include "bn_sprite_items_u.h"
 #include "bn_music_items.h"
 #include "bn_sound_items.h"
-
+#include "bn_sprite_items_presents_text.h"
 
 #include "globals.hpp"
 #include "scene.hpp"
 #include "zoop.hpp"
 #include "snow.hpp"
+#include "train.hpp"
 
 
 namespace splash 
@@ -35,9 +36,22 @@ namespace splash
         sprite_ptr c2 = sprite_items::c2.create_sprite(0,-128);
         sprite_ptr u = sprite_items::u.create_sprite(64,-128);
 
-        // background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-        // background->set_z_order(4);
-        // background->set_camera(*camera);
+        // Presents text
+
+
+        // Backround
+        background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        background->set_z_order(4);
+        background->set_camera(*camera);
+
+        // Palette fade
+        bn::color icy = rgb255(133, 168, 253);
+        bn::bg_palette_ptr pal = background->palette();
+        pal.set_fade_color(icy);
+        bn::fixed fade = 1;
+
+        // Train
+        train the_train;
 
         // music_items::splashscreen.play();
         int t = 0;
@@ -46,11 +60,27 @@ namespace splash
         int exit_base = 90;
         int exit_stagger = 10;
 
+        camera->set_x(250);
+        camera->set_y(500);
+
         while(true) 
         {   
             t++;
 
             global_snow->draw_and_update();
+            the_train.update();
+
+
+            // Fade background in
+            fade = lerp(fade, 0, 0.02);
+            pal.set_fade_intensity(fade);
+
+            // Cutscene upwards
+            if (t > 2 * 60) {
+                if (camera->y() > 50) {
+                    camera->set_y(camera->y() - 1);
+                }
+            }
 
             // Boomhut pan upwards
 
@@ -80,8 +110,9 @@ namespace splash
             }
 
             // finished, go to main menu 
-            if (t == 3 * 60) {
+            if (t == 10 * 60) {
                 // music::stop();
+                background.reset();
                 return next_scene::character_select;
             }
 
