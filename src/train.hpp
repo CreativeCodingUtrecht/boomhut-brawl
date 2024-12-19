@@ -38,8 +38,9 @@ struct wagon
 
 struct train
 {   
+    bool played_sound = false;
     int x_between_wagons = 95;
-    bn::fixed_point position = bn::fixed_point(100,75);
+    bn::fixed_point position = bn::fixed_point(1200,75);
     
     wagon wagons[3] = {
         wagon(bn::fixed_point(position.x() - x_between_wagons, position.y())),
@@ -58,8 +59,14 @@ struct train
 
         position.set_x(position.x() - 4);
 
+        if (abs(position.x() - camera->x()) < 750 && !played_sound) {
+            bn::sound_items::train.play();
+            played_sound = true;
+        }
+
         // Back to start 
         if (position.x() < -1200) {
+            played_sound = false;
             // position.set_x(global_random->get_fixed(1000, 2000));
             position.set_x(2000);
             wagons[0].set_x(position.x() - x_between_wagons);
