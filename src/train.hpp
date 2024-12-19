@@ -1,3 +1,5 @@
+#pragma once
+
 #include "globals.hpp"
 
 #include "bn_sprite_items_trein_kop_smol.h"

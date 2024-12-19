@@ -45,8 +45,8 @@
 #include "main_menu.hpp"
 #include "zoop.hpp"
 #include "healthbars.hpp"
-#include "train.hpp"
 #include "sprite_autounload.hpp"
+#include "train.hpp"
 
 // Characters
 #include "./characters/-character.hpp"
