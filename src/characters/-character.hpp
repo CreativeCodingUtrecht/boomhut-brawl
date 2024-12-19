@@ -126,6 +126,10 @@ struct character {
     virtual ~character() {};
 };
 
+
+
+
+
 // Global
 character* you;
 character* other_player;
@@ -139,3 +143,4 @@ bn::vector<character*, 2> players() {
     vec.push_back(other_player);
     return vec;
 }
+

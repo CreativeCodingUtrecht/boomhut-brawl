@@ -49,21 +49,7 @@
 #include "train.hpp"
 
 // Characters
-#include "./characters/-character.hpp"
-#include "./characters/cate.hpp"
-#include "./characters/christine.hpp"
-#include "./characters/fabian.hpp"
-#include "./characters/fleur.hpp"
-#include "./characters/hunter.hpp"
-#include "./characters/joost.hpp"
-#include "./characters/laury.hpp"
-#include "./characters/mar.hpp"
-#include "./characters/networkninja.hpp"
-#include "./characters/rein.hpp"
-#include "./characters/saskia.hpp"
-#include "./characters/sjef.hpp"
-#include "./characters/werner.hpp"
-#include "./characters/sietse.hpp"
+#include "./characters/all_characters.hpp"
 
 
 #include "scene.hpp"
