@@ -100,23 +100,24 @@ namespace battle
 //        const bn::fixed y_offset = 256 + ;
 
         // Props        
-        bn::sprite_ptr props[] = {
-            // bn::sprite_items::adult_city.create_sprite(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48),
-            bn::sprite_items::wheel_snow.create_sprite(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16)
-        };
+        // bn::sprite_ptr props[] = {
+        //     // bn::sprite_items::adult_city.create_sprite(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48),
+        //     // .create_sprite()
+        // };
 
         // adult_city.set_camera(*camera);
         // adult_city.set_z_order(-100);
 
-        for (auto &prop : props) {
-            prop.set_camera(*camera);
-            prop.set_z_order(-100);
-            prop.set_visible(false);
-        }
+        // for (auto &prop : props) {
+        //     prop.set_camera(*camera);
+        //     prop.set_z_order(-100);
+        // }
 
         // Adult city
         sprite_autounload adult_city(bn::sprite_items::adult_city, bn::fixed_point(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48));
 
+        // Snow wheel
+        sprite_autounload wheel_snow(bn::sprite_items::wheel_snow, bn::fixed_point(327 - 256 + bn::display::width() / 2 + 32, 689 - 256 + bn::display::height() / 2 + 16));
 
         // Animals
         zoop::bee bee;
@@ -144,7 +145,7 @@ namespace battle
 
 
         // Trein
-        // train the_train;
+        train the_train;
 
 
         // Window for the train
@@ -173,7 +174,7 @@ namespace battle
 
         // Health bars
         healthbars bars = healthbars(you->avatar(), other_player->avatar());        
-        abilitybars abilitybars;
+        // abilitybars abilitybars;
 
         // Camera
         you->sprite_ptr()->set_camera(*camera);
@@ -197,10 +198,11 @@ namespace battle
             global_snow->draw_and_update();
 
             // Update train
-            // the_train.update();
+            the_train.update();
 
             // Props!
             adult_city.update_visibility();
+            wheel_snow.update_visibility();
 
             // Electric garden
 //            e_garden_anim.update();
@@ -272,8 +274,8 @@ namespace battle
             you->increase_ability();
             other_player->increase_ability();
 
-            abilitybars.set_ability_left(you->get_ability() / you->max_ability);
-            abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
+            // abilitybars.set_ability_left(you->get_ability() / you->max_ability);
+            // abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
 
             // Back to character select
             if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
