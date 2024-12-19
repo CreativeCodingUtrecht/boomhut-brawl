@@ -6,6 +6,7 @@
 
 #include "globals.hpp"
 #include "scene.hpp"
+#include "snow.hpp"
 
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
@@ -126,6 +127,8 @@ namespace main_menu
         while (true) 
         {
             t++;
+
+            global_snow->draw_and_update();
 
 
             // Announce that you're there

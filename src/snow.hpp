@@ -5,7 +5,7 @@
 #include "bn_sprite_items_snowflake_smol.h"
 
 #include "globals.hpp"
-#include "characters/-character.hpp"
+#include "bn_vector.h"
 
 
 
@@ -43,16 +43,20 @@ struct snowflake
             }
         }
         
-        if (you->is_indoors()) {
-            if (snowflake_is_indoors) {
-                spr.set_visible(false);
+        // Only do the check if the player has spawned: 
+        // the players are not spawned in the splash screen and menu
+        if (you) {
+            if (you->is_indoors()) {
+                if (snowflake_is_indoors) {
+                    spr.set_visible(false);
+                } else {
+                    spr.set_visible(true);
+                }
             } else {
-                spr.set_visible(true);
+                spr.set_visible(true);    
             }
-        } else {
-            spr.set_visible(true);    
-        }
-
+        } 
+        
         // Reset position
         if (spr.y() > camera->y() + bn::display::height() / 2) {
             spr.set_y(camera->y() - bn::display::height()/2);

@@ -5,7 +5,7 @@
 // Includes
 #include "../include/utils.h"
 #include "globals.hpp"
-
+// #include "snow.hpp"
 
 // scenes
 #include "scene.hpp"
@@ -37,7 +37,7 @@ int main()
     global_snow = snow();
 
     // Splash
-//    splash::run();
+    splash::run();
 
     // Main menu
     next_scene next = battle::run();

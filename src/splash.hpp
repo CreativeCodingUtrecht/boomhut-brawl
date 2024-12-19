@@ -19,11 +19,13 @@
 #include "globals.hpp"
 #include "scene.hpp"
 #include "zoop.hpp"
+#include "snow.hpp"
 
 
 namespace splash 
 {
     using namespace bn;
+
 
 
     next_scene run() 
@@ -33,8 +35,11 @@ namespace splash
         sprite_ptr c2 = sprite_items::c2.create_sprite(0,-128);
         sprite_ptr u = sprite_items::u.create_sprite(64,-128);
 
-        // music_items::splashscreen.play();
+        // background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+        // background->set_z_order(4);
+        // background->set_camera(*camera);
 
+        // music_items::splashscreen.play();
         int t = 0;
         
         int entrance_stagger = 10;
@@ -47,6 +52,9 @@ namespace splash
 
             global_snow->draw_and_update();
 
+            // Boomhut pan upwards
+
+            // CCU logo --------------------------------
             // c1
             if (t < exit_base) {
                 c1.set_y(lerp(0, c1.y(), .9));

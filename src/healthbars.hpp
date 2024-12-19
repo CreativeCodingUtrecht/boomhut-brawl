@@ -86,6 +86,5 @@ struct healthbars
     {
         healthbar_fill2.set_horizontal_scale(bn::max(health, bn::fixed(0.01)));
         healthbar_fill2.set_position(healthbar_fill_position_2.x() + 32 - health * 32, healthbar_fill_position_2.y());
-        // healthbar_fill.set_x(position_2.x() + map(health, 0, 1, 16, 48));
     }
 };
