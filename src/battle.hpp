@@ -134,15 +134,6 @@ namespace battle
         train the_train;
 
 
-        // Window for the train
-    //     auto trein_bg = bn::regular_bg_items::trein_bg.create_bg(100,210);
-    //    bn::window outside_window = bn::window::outside();
-    //    outside_window.set_show_bg(trein_bg, false);
-    // //    outside_window.set
-    //    bn::rect_window internal_window = bn::rect_window::internal();
-    //    internal_window.set_boundaries(-0, -200, 392, 1024);
-    //    internal_window.set_camera(camera);
-
         BN_LOG("test");
 
         // Facade
