@@ -46,6 +46,7 @@
 #include "zoop.hpp"
 #include "healthbars.hpp"
 #include "train.hpp"
+#include "sprite_autounload.hpp"
 
 // Characters
 #include "./characters/-character.hpp"
@@ -113,6 +114,10 @@ namespace battle
             prop.set_visible(false);
         }
 
+        // Adult city
+        sprite_autounload adult_city(bn::sprite_items::adult_city, bn::fixed_point(26 - 256 + bn::display::width() / 2 + 64, 318 - 256 + bn::display::height() / 2 + 48));
+
+
         // Animals
         zoop::bee bee;
         zoop::rat rat;
@@ -139,7 +144,7 @@ namespace battle
 
 
         // Trein
-        train the_train;
+        // train the_train;
 
 
         // Window for the train
@@ -188,10 +193,14 @@ namespace battle
             bee.update();
             rat.update();
 
+            // Update snow
             global_snow->draw_and_update();
 
             // Update train
-            the_train.update();
+            // the_train.update();
+
+            // Props!
+            adult_city.update_visibility();
 
             // Electric garden
 //            e_garden_anim.update();
