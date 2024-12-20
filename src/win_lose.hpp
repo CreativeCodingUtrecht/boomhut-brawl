@@ -31,6 +31,12 @@ namespace win_lose
         int frame = 0;
 
         // Get the background palette
+        if (!background.has_value()) {
+            background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
+            background->set_z_order(4);
+            background->set_camera(*camera);
+        }
+
         bn::color icy = rgb255(133, 168, 253);
         bn::bg_palette_ptr pal = background->palette();
         pal.set_fade_color(icy);
@@ -66,6 +72,7 @@ namespace win_lose
 
             if (bn::keypad::start_pressed() || bn::keypad::select_pressed()) {
                 background.reset();
+                you->sprite_ptr()->set_visible(false);
                 printer->print(bn::string<20>(""));
                 return next_scene::splash;
             }

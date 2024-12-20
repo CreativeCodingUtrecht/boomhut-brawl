@@ -2,6 +2,8 @@
 
 #include "-character.hpp"
 
+#include "../snowball.hpp"
+
 #include "bn_sprite_items_timo.h"
 #include "bn_sprite_items_avatar_networkninja.h"
 #include "bn_sprite_items_networkninja_keyboard_avatar.h"
@@ -162,6 +164,12 @@ struct networkninja: public character {
             anims->idle.update();
             return;
         }
+
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
+        }
+
 
         if (mosaic_timer > 0) {
             mosaic_timer--;

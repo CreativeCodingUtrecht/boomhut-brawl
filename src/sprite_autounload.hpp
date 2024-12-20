@@ -31,7 +31,7 @@ struct sprite_autounload {
             should_be_visible = false;
         }
 
-        BN_LOG(should_be_visible);
+        // BN_LOG(should_be_visible);
 
         if (should_be_visible && !spr.has_value()) {
             spr = spr_item.create_sprite(position);

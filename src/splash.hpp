@@ -37,7 +37,8 @@ namespace splash
         sprite_ptr u = sprite_items::u.create_sprite(64,-128);
 
         // Presents text
-
+        sprite_ptr presents_text = sprite_items::presents_text.create_sprite(0, -128);
+        presents_text.set_camera(*camera);
 
         // Backround
         background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
@@ -85,7 +86,7 @@ namespace splash
             // Boomhut pan upwards
 
             // CCU logo --------------------------------
-            // c1
+            // C
             if (t < exit_base) {
                 c1.set_y(lerp(0, c1.y(), .9));
             }
@@ -93,7 +94,7 @@ namespace splash
                 c1.set_y(lerp(128, c1.y(), .9));
             }
 
-            // c2
+            // C
             if (t > entrance_stagger && t < exit_base) {
                 c2.set_y(lerp(0, c2.y(), .9));
             }
@@ -101,7 +102,7 @@ namespace splash
                 c2.set_y(lerp(128, c2.y(), .9));
             }
 
-            // c3
+            // U
             if (t > entrance_stagger * 2 && t < exit_base) {
                 u.set_y(lerp(0, u.y(), .9));
             }
@@ -109,8 +110,16 @@ namespace splash
                 u.set_y(lerp(128, u.y(), .9));
             }
 
+            // presents text
+            if (t > 5 * 60 && t < 6 * 60) {
+                presents_text.set_y(lerp(camera->y(), presents_text.y(), .9));
+            }
+            if (t > 6 * 60 && t < 7 * 60) {
+                presents_text.set_y(lerp(camera->y() + 128, presents_text.y(), .9));
+            }
+
             // finished, go to main menu 
-            if (t == 10 * 60) {
+            if (t == 12 * 60) {
                 // music::stop();
                 background.reset();
                 return next_scene::character_select;

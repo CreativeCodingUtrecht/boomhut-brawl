@@ -11,7 +11,6 @@
 #include "bn_link.h"
 #include "bn_link_state.h"
 #include "bn_sound_items.h"
-#include "bn_music_items.h"
 #include "bn_music.h"
 
 // Includes
@@ -39,6 +38,7 @@
 
 // Sounds
 #include "bn_sound_items.h"
+#include "bn_music_items.h"
 
 
 namespace character_select 
@@ -170,6 +170,7 @@ namespace character_select
         int other_selected_menu_item_y = 0;
 
         if (!bn::music::playing()) {
+            // bn::music_items::backwithavengeance.play();
             bn::music_items::backwithavengeance.play();
             bn::music::set_volume(0.5);
         }

@@ -47,6 +47,7 @@
 #include "healthbars.hpp"
 #include "sprite_autounload.hpp"
 #include "train.hpp"
+#include "snowball.hpp"
 
 // Characters
 #include "./characters/all_characters.hpp"
@@ -145,7 +146,7 @@ namespace battle
 
         // Default characters
         if (!you) {
-            you = new hunter();
+            you = new networkninja();
         }
 
         if (!other_player) {
@@ -169,6 +170,10 @@ namespace battle
         while(true)
         {
             frame++;
+
+            // Update snowballs
+            snowballs::update_all();
+
 
             // Update animals
             bee.update();
@@ -267,6 +272,9 @@ namespace battle
 
             // Win / lose
             if (you->get_health() <= 0 || other_player->get_health() <= 0) {
+                snowballs::snowballs.clear();
+                background.reset();
+
 //                background.reset();
                 bars.pictogram.reset();
                 bars.pictogram2.reset();

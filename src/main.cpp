@@ -37,10 +37,11 @@ int main()
     global_snow = snow();
 
     // Splash
-    splash::run();
+    // battle::run();
+    next_scene next = battle::run();
 
     // Main menu
-    next_scene next = battle::run();
+    // next_scene next = character_select::run();
 
     while (true)
     {
