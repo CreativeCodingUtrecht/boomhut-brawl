@@ -15,10 +15,8 @@ bn::optional<bn::random> global_random;
 
 // The world
 bn::optional<bn::regular_bg_map_item> map_item;
-bn::optional<bn::regular_bg_ptr> indoor_background;
-bn::optional<bn::regular_bg_ptr> background;
-bn::optional<bn::regular_bg_ptr> background_area_left; // only shown when in this area
-bn::optional<bn::regular_bg_ptr> background_area_right; // only shown when in this area
+bn::optional<bn::regular_bg_ptr> background; // changes depending on where you are on the map
+
 
 int ground_tile = 1;
 int wall_tile = 2;
@@ -34,6 +32,6 @@ const bn::fixed gravity = 0.3;
 const bn::fixed_point spawn_point = bn::fixed_point(256,-100);
 
 const bn::fixed bounds_min_x =  -110;
-const bn::fixed bounds_max_x = 740;
+const bn::fixed bounds_max_x = 780;
 const bn::fixed bounds_min_y = -200;
 const bn::fixed bounds_max_y = 502;
