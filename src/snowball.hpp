@@ -6,17 +6,31 @@
 #include "./characters/-character.hpp"
 
 #include "bn_sprite_items_snowflake_smol.h"
+#include "bn_sprite_items_snowflake.h"
 #include "bn_sprite_items_snowball.h"
 
 
 
 namespace snowballs {
+    struct trail_snowflake {
+        bn::sprite_ptr spr;
+        int lifetime_left = 30;
+        bn::fixed_point velocity;
+
+        trail_snowflake(bn::fixed_point pos, bn::fixed_point vel):
+            spr(bn::sprite_items::snowflake.create_sprite(pos)) {
+                spr.set_camera(*camera);
+                velocity = vel;
+        }
+    };
+
+
     struct snowball {
         character* creator;
         bn::sprite_ptr spr;
         int direction;
 
-        bn::vector<bn::sprite_ptr, 3> trail;
+        bn::vector<trail_snowflake, 3> trail;
 
         snowball(character *creator, bn::fixed_point position, int direction): 
             creator(creator),  
@@ -31,8 +45,13 @@ namespace snowballs {
 
 
     void spawn(character *creator, bn::fixed_point position, bool horizontal_flip) {
+        int dir = horizontal_flip ? -1 : 1;
         if (!snowballs.full()) {
-            snowball new_snowball = snowball(creator, position, horizontal_flip ? -1 : 1);
+            snowball new_snowball = snowball(creator, position, dir);
+            for (int i = 0; i < 3; i++) {
+                auto flake = trail_snowflake(position, bn::fixed_point(global_random->get_fixed(0.5, 8) * dir, global_random->get_fixed(-0.5, 0.5)));
+                new_snowball.trail.push_back(flake);
+            }
             snowballs.push_back(new_snowball);
         }
     }
@@ -44,9 +63,13 @@ namespace snowballs {
             auto s = snowballs.at(i);
 
             if (s.direction == -1) {
-                s.spr.set_x(s.spr.x() - 7);
+                s.spr.set_x(s.spr.x() - 8);
             } else {
-                s.spr.set_x(s.spr.x() + 7);
+                s.spr.set_x(s.spr.x() + 8);
+            }
+
+            for (auto flake : s.trail) {
+                flake.spr.set_position(flake.spr.position() + flake.velocity);
             }
             
             s.spr.set_rotation_angle(clamp(s.spr.rotation_angle() + 50, 0, 360));
