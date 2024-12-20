@@ -40,7 +40,10 @@ namespace splash
         sprite_ptr presents_text = sprite_items::presents_text.create_sprite(0, -128);
         presents_text.set_camera(*camera);
 
-        // Backround
+        // Boomhut brawl text
+        
+
+        // Background
         background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
         background->set_z_order(4);
         background->set_camera(*camera);

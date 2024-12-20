@@ -41,7 +41,7 @@ int main()
     // next_scene next = battle::run();
 
     // Main menu
-    next_scene next = character_select::run();
+    next_scene next = splash::run();
 
     while (true)
     {
