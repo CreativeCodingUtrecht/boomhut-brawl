@@ -30,13 +30,17 @@ namespace snowballs {
         bn::sprite_ptr spr;
         int direction;
 
+        bn::sprite_animate_action<2> anim;
+
         bn::vector<trail_snowflake, 3> trail;
 
         snowball(character *creator, bn::fixed_point position, int direction): 
             creator(creator),  
             spr(bn::sprite_items::snowball.create_sprite(position)),
-            direction(direction) {
+            direction(direction),
+            anim(bn::create_sprite_animate_action_forever(spr, 2, bn::sprite_items::snowball.tiles_item(), 1, 2)) {
                 spr.set_camera(*camera);
+
         }
     };
 
@@ -61,6 +65,8 @@ namespace snowballs {
 
         for (int i = 0; i < snowballs.size(); i++) {
             auto s = snowballs.at(i);
+
+            s.anim.update();
 
             if (s.direction == -1) {
                 s.spr.set_x(s.spr.x() - 8);
