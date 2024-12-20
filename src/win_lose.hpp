@@ -75,8 +75,9 @@ namespace win_lose
 
             if (frame > 2*60 && (bn::keypad::a_pressed() || bn::keypad::start_pressed())) {
                 background.reset();
-                you->sprite_ptr()->set_visible(false);
-                other_player->sprite_ptr()->set_visible(false);
+                delete you;
+                delete other_player;
+                // other_player->sprite_ptr()->set_visible(false);
                 printer->print(bn::string<20>(""));
                 return next_scene::splash;
             }
