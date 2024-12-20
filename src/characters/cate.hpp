@@ -158,46 +158,52 @@ struct cate: public character {
 
         }
 
-        // STARS
-        if (keypad.b_pressed && !stars.full()) {
-            bn::sprite_ptr star = bn::sprite_items::cat_star.create_sprite(position);
-            star.set_camera(camera);
-            star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
-            star.set_scale(0.1);
-            stars.push_back(star);
-            bn::sound_items::ice_info.play();
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
         }
 
-        for (int i = 0; i < stars.size(); i++) {
-            auto s = stars.at(i);
 
-            if (s.horizontal_scale() < 1.0) {
-                s.set_scale(s.horizontal_scale() + 0.1);
-            }
+        // // STARS
+        // if (keypad.b_pressed && !stars.full()) {
+        //     bn::sprite_ptr star = bn::sprite_items::cat_star.create_sprite(position);
+        //     star.set_camera(camera);
+        //     star.set_horizontal_flip(_sprite_ptr->horizontal_flip());
+        //     star.set_scale(0.1);
+        //     stars.push_back(star);
+        //     bn::sound_items::ice_info.play();
+        // }
 
-            if (s.horizontal_flip()) {
-                s.set_x(s.x() - 5);
-            } else {
-                s.set_x(s.x() + 5);
-            }
+        // for (int i = 0; i < stars.size(); i++) {
+        //     auto s = stars.at(i);
+
+        //     if (s.horizontal_scale() < 1.0) {
+        //         s.set_scale(s.horizontal_scale() + 0.1);
+        //     }
+
+        //     if (s.horizontal_flip()) {
+        //         s.set_x(s.x() - 5);
+        //     } else {
+        //         s.set_x(s.x() + 5);
+        //     }
             
-            s.set_rotation_angle(clamp(s.rotation_angle() + 10, 0, 360));
-            // s.set
+        //     s.set_rotation_angle(clamp(s.rotation_angle() + 10, 0, 360));
+        //     // s.set
 
 
 
-            for (character* c : players()) {
-                if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 16) {
-                    c->apply_force(bn::fixed_point(5, 0));
-                    c->take_damage(25);
-                    stars.erase(stars.begin() + i);
-                }
-            }
+        //     for (character* c : players()) {
+        //         if (c != this && distance(s.position(), c->sprite_ptr()->position()) < 16) {
+        //             c->apply_force(bn::fixed_point(5, 0));
+        //             c->take_damage(25);
+        //             stars.erase(stars.begin() + i);
+        //         }
+        //     }
             
-            if (s.x() > bounds_max_x || s.x() < bounds_min_x) {
-                stars.erase(stars.begin() + i);
-            }
-        }
+        //     if (s.x() > bounds_max_x || s.x() < bounds_min_x) {
+        //         stars.erase(stars.begin() + i);
+        //     }
+        // }
 
         if (mosaic_timer > 0) {
             mosaic_timer--;

@@ -180,6 +180,11 @@ struct hunter: public character {
             return;
         }
 
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
+        }
+
         if (mosaic_timer > 0) {
             mosaic_timer--;
             bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));
@@ -302,54 +307,54 @@ struct hunter: public character {
 
 
         // Aiming!
-        if (keypad.b_pressed) {
-        }
-        if (keypad.b_held) {
-            is_aiming = true;
-            // Shoot!
-            if (aiming_countdown == 0) {
+        // if (keypad.b_pressed) {
+        // }
+        // if (keypad.b_held) {
+        //     is_aiming = true;
+        //     // Shoot!
+        //     if (aiming_countdown == 0) {
                 
-            } else {
-                aiming_countdown--;
-            }
-        }
-        if (!keypad.b_held && is_aiming) {
-            is_aiming = false;
-            bn::sound_items::hunter_bow.play_with_priority(3000);
-            attack_anim_load->reset();
-            aiming_countdown = 60;
-            arrow new_arrow = arrow {
-                .spr = bn::sprite_items::hunter_arrow.create_sprite(position.x(), position.y() - 8),
-                .direction = _sprite_ptr->horizontal_flip() ? -1 : 1
-            };
+        //     } else {
+        //         aiming_countdown--;
+        //     }
+        // }
+        // if (!keypad.b_held && is_aiming) {
+        //     is_aiming = false;
+        //     bn::sound_items::hunter_bow.play_with_priority(3000);
+        //     attack_anim_load->reset();
+        //     aiming_countdown = 60;
+        //     arrow new_arrow = arrow {
+        //         .spr = bn::sprite_items::hunter_arrow.create_sprite(position.x(), position.y() - 8),
+        //         .direction = _sprite_ptr->horizontal_flip() ? -1 : 1
+        //     };
 
-            new_arrow.spr.set_camera(camera);
-            arrows.push_back(new_arrow);
-        }
+        //     new_arrow.spr.set_camera(camera);
+        //     arrows.push_back(new_arrow);
+        // }
 
-        // Animate arrow
-        for (int i = 0; i < arrows.size(); i++) {
-            arrow a = arrows.at(i);
-            a.spr.set_x(a.spr.x() + 10 * a.direction);
-            a.spr.set_horizontal_flip(a.direction == -1);
+        // // Animate arrow
+        // for (int i = 0; i < arrows.size(); i++) {
+        //     arrow a = arrows.at(i);
+        //     a.spr.set_x(a.spr.x() + 10 * a.direction);
+        //     a.spr.set_horizontal_flip(a.direction == -1);
 
-            BN_LOG(you == this);
+        //     BN_LOG(you == this);
             
-            // hitting people
-            for (character* p : players()) {
-                if (p != this && distance(a.spr.position(), p->sprite_ptr()->position()) < 32) {
-                    p->sound_hit().play();
-                    arrows.erase(arrows.begin() + i);
-                    p->take_damage(10);
-                    bn::fixed f = 10;
-                    p->apply_force(bn::fixed_point(f * a.direction, 0));
-                }
-            }
+        //     // hitting people
+        //     for (character* p : players()) {
+        //         if (p != this && distance(a.spr.position(), p->sprite_ptr()->position()) < 32) {
+        //             p->sound_hit().play();
+        //             arrows.erase(arrows.begin() + i);
+        //             p->take_damage(10);
+        //             bn::fixed f = 10;
+        //             p->apply_force(bn::fixed_point(f * a.direction, 0));
+        //         }
+        //     }
 
-            if (a.spr.x() > bounds_max_x || a.spr.x() < bounds_min_x) {
-                arrows.erase(arrows.begin() + i);
-            }
-        }
+        //     if (a.spr.x() > bounds_max_x || a.spr.x() < bounds_min_x) {
+        //         arrows.erase(arrows.begin() + i);
+        //     }
+        // }
         
         // Update the right animation
         if (is_aiming) {

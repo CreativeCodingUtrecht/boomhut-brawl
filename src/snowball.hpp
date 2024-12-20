@@ -38,7 +38,7 @@ namespace snowballs {
     }
 
     void update_all() {
-        BN_LOG(snowballs.size());
+        // BN_LOG(snowballs.size());
 
         for (int i = 0; i < snowballs.size(); i++) {
             auto s = snowballs.at(i);
@@ -52,9 +52,9 @@ namespace snowballs {
             s.spr.set_rotation_angle(clamp(s.spr.rotation_angle() + 50, 0, 360));
 
             for (character* c : players()) {
-                if (c != s.creator && distance(s.spr.position(), c->sprite_ptr()->position()) < 16) {
-                    c->apply_force(bn::fixed_point(5, 0));
-                    c->take_damage(25);
+                if (c != s.creator && distance(s.spr.position(), c->sprite_ptr()->position()) < 12) {
+                    c->apply_force(bn::fixed_point(5 * s.direction, 0));
+                    c->take_damage(10);
                     c->sound_hit().play();
                     snowballs.erase(snowballs.begin() + i);
                 }

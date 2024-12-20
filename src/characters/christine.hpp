@@ -163,6 +163,12 @@ struct christine: public character {
             anims->idle.update();
             return;
         }
+
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
+        }
+        
         
          // Excel formulas!
         if (keypad.b_held && !formulas.full()) {

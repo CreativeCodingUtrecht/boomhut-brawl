@@ -141,6 +141,11 @@ struct sietse: public character {
             return;
         }
 
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
+        }
+
         if (mosaic_timer > 0) {
             mosaic_timer--;
             bn::sprites_mosaic::set_stretch(map(mosaic_timer, 30, 0, 1, 0));

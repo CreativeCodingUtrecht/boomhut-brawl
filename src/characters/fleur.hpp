@@ -149,6 +149,11 @@ struct fleur: public character {
             return;
         }
 
+        // Snowballs!
+        if (keypad.b_pressed) {
+            snowballs::spawn(this, position, _sprite_ptr->horizontal_flip());
+        }
+
 
         if (mosaic_timer > 0) {
             mosaic_timer--;

@@ -314,6 +314,11 @@ namespace character_select
                     weapon_you.reset();
                     weapon_other_player.reset();
 
+                    countdown_3.reset();
+                    countdown_2.reset();
+                    countdown_1.reset();
+                    countdown_fight.reset();
+
                     you->set_preview_mode(false);
                     other_player->set_preview_mode(false);
                     you->sprite_ptr()->set_mosaic_enabled(true);

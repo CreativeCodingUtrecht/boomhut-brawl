@@ -73,6 +73,7 @@ namespace win_lose
             if (bn::keypad::start_pressed() || bn::keypad::select_pressed()) {
                 background.reset();
                 you->sprite_ptr()->set_visible(false);
+                other_player->sprite_ptr()->set_visible(false);
                 printer->print(bn::string<20>(""));
                 return next_scene::splash;
             }

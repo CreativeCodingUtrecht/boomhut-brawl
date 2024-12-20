@@ -121,6 +121,7 @@ struct character {
         this->frame = frame;
         update(keypad);
     };
+
     virtual void update(multiplayer::keypad_data::keypad_data_struct keypad) = 0;
 
     virtual ~character() {};
