@@ -23,7 +23,10 @@ namespace win_lose
         // Play winner's sound
         (*winner)->sound_win().play();
         printer->print(bn::format<20>("{} wins", (*winner)->name()));
-        // Make the player animate but don't respond to
+
+        // TODO Print "press a to restart"
+
+        // Make the player animate but don't respond to input 
         (*winner)->set_preview_mode(true);
 
         bn::fixed scale = 1;
@@ -70,7 +73,7 @@ namespace win_lose
             pal.set_fade_intensity(fade);
 
 
-            if (bn::keypad::start_pressed() || bn::keypad::select_pressed()) {
+            if (frame > 2*60 && (bn::keypad::a_pressed() || bn::keypad::start_pressed())) {
                 background.reset();
                 you->sprite_ptr()->set_visible(false);
                 other_player->sprite_ptr()->set_visible(false);

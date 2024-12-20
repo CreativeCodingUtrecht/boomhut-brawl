@@ -38,10 +38,10 @@ int main()
 
     // Splash
     // battle::run();
-    next_scene next = battle::run();
+    // next_scene next = battle::run();
 
     // Main menu
-    // next_scene next = character_select::run();
+    next_scene next = character_select::run();
 
     while (true)
     {

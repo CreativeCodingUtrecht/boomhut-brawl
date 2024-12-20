@@ -54,6 +54,8 @@ namespace splash
         // Train
         train the_train;
 
+
+
         // music_items::splashscreen.play();
         int t = 0;
         
@@ -117,6 +119,8 @@ namespace splash
             if (t > 6 * 60 && t < 7 * 60) {
                 presents_text.set_y(lerp(camera->y() + 128, presents_text.y(), .9));
             }
+
+            BN_LOG(the_train.position.x());
 
             // finished, go to main menu 
             if (t == 12 * 60) {

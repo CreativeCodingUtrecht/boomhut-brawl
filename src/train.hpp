@@ -16,9 +16,9 @@ struct wagon
         middle(bn::sprite_items::trein_middel_smol.create_sprite(position.x(), position.y())),
         tail(bn::sprite_items::trein_kop_smol.create_sprite(position.x() + 16, position.y())) {
 
-        head.set_camera(camera);
-        middle.set_camera(camera);
-        tail.set_camera(camera);
+        head.set_camera(*camera);
+        middle.set_camera(*camera);
+        tail.set_camera(*camera);
 
         tail.set_horizontal_flip(true);
 
@@ -38,9 +38,9 @@ struct wagon
 
 struct train
 {   
-    bool played_sound = true;
+    bool played_sound = false;
     int x_between_wagons = 95;
-    bn::fixed_point position = bn::fixed_point(1200,75);
+    bn::fixed_point position = bn::fixed_point(2400,75);
     
     wagon wagons[3] = {
         wagon(bn::fixed_point(position.x() - x_between_wagons, position.y())),
@@ -53,6 +53,8 @@ struct train
     }
 
     void update() {
+        BN_LOG(position.x());
+
         for (wagon &w : wagons) {
             w.set_x(w.position.x()-4);
         }

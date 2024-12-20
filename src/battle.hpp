@@ -28,6 +28,8 @@
 #include "bn_regular_bg_items_tilemap.h"
 #include "bn_regular_bg_items_background.h"
 #include "bn_regular_bg_items_background_indoors.h"
+#include "bn_regular_bg_items_background_left.h"
+#include "bn_regular_bg_items_background_right.h"
 #include "bn_regular_bg_items_trein_bg.h"
 #include "bn_regular_bg_items_facade.h"
 
@@ -196,7 +198,7 @@ namespace battle
             
 //            printer->print_map_tiles_at_position(*map_item, you->sprite_ptr()->position());
             // printer->print("{} |nekfenwfjwklgenwnlgewknwe ");
-        //    printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
+            printer->print_map_tile_and_position(*map_item, you->sprite_ptr()->position());
 //             BN_LOG(props[0].position().x());
 
             // Update level
@@ -222,11 +224,18 @@ namespace battle
             // Always update own player
             you->update(frame, keypad_data_to_send.keypad_data);
 
-            // Indoors and outdoors -------
+
+            // Indoors and outdoors ----------------------------
             if (you->is_indoors()) {
                 background->set_item(bn::regular_bg_items::background_indoors);
             } else {
-                background->set_item(bn::regular_bg_items::background);
+                if (camera->x() < 130) {
+                    background->set_item(bn::regular_bg_items::background_left);
+                } else if (camera->x() > 480) {
+                    background->set_item(bn::regular_bg_items::background_right);
+                } else {
+                    background->set_item(bn::regular_bg_items::background);
+                }
             }
 
             if (other_player->is_indoors() && !you->is_indoors()) {
@@ -235,6 +244,8 @@ namespace battle
             } else {
                 other_player->sprite_ptr()->set_blending_enabled(false);
             }
+
+            // Maps left and right ----------------------------
 
             // Send if changed
             multiplayer::send_if_changed(keypad_data_to_send);

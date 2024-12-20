@@ -177,6 +177,10 @@ namespace character_select
 
         // Background
         bn::optional<bn::regular_bg_ptr> bg = bn::regular_bg_items::character_select_screen.create_bg(0,0);
+        bn::color icy = rgb255(133, 168, 253);
+        bn::bg_palette_ptr pal = bg->palette();
+        pal.set_fade_color(icy);
+        bn::fixed fade = 1;
 
         // Selectors
         bn::optional<bn::sprite_ptr> selector_you = bn::sprite_items::pictogram_selector_you.create_sprite(0,0);
@@ -222,11 +226,6 @@ namespace character_select
         bn::optional<bn::sprite_ptr> countdown_1, countdown_2, countdown_3;
         bn::optional<bn::sprite_ptr> countdown_fight;
 
-        bn::color icy = bn::color(10, 10, 31);
-
-        bn::bg_palette_ptr pal = bg->palette();
-        pal.set_fade_color(icy);
-
 
         while (true) 
         {
@@ -234,6 +233,8 @@ namespace character_select
 
             // log_memory_usage();
 
+            fade = lerp(fade, 0, 0.1);
+            pal.set_fade_intensity(fade);
 
             // Snow
             global_snow->draw_and_update();
