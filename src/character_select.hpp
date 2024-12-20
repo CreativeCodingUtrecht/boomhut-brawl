@@ -396,11 +396,11 @@ namespace character_select
             }
 
             // TODO to be deleted later
-            if (keys_data.keypad_data.b_pressed) {
-                bn::sound_items::fight_countdown.play();
-                countdown = 180;
-                counting_down = true;
-            }
+            // if (keys_data.keypad_data.b_pressed) {
+            //     bn::sound_items::fight_countdown.play();
+            //     countdown = 180;
+            //     counting_down = true;
+            // }
 
             // menu navigation other player
             if (multiplayer::other_player_keypad_data.keypad_data.up_pressed || multiplayer::other_player_keypad_data.keypad_data.down_pressed || 

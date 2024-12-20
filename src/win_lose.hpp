@@ -73,12 +73,16 @@ namespace win_lose
             pal.set_fade_intensity(fade);
 
 
-            if (frame > 2*60 && (bn::keypad::a_pressed() || bn::keypad::start_pressed())) {
+            if (frame > 2*60 && bn::keypad::a_pressed()) {
                 background.reset();
-                delete you;
-                delete other_player;
+                // you->sprite_ptr().reset();
+                // other_player->sprite_ptr().reset();
+                you->unload();
+                other_player->unload();
+                
                 // other_player->sprite_ptr()->set_visible(false);
-                printer->print(bn::string<20>(""));
+                printer->clear();
+                
                 return next_scene::splash;
             }
 

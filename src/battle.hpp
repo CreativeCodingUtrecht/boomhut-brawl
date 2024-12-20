@@ -36,7 +36,6 @@
 // Sprites
 #include "bn_sprite_items_wheel.h"
 #include "bn_sprite_items_wheel_snow.h"
-#include "bn_sprite_items_e_garden_power.h"
 #include "bn_sprite_items_adult_city.h"
 
 // Includes
@@ -124,27 +123,12 @@ namespace battle
         background->set_camera(*camera);
 
         // Electric garden
-//        bn::sprite_ptr e_garden = bn::sprite_items::e_garden_power.create_sprite(400,490);
-//        e_garden.set_camera(*camera);
-//
-//        bn::sprite_animate_action<2> e_garden_anim = bn::create_sprite_animate_action_forever(e_garden, 2, bn::sprite_items::e_garden_power.tiles_item(), 0, 1);
-
-        // BG and map
-//        bn::regular_bg_item tilemap_item = bn::regular_bg_items::tilemap;
-//        bn::fixed_point tilemap_position = bn::fixed_point(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
-//        bn::regular_bg_ptr tilemap = tilemap_item.create_bg(tilemap_position);
-//        tilemap.set_camera(*camera);
 
 
         // Trein
         train the_train;
 
 
-        BN_LOG("test");
-
-        // Facade
-//        bn::regular_bg_ptr facade = bn::regular_bg_items::facade.create_bg(0,0);
-//        facade.set_camera(*camera);
 
         // Default characters
         if (!you) {

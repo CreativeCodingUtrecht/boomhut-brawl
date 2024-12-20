@@ -58,8 +58,8 @@ namespace splash
         // sprite_ptr presents_text = sprite_items::presents_text.create_sprite(0, -128);
         // presents_text.set_camera(*camera);
 
-        bn::music_items::getready_compat.play();
-        bn::music::set_volume(0.5);
+        // bn::music_items::getready_compat.play();
+        // bn::music::set_volume(0.5);
 
         // Boomhut brawl text
         int title_x = 250;
@@ -193,7 +193,7 @@ namespace splash
                 
             }
 
-            if (bn::keypad::a_pressed() ||bn::keypad::start_pressed()) {
+            if (t > 60 && bn::keypad::a_pressed() ||bn::keypad::start_pressed()) {
                 music::stop();
                 background.reset();
                 return next_scene::character_select;

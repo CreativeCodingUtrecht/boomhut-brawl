@@ -213,13 +213,17 @@ class info_printer
 
     void print_mem_usage()
     {
-        // print(bn::format<40>("{}, {}", bn::memory::used_static_iwram, bn::memory::used_stack_iwram));
+        print(bn::format<40>("{}, {}", bn::memory::used_static_iwram, bn::memory::used_stack_iwram));
     }
 
     void print(bn::string<40> str)
     {
         info_text_sprites.clear();
         text_generator->generate(0, 65, str, info_text_sprites);
+    }
+
+    void clear() {
+        info_text_sprites.clear();
     }
 
     void print(bn::fixed f)
