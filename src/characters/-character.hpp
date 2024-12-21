@@ -116,9 +116,9 @@ struct character {
 
     // behaviour
     virtual void set_preview_mode(bool) = 0; 
-    virtual void update(int frame, multiplayer::keypad_data::keypad_data_struct keypad) 
+    void update(int _frame, multiplayer::keypad_data::keypad_data_struct keypad) 
     {
-        this->frame = frame;
+        this->frame = _frame;
         update(keypad);
     };
 

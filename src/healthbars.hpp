@@ -1,7 +1,7 @@
 #include "bn_display.h"
 #include "bn_sprite_ptr.h"
 
-#include "../../../include/utils.h";
+#include "../../../include/utils.h"
 
 #include "bn_sprite_items_pictogram_frame.h"
 #include "bn_sprite_items_healthbar_fill.h"

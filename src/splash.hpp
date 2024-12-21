@@ -45,6 +45,43 @@ namespace splash
 {
     using namespace bn;
 
+    int title_x = 250;
+    int title_y = 10;
+
+    struct boomhut_brawl_title_wave
+    {
+        // Boomhut brawl text
+        
+        sprite_ptr titel_sprites[12] = {
+            sprite_items::titel_1.create_sprite(title_x + -95, title_y),
+            sprite_items::titel_2.create_sprite(title_x + -80, title_y),
+            sprite_items::titel_2.create_sprite(title_x + -65, title_y),
+            sprite_items::titel_3.create_sprite(title_x + -48, title_y),
+            sprite_items::titel_4.create_sprite(title_x + -28, title_y),
+            sprite_items::titel_5.create_sprite(title_x + -13, title_y),
+            sprite_items::titel_6.create_sprite(title_x + 0, title_y),
+
+            sprite_items::titel_1.create_sprite(title_x + 24, title_y),
+            sprite_items::titel_7.create_sprite(title_x + 40, title_y),
+            sprite_items::titel_8.create_sprite(title_x + 58, title_y),
+            sprite_items::titel_9.create_sprite(title_x + 76, title_y),
+            sprite_items::titel_10.create_sprite(title_x + 90, title_y),
+        };
+
+        boomhut_brawl_title_wave() {
+            for (auto s : titel_sprites) {
+                s.set_camera(*camera);
+            }
+        }
+        
+        void animate(int t) {
+            for (size_t i = 0; i < 12; i++) {
+                titel_sprites[i].set_y(title_y + sin(bn::fixed(t) / 100 + bn::fixed(i) / 12) * 5.0);
+            }
+        }
+
+    };
+
 
 
     next_scene run() 
@@ -61,28 +98,7 @@ namespace splash
         // bn::music_items::getready_compat.play();
         // bn::music::set_volume(0.5);
 
-        // Boomhut brawl text
-        int title_x = 250;
-        int title_y = 10;
-        sprite_ptr titel_sprites[] = {
-            sprite_items::titel_1.create_sprite(title_x + -95, title_y),
-            sprite_items::titel_2.create_sprite(title_x + -80, title_y),
-            sprite_items::titel_2.create_sprite(title_x + -65, title_y),
-            sprite_items::titel_3.create_sprite(title_x + -48, title_y),
-            sprite_items::titel_4.create_sprite(title_x + -28, title_y),
-            sprite_items::titel_5.create_sprite(title_x + -13, title_y),
-            sprite_items::titel_6.create_sprite(title_x + 0, title_y),
-
-            sprite_items::titel_1.create_sprite(title_x + 24, title_y),
-            sprite_items::titel_7.create_sprite(title_x + 40, title_y),
-            sprite_items::titel_8.create_sprite(title_x + 58, title_y),
-            sprite_items::titel_9.create_sprite(title_x + 76, title_y),
-            sprite_items::titel_10.create_sprite(title_x + 90, title_y),
-        };
         
-        for (auto s : titel_sprites) {
-            s.set_camera(*camera);
-        }
 
         // press to start
         bool start_showing_press_to_start = false;
@@ -106,6 +122,7 @@ namespace splash
         // Train
         train the_train;
 
+        boomhut_brawl_title_wave title;
 
 
         // music_items::splashscreen.play();
@@ -142,9 +159,7 @@ namespace splash
             // Boomhut pan upwards
 
             // Title waviness
-            for (size_t i = 0; i < 12; i++) {
-                titel_sprites[i].set_y(title_y + sin(bn::fixed(t) / 100 + bn::fixed(i) / 12) * 5.0);
-            }
+            title.animate(t);
 
             // Press a to start
             bool show_press_to_start = start_showing_press_to_start && t % 60 < 30;
@@ -193,7 +208,7 @@ namespace splash
                 
             }
 
-            if (t > 60 && bn::keypad::a_pressed() ||bn::keypad::start_pressed()) {
+            if (t > 60 && (bn::keypad::a_pressed() || bn::keypad::start_pressed())) {
                 music::stop();
                 background.reset();
                 return next_scene::character_select;

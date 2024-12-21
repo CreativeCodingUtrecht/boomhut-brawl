@@ -34,10 +34,10 @@ namespace snowballs {
 
         bn::vector<trail_snowflake, 3> trail;
 
-        snowball(character *creator, bn::fixed_point position, int direction): 
-            creator(creator),  
+        snowball(character *player, bn::fixed_point position, int dir): 
+            creator(player),  
             spr(bn::sprite_items::snowball.create_sprite(position)),
-            direction(direction),
+            direction(dir),
             anim(bn::create_sprite_animate_action_forever(spr, 2, bn::sprite_items::snowball.tiles_item(), 1, 2)) {
                 spr.set_camera(*camera);
 

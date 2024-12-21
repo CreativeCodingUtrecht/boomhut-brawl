@@ -258,12 +258,12 @@ namespace battle
             // abilitybars.set_ability_right(other_player->get_ability() / other_player->max_ability);        
 
             // Back to character select
-            if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
-                background.reset();
-                bars.pictogram.reset();
-                bars.pictogram2.reset();
-                return next_scene::character_select;
-            }
+            // if (bn::keypad::select_pressed() || multiplayer::other_player_keypad_data.keypad_data.select_pressed) {
+            //     background.reset();
+            //     bars.pictogram.reset();
+            //     bars.pictogram2.reset();
+            //     return next_scene::character_select;
+            // }
 
             // Win / lose
             if (you->get_health() <= 0 || other_player->get_health() <= 0) {
@@ -279,7 +279,6 @@ namespace battle
                 } else {
                     winner = you;
                 }
-
 
                 return next_scene::you_win;
             }

@@ -12,7 +12,7 @@ struct sprite_autounload {
 
     bn::optional<bn::sprite_ptr> spr;
 
-    sprite_autounload(bn::sprite_item spr_item, bn::fixed_point position): spr_item(spr_item), position(position), spr(spr_item.create_sprite(position)) {
+    sprite_autounload(bn::sprite_item item, bn::fixed_point pos): spr_item(item), position(pos), spr(spr_item.create_sprite(position)) {
         spr->set_camera(*camera);
     }
 
