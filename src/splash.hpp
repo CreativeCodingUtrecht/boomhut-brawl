@@ -161,10 +161,6 @@ namespace splash
         // bn::music_items::getready_compat.play();
         // bn::music::set_volume(0.5);
 
-
-        // press to start
-        press_a_to_start press_to_start;
-
         // Background
         background = bn::regular_bg_items::background.create_bg(bn::display::width() / 2 + 256, bn::display::height() / 2 + 256);
         background->set_z_order(4);
@@ -179,8 +175,14 @@ namespace splash
         // Train
         train the_train;
 
-        boomhut_brawl_title_wave title;
+        // Title
+        boomhut_brawl_title_wave title_wave;
 
+        // Press to start
+        press_a_to_start press_to_start;
+
+        // CCU
+        // ccu_logo logo;
 
         // music_items::splashscreen.play();
         int t = 0;
@@ -213,7 +215,7 @@ namespace splash
             }
 
             // Title waviness
-            title.animate(t);
+            title_wave.animate(t);
 
             // Press a to start
             press_to_start.animate(t);
