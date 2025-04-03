@@ -3,6 +3,10 @@
 #include "bn_core.h"
 #include "bn_keypad.h"
 #include "bn_sprite_palette_actions.h"
+#include "bn_link.h"
+#include "bn_link_player.h"
+#include "bn_link_state.h"
+
 
 #include "globals.hpp"
 #include "scene.hpp"
@@ -10,6 +14,7 @@
 
 #include "bn_sprite_items_menu_platforming.h"
 #include "bn_sprite_items_menu_selector.h"
+#include "bn_sprite_items_twinkle.h"
 #include "bn_regular_bg_items_menu_bg.h"
 #include "bn_sound_items.h"
 
