@@ -5,6 +5,7 @@
 #include "bn_sprite_items_trein_kop_smol.h"
 #include "bn_sprite_items_trein_middel_smol.h"
 
+#include "bn_sound_items.h"
 
 struct wagon 
 {
@@ -42,6 +43,7 @@ struct train
     bool played_sound = true;
     int x_between_wagons = 95;
     bn::fixed_point position = bn::fixed_point(2200,75);
+    int speed = 4;
     
     wagon wagons[3] = {
         wagon(bn::fixed_point(position.x() - x_between_wagons, position.y())),
@@ -57,12 +59,15 @@ struct train
     void update() {
         // BN_LOG(position.x());
 
+        // Move position of train and wagons
+        position.set_x(position.x() - speed);
+
         for (wagon &w : wagons) {
-            w.set_x(w.position.x()-4);
+            w.set_x(w.position.x()-speed);
         }
 
-        position.set_x(position.x() - 4);
 
+        // Play sound when train gets near
         if (abs(position.x() - camera->x()) < 750 && !played_sound) {
             bn::sound_items::train.play();
             played_sound = true;
@@ -71,7 +76,7 @@ struct train
         // Back to start 
         if (position.x() < -1200) {
             played_sound = false;
-            // position.set_x(global_random->get_fixed(1000, 2000));
+            // position.set_x(global_random->get_fixed(1000, 2000)); // Random position
             position.set_x(2000);
             wagons[0].set_x(position.x() - x_between_wagons);
             wagons[1].set_x(position.x());
