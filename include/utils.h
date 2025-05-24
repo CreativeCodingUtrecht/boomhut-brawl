@@ -12,6 +12,7 @@
 #include "bn_format.h"
 #include "bn_memory.h"
 #include "bn_rect.h"
+#include "bn_keypad.h"
 
 #include "../../common/include/common_info.h"
 #include "../../common/include/common_variable_8x8_sprite_font.h"

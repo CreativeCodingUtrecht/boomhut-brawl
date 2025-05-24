@@ -1,11 +1,9 @@
 #include "bn_core.h"
 #include "bn_bg_palettes.h"
-#include "bn_keypad.h"
 
 // Includes
 #include "../include/utils.h"
 #include "globals.hpp"
-// #include "snow.hpp"
 
 // scenes
 #include "scene.hpp"
@@ -14,7 +12,6 @@
 #include "main_menu.hpp"
 #include "character_select.hpp"
 #include "win_lose.hpp"
-#include "christmas.hpp"
 
 
 
